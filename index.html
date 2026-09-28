@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
-<title>ШКОЛА №43 — V12.1 New</title>
+<title>ШКОЛА №43 — V12.1.1 Fix</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:Consolas,monospace;color:#cfe;position:fixed;touch-action:none}
@@ -11,21 +11,23 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 .hidden{display:none!important}
 #menu{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#151515,#000 72%);z-index:100;padding:10px}
 #tv{position:relative;width:100%;max-width:560px;padding:16px 16px 40px;border-radius:20px;background:linear-gradient(160deg,#3d332a,#1e1813 55%,#0c0907);box-shadow:0 0 0 5px #0a0806,0 25px 60px #000}
-#scr{position:relative;width:100%;aspect-ratio:3/4;max-height:78vh;border-radius:14px;overflow:hidden;background:#020a04;box-shadow:inset 0 0 70px rgba(0,0,0,.97)}
+#scr{position:relative;width:100%;aspect-ratio:3/4;max-height:80vh;border-radius:14px;overflow:hidden;background:#020a04;box-shadow:inset 0 0 70px rgba(0,0,0,.97)}
 #crt{position:absolute;inset:0;pointer-events:none;z-index:5;background:repeating-linear-gradient(0deg,rgba(0,0,0,.4) 0 1px,transparent 1px 3px)}
 #scan{position:absolute;inset:0;pointer-events:none;z-index:6;background:linear-gradient(180deg,transparent 0%,rgba(80,255,140,.08) 50%,transparent 100%);animation:scanMove 4s linear infinite}
 @keyframes scanMove{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
-#min{position:absolute;inset:0;z-index:7;display:flex;flex-direction:column;padding:18px 20px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#1d5 #041208}
+#min{position:absolute;inset:0;z-index:7;display:flex;flex-direction:column;padding:14px 16px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#1d5 #041208}
 #min::-webkit-scrollbar{width:6px}
 #min::-webkit-scrollbar-thumb{background:#1d5;border-radius:3px}
-.greet{font-size:11px;color:#8f8;line-height:1.5;margin-bottom:12px;text-shadow:0 0 6px #0f0}
-.greet .big{display:block;font-size:15px;color:#5f9;letter-spacing:2px;text-shadow:0 0 10px #0f0;margin-bottom:6px}
-.greet .hi{display:block;font-size:12px;color:#cff;margin-bottom:4px}
-.greet .rules{display:block;font-size:10.5px;color:#6a9;line-height:1.4;margin-top:6px}
-#menuList{display:flex;flex-direction:column;gap:3px;flex:1}
-.mbtn{background:rgba(13,42,28,.4);border:1px solid #1d5;color:#9fecbf;font-family:inherit;font-size:12.5px;text-align:left;padding:10px 12px;cursor:pointer;letter-spacing:1.2px;border-radius:4px;transition:.1s}
+.greet{font-size:10.5px;color:#8f8;line-height:1.4;margin-bottom:10px;text-shadow:0 0 6px #0f0}
+.greet .big{display:block;font-size:13.5px;color:#5f9;letter-spacing:2px;text-shadow:0 0 10px #0f0;margin-bottom:5px}
+.greet .hi{display:block;font-size:11px;color:#cff;margin-bottom:3px}
+.greet .rules{display:block;font-size:10px;color:#6a9;line-height:1.4;margin-top:5px}
+.menuScreen{display:flex;flex-direction:column;gap:4px;flex:1}
+.menuScreen.hidden{display:none}
+.mbtn{background:rgba(13,42,28,.5);border:1px solid #1d5;color:#9fecbf;font-family:inherit;font-size:12.5px;text-align:left;padding:10px 12px;cursor:pointer;letter-spacing:1.2px;border-radius:4px;transition:.1s}
 .mbtn:hover,.mbtn:active{background:#1d5;color:#021}
 .mbtn.danger{color:#ffa0a0;border-color:#a02020}
+.mbtn.danger:hover{background:#a02020;color:#fff}
 .mbtn.horror{color:#f66;border-color:#800;background:rgba(60,0,0,.5)}
 .mbtn.horror:hover{background:#800;color:#fff}
 .mbtn.small{font-size:11px;padding:7px 12px}
@@ -33,7 +35,7 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 .mbtn.role:hover{background:#5060a0;color:#fff}
 .mbtn.role.student{background:rgba(80,30,50,.5);border-color:#a05060;color:#ffc0d0}
 .mbtn.role.student:hover{background:#a05060;color:#fff}
-.mfoot{font-size:10px;color:#2a7;margin-top:12px;letter-spacing:1px;line-height:1.5}
+.mfoot{font-size:9.5px;color:#2a7;margin-top:10px;letter-spacing:1px;line-height:1.4}
 #hud{position:fixed;inset:0;pointer-events:none;z-index:30;display:none}
 #cross{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;opacity:.6}
 #cross::before,#cross::after{content:'';position:absolute;background:#fff}
@@ -93,7 +95,6 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 #screamer.alt{background:#300}
 #screamer.alt #screamerFace{color:#fff;text-shadow:0 0 30px #f00,0 0 60px #f00}
 #heartbeat{position:fixed;inset:0;pointer-events:none;z-index:14;background:radial-gradient(circle at center,transparent 40%,rgba(120,0,0,.4));opacity:0;transition:opacity .3s}
-/* Таймер старта последнего дня */
 #countdown{position:fixed;inset:0;z-index:98;display:none;align-items:center;justify-content:center;flex-direction:column;background:rgba(0,0,0,.92)}
 #countdown.on{display:flex}
 #cdNum{font-size:35vmin;color:#5f9;text-shadow:0 0 40px #0f0,0 0 80px #0f0;font-weight:bold;animation:cdPulse .3s infinite}
@@ -163,8 +164,31 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
   <span class="hi">Вы попали на ночную смену охранником в школу №43.</span>
   <span class="rules">Соблюдайте правила, чтобы выжить. 5 дней. Каждую ночь — что-то новое.</span>
 </div>
-<div id="menuList"></div>
-<div class="mfoot" id="menuFoot">V12.1 New • WASD / Мышь • E — взаимо • R — рация</div>
+
+<div id="menuMain" class="menuScreen">
+  <button class="mbtn" data-action="newGame">▶ НОВАЯ СМЕНА</button>
+  <button class="mbtn small" data-action="settings">⚙ НАСТРОЙКИ</button>
+  <button class="mbtn small" data-action="achievements">🏆 ДОСТИЖЕНИЯ</button>
+  <button class="mbtn small" data-action="about">ℹ ОБ ИГРЕ</button>
+</div>
+
+<div id="menuRole" class="menuScreen hidden">
+  <button class="mbtn role" data-action="roleGuard">🛡 ОХРАННИК — по правилам</button>
+  <button class="mbtn role student" data-action="roleStudent">👨‍🎓 ШКОЛЬНИК 7А — дежурю 5 дней</button>
+  <button class="mbtn small" data-action="backMain">← НАЗАД</button>
+</div>
+
+<div id="menuDiff" class="menuScreen hidden">
+  <button class="mbtn" data-diff="easy">ЛЕГКО</button>
+  <button class="mbtn danger" data-diff="normal">НОРМА</button>
+  <button class="mbtn danger" data-diff="hard">СЛОЖНО</button>
+  <button class="mbtn horror" data-diff="horror">ХОРРОР</button>
+  <button class="mbtn horror" data-diff="extreme">ЭКСТРИМ</button>
+  <button class="mbtn horror" data-diff="nightmare">КОШМАР</button>
+  <button class="mbtn small" data-action="backRole">← НАЗАД</button>
+</div>
+
+<div class="mfoot" id="menuFoot">V12.1.1 Fix • WASD / Мышь • E — взаимо • B — маркер • N — бумеранг</div>
 </div>
 </div><div id="tvlb">ГОРИЗОНТ-43</div></div></div>
 
@@ -200,7 +224,7 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
   <div id="cdText">ПОСЛЕДНИЙ ДЕНЬ</div>
   <div id="cdSub">ПРИГОТОВЬТЕСЬ</div>
 </div>
-<div id="fps"><b id="fpsVal">--</b> FPS | <span id="fpsInfo">dc:-- tri:--</span></div>
+<div id="fps"><b id="fpsVal">--</b> FPS</div>
 
 <div id="touchUI">
 <div id="joyBase"><div id="joyKnob"></div></div>
@@ -216,7 +240,7 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 </div>
 
 <div class="panel" id="pcPanel"><div class="pbox">
-<h2>ПОСТ ОХРАНЫ • V12.1</h2>
+<h2>ПОСТ ОХРАНЫ • V12.1.1</h2>
 <div id="pcInfo"></div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px">
 <button data-cmd="code1" class="danger">КОД 1</button>
@@ -253,7 +277,7 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 </div></div>
 
 <div class="panel" id="rulesPanel"><div class="pbox">
-<h2>ПРАВИЛА • V12.1 New</h2>
+<h2>ПРАВИЛА • V12.1.1</h2>
 <div class="rules" id="rulesText"></div>
 <button id="rulesOk" class="primary">ПОНЯЛ</button>
 </div></div>
@@ -268,33 +292,4 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <div class="sr"><span>Общая громкость</span><input id="s_vol" type="range" min="0" max="1" step="0.05"><span class="sv" id="v_vol"></span></div>
 </div>
 <div class="sg"><h3>ГРАФИКА</h3>
-<div class="sr"><span>Качество</span><input id="s_qual" type="range" min="0" max="3" step="1"><span class="sv" id="v_qual"></span></div>
-<div class="sr"><span>Туман</span><input id="s_dist" type="range" min="15" max="120" step="1"><span class="sv" id="v_dist"></span></div>
-</div>
-<div style="margin-top:14px">
-<button id="setBack" class="primary">НАЗАД</button>
-<button id="setReset">СБРОС</button>
-</div>
-</div></div>
-
-<div class="panel" id="endPanel"><div class="pbox">
-<h1 id="endT"></h1><p id="endX"></p><div id="endS"></div>
-<button id="endR" class="primary" style="width:100%">НОВАЯ СМЕНА</button>
-</div></div>
-
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script>
-<script type="module">
-import * as THREE from 'three';
-
-const isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||(navigator.maxTouchPoints>0);
-
-const DEF={sens:1.5,bob:1,vol:0.6,qual:isMobile?0:1,dist:isMobile?35:60};
-let cfg=Object.assign({},DEF);
-try{Object.assign(cfg,JSON.parse(localStorage.getItem('sh43v121')||'{}'));}catch(e){}
-
-const PR_OPTS=[0.5,0.75,1.0,1.5];
-
-let device=isMobile?'touch':'kbm';
-let difficulty='normal';
-const DIFF={
-  easy:{anomMul:0.5,hungRate:0.25,stamRate:
+<div class="sr"><span>Качество</span><input id="s_qual" type="range" min="0"
