@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
-<title>ШКОЛА №43 — v9 ДЕНЬ/НОЧЬ</title>
+<title>ШКОЛА №43 — v10</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:Consolas,monospace;color:#cfe;position:fixed;touch-action:none}
@@ -36,9 +36,6 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 #tbox .phase{display:block;font-size:11px;letter-spacing:2px;margin-top:2px}
 #tbox .phase.night{color:#7a8acf}
 #tbox .phase.day{color:#ffd76a}
-#tbox.warn .time{color:#f88}
-#tbox .bell{color:#fa0;animation:pulse .5s infinite}
-@keyframes pulse{50%{opacity:.3}}
 #obj{position:absolute;left:10px;top:calc(10px + env(safe-area-inset-top));font-size:10.5px;line-height:1.4;color:#d9ffe5;padding:5px 9px;background:rgba(0,0,0,.55);border-left:2px solid #4dff9b;max-width:55vw;border-radius:2px}
 #obj:empty{display:none}
 #bars{position:absolute;left:10px;bottom:calc(10px + env(safe-area-inset-bottom));width:130px}
@@ -49,6 +46,10 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 .br i.low{background:#f55}
 .br i.mid{background:#fa0}
 .br i.sanity{background:#a080ff}
+.br i.health{background:#ff5a5a}
+#inventory{position:absolute;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));display:flex;gap:4px;flex-direction:column}
+.inv-item{font-size:10px;color:#9ad0ff;background:rgba(0,0,0,.6);border:1px solid #1d5;border-radius:3px;padding:3px 7px;letter-spacing:1px}
+.inv-item.active{color:#0f0;border-color:#0f0;background:rgba(0,40,20,.6)}
 #prompt{position:absolute;left:50%;bottom:22%;transform:translate(-50%,4px);font-size:11px;color:#fff;padding:6px 11px;background:rgba(0,0,0,.85);border:1px solid #4dff9b;border-radius:4px;opacity:0;transition:.15s;white-space:nowrap;max-width:90vw}
 #prompt.on{opacity:1;transform:translate(-50%,0)}
 #prompt b{color:#4dff9b}
@@ -57,9 +58,6 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 @keyframes tin{from{opacity:0;transform:translateX(20px)}}
 @keyframes tout{to{opacity:0;transform:translateX(20px)}}
 #dmg{position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(150,0,0,.9));opacity:0;transition:.3s;pointer-events:none;z-index:15}
-#flick{position:fixed;inset:0;background:#ffe0a0;opacity:0;pointer-events:none;z-index:29}
-#flick.on{animation:fl .7s}
-@keyframes fl{0%{opacity:.5}100%{opacity:0}}
 #blueflash{position:fixed;inset:0;background:#2040ff;opacity:0;pointer-events:none;z-index:28;transition:opacity .2s}
 #blueflash.on{opacity:.4}
 #dayflash{position:fixed;inset:0;background:#ffe8a0;opacity:0;pointer-events:none;z-index:28;transition:opacity .4s}
@@ -72,24 +70,18 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 @keyframes sp{0%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.08)}}
 #heartbeat{position:fixed;inset:0;pointer-events:none;z-index:14;background:radial-gradient(circle at center,transparent 40%,rgba(120,0,0,.4));opacity:0;transition:opacity .3s}
 .panel{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:60;background:rgba(0,0,0,.85);padding:10px}
-.pbox{background:linear-gradient(160deg,rgba(10,22,16,.98),rgba(6,14,10,.98));border:2px solid #1d5;padding:16px;max-width:440px;width:100%;max-height:88vh;overflow-y:auto;border-radius:8px;font-size:12px;line-height:1.55;color:#bfe}
+.pbox{background:linear-gradient(160deg,rgba(10,22,16,.98),rgba(6,14,10,.98));border:2px solid #1d5;padding:16px;max-width:480px;width:100%;max-height:88vh;overflow-y:auto;border-radius:8px;font-size:12px;line-height:1.55;color:#bfe}
 .pbox h2{color:#5f9;font-size:14px;margin-bottom:10px;letter-spacing:2px}
 .pbox button{background:#0d2a1c;color:#9fecbf;border:1px solid #1d5;padding:9px 12px;margin:4px 4px 0 0;font-family:inherit;font-size:11.5px;letter-spacing:1px;border-radius:4px;cursor:pointer}
 .pbox button:hover{background:#1d5;color:#021}
 .pbox button.primary{background:#1a5c3a;color:#dfffe9;border-color:#3fd18a}
 .pbox button.danger{background:#4a1414;color:#ffbaba;border-color:#a02020}
-#pcBtns{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px}
-#pcBtns button{margin:0;width:100%}
-#pcBtns .full{grid-column:span 2}
-#pcInfo{color:#9fdcb8;margin-bottom:10px;padding:8px;background:rgba(0,40,20,.4);border-left:3px solid #4dff9b;font-size:11px;line-height:1.6}
-#pcInfo b{color:#4dff9b}
-#pcLog{margin-top:10px;color:#6c9;font-size:10.5px;min-height:18px;padding:7px 9px;background:rgba(0,0,0,.5);border-left:2px solid #1d5}
-#dlgN{color:#ffd76a;font-size:12px;letter-spacing:1.5px;margin-bottom:7px;padding-bottom:6px;border-bottom:1px solid rgba(255,215,106,.3)}
-#dlgT{font-size:12px;line-height:1.55;color:#e0f5e8;min-height:36px;margin-bottom:11px}
 .sr{display:flex;align-items:center;gap:8px;margin:7px 0;font-size:11px}
 .sr>span:first-child{width:145px;color:#8dc8a8;font-size:10.5px}
 input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 .sv{width:44px;text-align:right;color:#4dff9b;font-size:10.5px}
+.sg{background:rgba(0,60,30,.3);border-left:3px solid #1d5;padding:8px 10px;margin:10px 0;border-radius:3px}
+.sg h3{color:#9ad0ff;font-size:11px;letter-spacing:1.5px;margin-bottom:6px}
 #endT{font-size:19px;letter-spacing:3px;text-align:center;margin-bottom:10px}
 #endX{font-size:11.5px;line-height:1.55;text-align:center;color:#cfe;margin-bottom:12px}
 #endS{color:#6c9;font-size:10.5px;margin-bottom:14px;padding:9px;background:rgba(0,40,20,.4);border-radius:4px;text-align:center;line-height:1.7}
@@ -113,12 +105,15 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 #joyBase{position:absolute;left:18px;bottom:calc(18px + env(safe-area-inset-bottom));width:118px;height:118px;border-radius:50%;background:rgba(0,0,0,.35);border:2px solid rgba(120,255,180,.4);pointer-events:auto;touch-action:none}
 #joyKnob{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(120,255,180,.95),rgba(40,120,80,.85));pointer-events:none}
 #lookZone{position:absolute;right:0;top:0;width:58%;height:100%;pointer-events:auto;touch-action:none}
-#btnAct{position:absolute;right:18px;bottom:calc(130px + env(safe-area-inset-bottom));width:76px;height:76px;border-radius:50%;background:rgba(80,255,140,.35);border:3px solid #4dff9b;color:#fff;font-size:11px;font-weight:bold;pointer-events:auto;display:flex;align-items:center;justify-content:center}
-#btnVape{position:absolute;right:108px;bottom:calc(190px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:rgba(160,200,255,.3);border:2px solid rgba(160,200,255,.6);color:#e0eeff;font-size:9.5px;pointer-events:auto;display:flex;align-items:center;justify-content:center}
-#btnRadio{position:absolute;right:108px;bottom:calc(255px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:rgba(80,140,255,.3);border:2px solid rgba(80,140,255,.6);color:#d0e0ff;font-size:9.5px;pointer-events:auto;display:flex;align-items:center;justify-content:center}
-#btnTorch{position:absolute;left:145px;bottom:calc(18px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:rgba(255,220,140,.3);border:2px solid rgba(255,220,140,.6);color:#fff4c8;font-size:9.5px;pointer-events:auto;display:flex;align-items:center;justify-content:center}
-#btnSprint{position:absolute;left:145px;bottom:calc(85px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;background:rgba(255,100,100,.3);border:2px solid rgba(255,100,100,.6);color:#ffd0d0;font-size:9.5px;pointer-events:auto;display:flex;align-items:center;justify-content:center}
-#btnSprint:active,#btnSprint.held{background:rgba(255,100,100,.85);color:#fff;transform:scale(.9)}
+.tbtn{position:absolute;border-radius:50%;color:#fff;font-family:inherit;font-size:10px;font-weight:bold;pointer-events:auto;display:flex;align-items:center;justify-content:center;border:2px solid}
+#btnAct{right:18px;bottom:calc(130px + env(safe-area-inset-bottom));width:76px;height:76px;background:rgba(80,255,140,.35);border-color:#4dff9b;font-size:11px}
+#btnAct:active{background:#4dff9b;color:#021;transform:scale(.9)}
+#btnVape{right:108px;bottom:calc(190px + env(safe-area-inset-bottom));width:56px;height:56px;background:rgba(160,200,255,.3);border-color:rgba(160,200,255,.6);color:#e0eeff;font-size:9.5px}
+#btnRadio{right:108px;bottom:calc(255px + env(safe-area-inset-bottom));width:56px;height:56px;background:rgba(80,140,255,.3);border-color:rgba(80,140,255,.6);color:#d0e0ff;font-size:9.5px}
+#btnTorch{left:145px;bottom:calc(18px + env(safe-area-inset-bottom));width:56px;height:56px;background:rgba(255,220,140,.3);border-color:rgba(255,220,140,.6);color:#fff4c8;font-size:9.5px}
+#btnSprint{left:145px;bottom:calc(85px + env(safe-area-inset-bottom));width:56px;height:56px;background:rgba(255,100,100,.3);border-color:rgba(255,100,100,.6);color:#ffd0d0;font-size:9.5px}
+#btnSprint.held{background:rgba(255,100,100,.85);color:#fff;transform:scale(.9)}
+#btnEat{right:18px;bottom:calc(60px + env(safe-area-inset-bottom));width:56px;height:56px;background:rgba(255,150,80,.3);border-color:rgba(255,150,80,.6);color:#ffe0c0;font-size:9.5px}
 </style>
 </head>
 <body>
@@ -127,7 +122,7 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <div id="crt"></div>
 <div id="min">
 <h1>ШКОЛА №43<br>НОЧНАЯ СМЕНА</h1>
-<div class="sub">v9 • ЦИКЛ ДЕНЬ/НОЧЬ</div>
+<div class="sub">v10 • 10 КАРТ</div>
 <div id="menuList"></div>
 </div>
 </div><div id="tvlb">ГОРИЗОНТ-43</div></div></div>
@@ -138,19 +133,19 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <span class="day" id="dayBox">ДЕНЬ 1/5</span>
 <span class="time" id="clock">--:--</span>
 <span class="phase" id="phaseBox">НОЧЬ</span>
-<span id="bellIcon" class="bell hidden"> 🔔</span>
 </div>
 <div id="obj"></div>
 <div id="bars">
+<div class="br" id="healthWrap"><label>ЗДОРОВЬЕ</label><div><i id="health" class="health"></i></div></div>
 <div class="br"><label>СИЛЫ</label><div><i id="stam"></i></div></div>
 <div class="br"><label>СЫТОСТЬ</label><div><i id="hung"></i></div></div>
 <div class="br" id="sanityWrap" style="display:none"><label>РАССУДОК</label><div><i id="sanity" class="sanity"></i></div></div>
 </div>
+<div id="inventory"></div>
 <div id="prompt"></div>
 <div id="toasts"></div>
 </div>
 <div id="dmg"></div>
-<div id="flick"></div>
 <div id="blueflash"></div>
 <div id="dayflash"></div>
 <div id="heartbeat"></div>
@@ -160,11 +155,12 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <div id="touchUI">
 <div id="joyBase"><div id="joyKnob"></div></div>
 <div id="lookZone"></div>
-<button id="btnAct">ВЗАИМ</button>
-<button id="btnVape">ВЕЙП</button>
-<button id="btnRadio">📻 РАЦИЯ</button>
-<button id="btnTorch">🔦 СВЕТ</button>
-<button id="btnSprint">БЕГ</button>
+<button class="tbtn" id="btnAct">ВЗАИМ</button>
+<button class="tbtn" id="btnVape">ВЕЙП</button>
+<button class="tbtn" id="btnRadio">📻</button>
+<button class="tbtn" id="btnTorch">🔦</button>
+<button class="tbtn" id="btnSprint">БЕГ</button>
+<button class="tbtn" id="btnEat">🍞</button>
 </div>
 
 <div class="panel" id="pcPanel"><div class="pbox">
@@ -175,17 +171,17 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <button data-cmd="code3" class="danger">КОД 3</button>
 <button data-cmd="bell">ЗВОНОК</button>
 <button data-cmd="sched">СМЕНА</button>
-<button data-cmd="close" class="primary full">ЗАКРЫТЬ [E]</button>
+<button data-cmd="close" class="primary">ЗАКРЫТЬ [E]</button>
 </div>
 <div id="pcLog">Терминал готов.</div>
 </div></div>
 
 <div class="panel" id="radioPanel"><div class="pbox">
-<h2>РАЦИЯ • КАНАЛ 3</h2>
-<button class="radio-btn" data-radio="1"><b>КОД 1</b><span>Изгнать всех сущностей</span></button>
+<h2>РАЦИЯ</h2>
+<button class="radio-btn" data-radio="1"><b>КОД 1</b><span>Изгнать сущностей</span></button>
 <button class="radio-btn" data-radio="2"><b>КОД 2</b><span>Обход завершён</span></button>
 <button class="radio-btn" data-radio="3"><b>КОД 3</b><span>КОНЕЦ СМЕНЫ</span></button>
-<button class="radio-btn" data-radio="4"><b>КОД 4</b><span>Восстановить силы</span></button>
+<button class="radio-btn" data-radio="4"><b>КОД 4</b><span>Восстановить</span></button>
 <button class="radio-btn" data-radio="5"><b>КОД 5</b><span>Всё чисто</span></button>
 <button data-cmd="close" class="primary" style="width:100%;margin-top:8px">ЗАКРЫТЬ [R]</button>
 <div id="radioLog">Рация готова.</div>
@@ -211,17 +207,40 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 
 <div class="panel" id="setPanel"><div class="pbox">
 <h2>НАСТРОЙКИ</h2>
+
+<div class="sg"><h3>УПРАВЛЕНИЕ</h3>
 <div class="sr"><span>Чувствительность</span><input id="s_sens" type="range" min="0.3" max="3" step="0.05"><span class="sv" id="v_sens"></span></div>
+<div class="sr"><span>Инверсия мыши</span><input id="s_inv" type="range" min="0" max="1" step="1"><span class="sv" id="v_inv"></span></div>
+</div>
+
+<div class="sg"><h3>ГРАФИКА</h3>
+<div class="sr"><span>Качество</span><input id="s_qual" type="range" min="0" max="3" step="1"><span class="sv" id="v_qual"></span></div>
 <div class="sr"><span>Угол обзора</span><input id="s_fov" type="range" min="60" max="110" step="1"><span class="sv" id="v_fov"></span></div>
 <div class="sr"><span>Яркость</span><input id="s_bright" type="range" min="0.6" max="2.5" step="0.05"><span class="sv" id="v_bright"></span></div>
-<div class="sr"><span>Туман</span><input id="s_dist" type="range" min="15" max="100" step="1"><span class="sv" id="v_dist"></span></div>
-<div class="sr"><span>Размер HUD</span><input id="s_hud" type="range" min="0.8" max="1.4" step="0.05"><span class="sv" id="v_hud"></span></div>
-<div class="sr"><span>Качество (пиксели)</span><input id="s_qual" type="range" min="0" max="3" step="1"><span class="sv" id="v_qual"></span></div>
+<div class="sr"><span>Туман</span><input id="s_dist" type="range" min="15" max="120" step="1"><span class="sv" id="v_dist"></span></div>
+<div class="sr"><span>Сглаживание</span><input id="s_aa" type="range" min="0" max="1" step="1"><span class="sv" id="v_aa"></span></div>
+<div class="sr"><span>Тени</span><input id="s_shadow" type="range" min="0" max="1" step="1"><span class="sv" id="v_shadow"></span></div>
 <div class="sr"><span>Лимит FPS</span><input id="s_fps" type="range" min="0" max="4" step="1"><span class="sv" id="v_fps"></span></div>
 <div class="sr"><span>Дальние NPC</span><input id="s_lod" type="range" min="10" max="60" step="1"><span class="sv" id="v_lod"></span></div>
 <div class="sr"><span>NPC (кол-во)</span><input id="s_npc" type="range" min="3" max="40" step="1"><span class="sv" id="v_npc"></span></div>
 <div class="sr"><span>Показ FPS</span><input id="s_showfps" type="range" min="0" max="1" step="1"><span class="sv" id="v_showfps"></span></div>
-<div style="margin-top:14px"><button id="setBack" class="primary">НАЗАД</button><button id="setReset">СБРОС</button></div>
+</div>
+
+<div class="sg"><h3>HUD ДЛЯ ТЕЛЕФОНА</h3>
+<div class="sr"><span>Показ часов</span><input id="s_hudClock" type="range" min="0" max="1" step="1"><span class="sv" id="v_hudClock"></span></div>
+<div class="sr"><span>Показ баров</span><input id="s_hudBars" type="range" min="0" max="1" step="1"><span class="sv" id="v_hudBars"></span></div>
+<div class="sr"><span>Показ задачи</span><input id="s_hudObj" type="range" min="0" max="1" step="1"><span class="sv" id="v_hudObj"></span></div>
+<div class="sr"><span>Показ прицела</span><input id="s_hudCross" type="range" min="0" max="1" step="1"><span class="sv" id="v_hudCross"></span></div>
+<div class="sr"><span>Показ тостов</span><input id="s_hudToasts" type="range" min="0" max="1" step="1"><span class="sv" id="v_hudToasts"></span></div>
+<div class="sr"><span>Показ инвентаря</span><input id="s_hudInv" type="range" min="0" max="1" step="1"><span class="sv" id="v_hudInv"></span></div>
+<div class="sr"><span>Размер HUD</span><input id="s_hud" type="range" min="0.7" max="1.5" step="0.05"><span class="sv" id="v_hud"></span></div>
+<div class="sr"><span>Прозрачность</span><input id="s_hudAlpha" type="range" min="0.3" max="1" step="0.05"><span class="sv" id="v_hudAlpha"></span></div>
+</div>
+
+<div style="margin-top:14px">
+<button id="setBack" class="primary">НАЗАД</button>
+<button id="setReset">СБРОС</button>
+</div>
 </div></div>
 
 <div class="panel" id="endPanel"><div class="pbox">
@@ -235,9 +254,15 @@ import * as THREE from 'three';
 
 const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (navigator.maxTouchPoints>0);
 
-const DEF={sens:1.5,fov:78,bright:1.5,dist:isMobile?30:55,hud:1.0,qual:0,fps:0,lod:isMobile?20:40,npcCount:isMobile?20:40,showFps:1};
+const DEF={
+  sens:1.5, inv:0,
+  qual:isMobile?0:1, fov:78, bright:1.5, dist:isMobile?35:60, aa:0, shadow:0,
+  fps:0, lod:isMobile?25:40, npcCount:isMobile?25:40, showFps:1,
+  hud:1.0, hudAlpha:0.9,
+  hudClock:1, hudBars:1, hudObj:1, hudCross:1, hudToasts:1, hudInv:1
+};
 let cfg=Object.assign({},DEF);
-try{Object.assign(cfg,JSON.parse(localStorage.getItem('sh43v9')||'{}'));}catch(e){}
+try{Object.assign(cfg,JSON.parse(localStorage.getItem('sh43v10')||'{}'));}catch(e){}
 
 const PR_OPTS=[0.5,0.75,1.0,1.5];
 const FPS_OPTS=[0,60,30,45,120];
@@ -252,44 +277,54 @@ const DIFF={
 };
 const isHorror=()=>difficulty==='horror';
 
-// ═══ ОДИН ЦИКЛ = 5 МИНУТ = 21 ИГРОВОЙ ЧАС (20:00 → 17:00) ═══
 const DAY_SECONDS = 300;
 const CYCLE_HOURS = 21;
 const MAX_DAY = 5;
+const MAP_COUNT = 10;
 
-const G={running:false,paused:false,dead:false,day:1,dayTime:0,seed:1,
-stam:100,hunger:100,sanity:100,floor:0,
-bell:false,bellT:0,code1:false,code1T:0,
-deaths:0,ach:new Set(),smoke:[],tpCD:0,
-hasKnife:false,hasBun:false,vapeCD:0,quizDone:false,
-fiz:{active:false,t:0,jumps:0,done:false},
-larionovActive:false,larionovT:0,
-rulesShown:false,flashlightOn:true,radioOpen:false,screamerCD:0,
-fps:60,fpsAcc:0,fpsFrames:0,
-code1Count:0,code3Count:0,
-daySpawned:false,
-lastPhase:null};
+const G={
+  running:false,paused:false,dead:false,day:1,dayTime:0,seed:1,mapId:0,
+  health:100,stam:100,hunger:100,sanity:100,floor:0,
+  bell:false,bellT:0,code1:false,code1T:0,
+  deaths:0,ach:new Set(),smoke:[],tpCD:0,
+  hasKnife:false,hasBun:false,vapeCD:0,quizDone:false,
+  fiz:{active:false,t:0,jumps:0,done:false},
+  larionovActive:false,larionovT:0,
+  rulesShown:false,flashlightOn:true,radioOpen:false,screamerCD:0,
+  fps:60,fpsAcc:0,fpsFrames:0,
+  code1Count:0,code3Count:0,
+  daySpawned:false,
+  items:[],   // подбираемые предметы
+  inv:{food:0,medkit:0,ammo:0}
+};
 
 let renderer=null,scene=null,camera=null,torch=null,world=null,canvas=null;
-let ambLight=null, hemiLight=null;
+let ambLight=null,hemiLight=null,sunLight=null;
 const BOX_GEO = new THREE.BoxGeometry(1,1,1);
 
 function initThree(){
-  renderer=new THREE.WebGLRenderer({antialias:false,powerPreference:'high-performance',stencil:false,depth:true,alpha:false});
+  renderer=new THREE.WebGLRenderer({
+    antialias:cfg.aa>0,
+    powerPreference:'high-performance',
+    stencil:false, depth:true, alpha:false
+  });
   const pr = isMobile ? 0.75 : PR_OPTS[cfg.qual];
   renderer.setPixelRatio(pr);
   renderer.setSize(innerWidth,innerHeight);
   renderer.outputColorSpace=THREE.SRGBColorSpace;
   renderer.sortObjects=false;
+  if(cfg.shadow) renderer.shadowMap.enabled=true;
   document.body.appendChild(renderer.domElement);
   scene=new THREE.Scene();
   scene.background=new THREE.Color(0x1a2230);
   scene.fog=new THREE.Fog(0x1a2230,5,cfg.dist);
-  camera=new THREE.PerspectiveCamera(cfg.fov,innerWidth/innerHeight,0.15,isMobile?80:150);
+  camera=new THREE.PerspectiveCamera(cfg.fov,innerWidth/innerHeight,0.15,isMobile?120:200);
   camera.rotation.order='YXZ';
   scene.add(camera);
   ambLight=new THREE.AmbientLight(0xffffff,0.85);scene.add(ambLight);
   hemiLight=new THREE.HemisphereLight(0xd0e0f0,0x505860,0.55);scene.add(hemiLight);
+  sunLight=new THREE.DirectionalLight(0xfff4d0,0.5);
+  sunLight.position.set(-30,60,30);scene.add(sunLight);
   torch=new THREE.PointLight(0xfff4dc,1.8,20,1.5);
   torch.position.set(0,0,0);camera.add(torch);
   world=new THREE.Group();world.matrixAutoUpdate=false;scene.add(world);
@@ -312,6 +347,7 @@ function initMaterials(){
   M.ceil=new THREE.MeshLambertMaterial({color:0xd8d8cc});
   M.wall=new THREE.MeshLambertMaterial({color:0xc0c8b8});
   M.wall2=new THREE.MeshLambertMaterial({color:0xa8b4c0});
+  M.wall3=new THREE.MeshLambertMaterial({color:0xd0c0a0});
   M.wood=new THREE.MeshLambertMaterial({color:0xa07850});
   M.desk=new THREE.MeshLambertMaterial({color:0xc8b080});
   M.metal=new THREE.MeshLambertMaterial({color:0x808890});
@@ -327,13 +363,35 @@ function initMaterials(){
   M.yellow=new THREE.MeshLambertMaterial({color:0xc0a040});
   M.brown=new THREE.MeshLambertMaterial({color:0x6a4020});
   M.purple=new THREE.MeshLambertMaterial({color:0x6a4080});
+  M.glass=new THREE.MeshLambertMaterial({color:0x9fd4ff,transparent:true,opacity:0.35});
+  M.food=new THREE.MeshLambertMaterial({color:0xffa050});
+  M.medkit=new THREE.MeshLambertMaterial({color:0xff3030,emissive:0x300000});
+  M.knife=new THREE.MeshLambertMaterial({color:0xc0d0e0});
 }
 
-const FH=4.0, WH=3.5;
-const X_MIN=-50, X_MAX=50, Z_CORR=3, Z_ROOM=20, RW=12.5;
-
-let colliders=[],rooms={},npcs=[],pcPos=new THREE.Vector3(),layout=null;
-
+// ═══ 10 КАРТ ═══
+const MAPS=[
+  {name:'СТАНДАРТ', n:['class1a','class1b','wc1','cafe','cafe','gym','gym2','class5a','class6a','wc2'],
+                s:['post','director','doctor','english','trud','storage','teachers','library','class7a','class4b']},
+  {name:'ВОСТОЧНАЯ', n:['wc1','class1a','cafe','cafe','gym','gym2','class5a','class6a','wc2','class7a'],
+                 s:['post','doctor','english','director','trud','storage','library','teachers','class4b','class1b']},
+  {name:'МУЗЫКАЛЬНАЯ', n:['music','class1a','class1b','wc1','cafe','cafe','class5a','gym','gym2','wc2'],
+                   s:['post','english','director','doctor','trud','storage','library','teachers','class7a','class6a']},
+  {name:'НАУЧНАЯ', n:['class1a','wc1','physics','chemistry','class5a','class6a','wc2','class7a','math','biology'],
+               s:['post','director','doctor','english','cafe','cafe','trud','library','teachers','storage']},
+  {name:'СПОРТИВНАЯ', n:['class1a','class1b','wc1','gym','gym2','gym','gym2','class5a','wc2','class6a'],
+                  s:['post','director','doctor','english','cafe','cafe','trud','teachers','class7a','storage']},
+  {name:'БИБЛИОТЕЧНАЯ', n:['class1a','library','library','wc1','class1b','class5a','class6a','wc2','class7a','math'],
+                    s:['post','director','english','doctor','cafe','cafe','trud','teachers','storage','class4b']},
+  {name:'КОМПЬЮТЕРНАЯ', n:['computer','computer','class1a','class1b','wc1','class5a','class6a','wc2','class7a','math'],
+                    s:['post','director','doctor','english','cafe','cafe','trud','library','teachers','storage']},
+  {name:'ХУДОЖЕСТВЕННАЯ', n:['class1a','class1b','music','wc1','class5a','class6a','wc2','class7a','history','geography'],
+                     s:['post','director','doctor','english','cafe','cafe','trud','library','teachers','storage']},
+  {name:'ИСТОРИЧЕСКАЯ', n:['history','history','class1a','wc1','class1b','geography','class5a','wc2','class6a','class7a'],
+                    s:['post','director','doctor','english','cafe','cafe','trud','library','teachers','storage']},
+  {name:'СЛОЖНАЯ', n:['wc1','wc2','wc3','class1a','class1b','class5a','class6a','class7a','math','physics'],
+               s:['post','director','doctor','english','cafe','cafe','trud','library','chemistry','storage']}
+];
 const ROOM_NAMES={
   stairs:'ЛЕСТНИЦА',post:'ПОСТ',director:'ДИРЕКТОР',doctor:'МЕДКАБ',
   english:'АНГЛИЙСКИЙ',cafe:'СТОЛОВАЯ',gym:'СПОРТЗАЛ',gym2:'РАЗДЕВАЛКА',
@@ -346,13 +404,15 @@ const ROOM_NAMES={
   music:'МУЗЫКА',history:'ИСТОРИЯ',geography:'ГЕОГРАФИЯ'
 };
 
-const FIXED_F1_N=['stairs','class1a','class1b','wc1','wc2','gym','gym2','stairs'];
-const FIXED_F1_S=['post','director','doctor','english','cafe','cafe','teachers','trud'];
-const FIXED_F2_N=['stairs','class5a','class6a','wc3','wc4','class7a','physics','stairs'];
-const FIXED_F2_S=['library','chemistry','math','biology','computer','music','history','geography'];
+const FH=4.0, WH=3.5;
+const X_MIN=-62, X_MAX=62, Z_CORR=3.5, Z_ROOM=22, RW=12.5;
 
-function generateLayout(){return{0:{n:FIXED_F1_N.slice(),s:FIXED_F1_S.slice()},1:{n:FIXED_F2_N.slice(),s:FIXED_F2_S.slice()}};}
+let colliders=[],rooms={},npcs=[],pcPos=new THREE.Vector3(),layout=null;
 
+function generateLayout(mapId){
+  const map=MAPS[mapId % MAPS.length];
+  return {n:map.n.slice(), s:map.s.slice()};
+}
 function roomBounds(i,side){
   const x0=X_MIN+RW*i,x1=x0+RW;
   if(side==='n') return {x0,x1,z0:Z_CORR,z1:Z_ROOM};
@@ -362,7 +422,9 @@ function addBox(x,y,z,w,h,d,mat,col){
   if(col===undefined) col=true;
   const o=new THREE.Mesh(BOX_GEO,mat);
   o.position.set(x,y,z);o.scale.set(w,h,d);
-  o.matrixAutoUpdate=false;o.updateMatrix();world.add(o);
+  o.matrixAutoUpdate=false;o.updateMatrix();
+  if(cfg.shadow){o.castShadow=true;o.receiveShadow=true;}
+  world.add(o);
   if(col)colliders.push({minX:x-w/2,maxX:x+w/2,minY:y-h/2,maxY:y+h/2,minZ:z-d/2,maxZ:z+d/2});
   return o;
 }
@@ -372,7 +434,6 @@ function wallAlongX(x0,x1,z,y0,gaps,mat){
   for(const [a,b] of ops){if(a>cur)addBox((cur+a)/2,y0+WH/2,z,a-cur,WH,0.35,mat);cur=Math.max(cur,b);}
   if(cur<x1)addBox((cur+x1)/2,y0+WH/2,z,x1-cur,WH,0.35,mat);
 }
-
 const signTexCache={};
 function makeSignTexture(text){
   if(signTexCache[text]) return signTexCache[text];
@@ -395,21 +456,6 @@ function addDoorSign(cx,y,z,text,facing){
   mesh.rotation.y=facing==='n'?Math.PI:0;
   mesh.matrixAutoUpdate=false;mesh.updateMatrix();world.add(mesh);
 }
-function addWallPoster(cx,y,z,w,h,color,text,facing){
-  const c=document.createElement('canvas');c.width=128;c.height=96;
-  const g=c.getContext('2d');
-  g.fillStyle='#'+color.toString(16).padStart(6,'0');
-  g.fillRect(0,0,128,96);
-  g.strokeStyle='rgba(255,255,255,.5)';g.lineWidth=2;g.strokeRect(2,2,124,92);
-  if(text){g.fillStyle='#fff';g.font='bold 14px Consolas';g.textAlign='center';
-    const words=text.split(' ');let yy=24;for(const w2 of words){g.fillText(w2,64,yy);yy+=16;}}
-  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;
-  const mat=new THREE.MeshBasicMaterial({map:t,fog:false});
-  const mesh=new THREE.Mesh(new THREE.PlaneGeometry(w,h),mat);
-  mesh.position.set(cx,y,z);
-  mesh.rotation.y=facing==='n'?Math.PI:0;
-  mesh.matrixAutoUpdate=false;mesh.updateMatrix();world.add(mesh);
-}
 function bigLabelSprite(text, color){
   const c=document.createElement('canvas');
   c.width=512; c.height=96;
@@ -426,68 +472,99 @@ function bigLabelSprite(text, color){
   g.fillText(text,256,50);
   const t=new THREE.CanvasTexture(c);
   t.colorSpace=THREE.SRGBColorSpace;
-  const sp=new THREE.Sprite(new THREE.SpriteMaterial({
-    map:t, depthTest:false, transparent:true
-  }));
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false,transparent:true}));
   sp.scale.set(4.5,0.85,1);
   return sp;
+}
+
+// ═══ ОКНА ═══
+function addWindows(z, y0){
+  // На внешней стене (z=±Z_ROOM) размещаем окна каждые 6м
+  for(let x=X_MIN+3; x<X_MAX-3; x+=6){
+    // Рама
+    const frameMat=M.metal;
+    // Верх и низ рамы
+    addBox(x, y0+2.5, z, 2.6, 0.15, 0.15, frameMat, false);
+    addBox(x, y0+0.9, z, 2.6, 0.15, 0.15, frameMat, false);
+    // Боковые
+    addBox(x-1.3, y0+1.7, z, 0.1, 1.6, 0.15, frameMat, false);
+    addBox(x+1.3, y0+1.7, z, 0.1, 1.6, 0.15, frameMat, false);
+    // Стекло
+    const glass=new THREE.Mesh(new THREE.PlaneGeometry(2.5,1.5),M.glass);
+    glass.position.set(x, y0+1.7, z);
+    glass.matrixAutoUpdate=false;glass.updateMatrix();
+    world.add(glass);
+    // Вертикальная планка посередине
+    addBox(x, y0+1.7, z, 0.08, 1.6, 0.12, frameMat, false);
+  }
 }
 
 function buildSchool(){
   if(!world) return;
   while(world.children.length) world.remove(world.children[0]);
   colliders=[];rooms={};npcs=[];G.smoke=[];
+  G.items=[];
   for(const k in signTexCache) delete signTexCache[k];
-  layout=generateLayout();
+  layout=generateLayout(G.mapId);
+  const L=layout;
+  const y0=0;
+  const N_ROOMS=10;
 
   addBox(0,-0.15,0,X_MAX-X_MIN+2,0.3,Z_ROOM*2+2,M.floor,false);
   addBox(0,FH-0.15,0,X_MAX-X_MIN+2,0.3,Z_ROOM*2+2,M.ceil,false);
-  addBox(0,2*FH-0.15,0,X_MAX-X_MIN+2,0.3,Z_ROOM*2+2,M.ceil,false);
 
-  for(let f=0;f<2;f++){
-    const y0=f*FH;const L=layout[f];
-    addBox(0,y0+WH/2,Z_ROOM+0.2,X_MAX-X_MIN+2,WH,0.4,M.wall);
-    addBox(0,y0+WH/2,-Z_ROOM-0.2,X_MAX-X_MIN+2,WH,0.4,M.wall);
-    addBox(X_MIN-0.2,y0+WH/2,0,0.4,WH,Z_ROOM*2+2,M.wall);
-    addBox(X_MAX+0.2,y0+WH/2,0,0.4,WH,Z_ROOM*2+2,M.wall);
+  // Внешние стены
+  addBox(0,y0+WH/2,Z_ROOM+0.2,X_MAX-X_MIN+2,WH,0.4,M.wall);
+  addBox(0,y0+WH/2,-Z_ROOM-0.2,X_MAX-X_MIN+2,WH,0.4,M.wall);
+  addBox(X_MIN-0.2,y0+WH/2,0,0.4,WH,Z_ROOM*2+2,M.wall);
+  addBox(X_MAX+0.2,y0+WH/2,0,0.4,WH,Z_ROOM*2+2,M.wall);
 
-    const gN=[],gS=[];
-    for(let i=0;i<8;i++){
-      const bn=roomBounds(i,'n'),bs=roomBounds(i,'s');
-      gN.push([(bn.x0+bn.x1)/2-1.3,(bn.x0+bn.x1)/2+1.3]);
-      gS.push([(bs.x0+bs.x1)/2-1.3,(bs.x0+bs.x1)/2+1.3]);
-    }
-    wallAlongX(X_MIN,X_MAX,Z_CORR,y0,gN,M.wall2);
-    wallAlongX(X_MIN,X_MAX,-Z_CORR,y0,gS,M.wall2);
+  // Проёмы для комнат
+  const gN=[],gS=[];
+  for(let i=0;i<N_ROOMS;i++){
+    const bn=roomBounds(i,'n'),bs=roomBounds(i,'s');
+    gN.push([(bn.x0+bn.x1)/2-1.3,(bn.x0+bn.x1)/2+1.3]);
+    gS.push([(bs.x0+bs.x1)/2-1.3,(bs.x0+bs.x1)/2+1.3]);
+  }
+  wallAlongX(X_MIN,X_MAX,Z_CORR,y0,gN,M.wall2);
+  wallAlongX(X_MIN,X_MAX,-Z_CORR,y0,gS,M.wall2);
 
-    for(let i=1;i<8;i++){
-      const x=X_MIN+RW*i;
-      const rn1=L.n[i-1],rn2=L.n[i],rs1=L.s[i-1],rs2=L.s[i];
-      const skipN=(rn1==='gym'&&rn2==='gym2')||(rn1==='cafe'&&rn2==='cafe');
-      const skipS=(rs1==='cafe'&&rs2==='cafe');
-      if(!skipN) addBox(x,y0+WH/2,(Z_CORR+Z_ROOM)/2,0.3,WH,Z_ROOM-Z_CORR,M.wall);
-      if(!skipS) addBox(x,y0+WH/2,-(Z_CORR+Z_ROOM)/2,0.3,WH,Z_ROOM-Z_CORR,M.wall);
-    }
-
-    for(let i=0;i<8;i++){
-      const bn=roomBounds(i,'n'),bs=roomBounds(i,'s');
-      const rn=L.n[i],rs=L.s[i];
-      const cxn=(bn.x0+bn.x1)/2,cxs=(bs.x0+bs.x1)/2;
-      rooms[`${f}_n_${i}`]={type:rn,...bn,cx:cxn,cz:(bn.z0+bn.z1)/2};
-      rooms[`${f}_s_${i}`]={type:rs,...bs,cx:cxs,cz:(bs.z0+bs.z1)/2};
-      addDoorSign(cxn+1.9,y0+WH-0.5,Z_CORR-0.2,ROOM_NAMES[rn]||'?','n');
-      addDoorSign(cxs-1.9,y0+WH-0.5,-Z_CORR+0.2,ROOM_NAMES[rs]||'?','s');
-      fillRoom(rn,rooms[`${f}_n_${i}`],y0,f,i,'n');
-      fillRoom(rs,rooms[`${f}_s_${i}`],y0,f,i,'s');
-    }
-
-    const lampStep=isMobile?25:15;
-    for(let x=X_MIN+8;x<=X_MAX-8;x+=lampStep){
-      addBox(x,y0+WH-0.1,0,2.4,0.08,0.5,M.lamp,false);
-    }
+  // Перегородки
+  for(let i=1;i<N_ROOMS;i++){
+    const x=X_MIN+RW*i;
+    const rn1=L.n[i-1],rn2=L.n[i];
+    const rs1=L.s[i-1],rs2=L.s[i];
+    const skipN=(rn1==='gym'&&rn2==='gym2')||(rn1==='cafe'&&rn2==='cafe')||(rn1==='library'&&rn2==='library')||(rn1==='computer'&&rn2==='computer')||(rn1==='history'&&rn2==='history');
+    const skipS=(rs1==='cafe'&&rs2==='cafe');
+    if(!skipN) addBox(x,y0+WH/2,(Z_CORR+Z_ROOM)/2,0.3,WH,Z_ROOM-Z_CORR,M.wall);
+    if(!skipS) addBox(x,y0+WH/2,-(Z_CORR+Z_ROOM)/2,0.3,WH,Z_ROOM-Z_CORR,M.wall);
   }
 
-  const EL=isMobile?100:200,HW=2.5;
+  // Комнаты
+  for(let i=0;i<N_ROOMS;i++){
+    const bn=roomBounds(i,'n'),bs=roomBounds(i,'s');
+    const rn=L.n[i],rs=L.s[i];
+    const cxn=(bn.x0+bn.x1)/2,cxs=(bs.x0+bs.x1)/2;
+    rooms[`n_${i}`]={type:rn,...bn,cx:cxn,cz:(bn.z0+bn.z1)/2};
+    rooms[`s_${i}`]={type:rs,...bs,cx:cxs,cz:(bs.z0+bs.z1)/2};
+    addDoorSign(cxn+1.9,y0+WH-0.5,Z_CORR-0.2,ROOM_NAMES[rn]||'?','n');
+    addDoorSign(cxs-1.9,y0+WH-0.5,-Z_CORR+0.2,ROOM_NAMES[rs]||'?','s');
+    fillRoom(rn,rooms[`n_${i}`],y0,i,'n');
+    fillRoom(rs,rooms[`s_${i}`],y0,i,'s');
+  }
+
+  // Лампы
+  const lampStep=isMobile?25:15;
+  for(let x=X_MIN+8;x<=X_MAX-8;x+=lampStep){
+    addBox(x,y0+WH-0.1,0,2.4,0.08,0.5,M.lamp,false);
+  }
+
+  // ОКНА на внешних стенах
+  addWindows(Z_ROOM, y0);
+  addWindows(-Z_ROOM, y0);
+
+  // 0-й этаж — бесконечный коридор (западнее)
+  const EL=isMobile?100:200, HW=2.5;
   addBox(X_MIN-EL/2,-0.15,0,EL,0.3,HW*2+0.5,M.floor,false);
   addBox(X_MIN-EL/2,WH,0,EL,0.3,HW*2+0.5,M.ceil,false);
   addBox(X_MIN-EL/2,WH/2,-HW-0.25,EL,WH,0.3,M.wall2,false);
@@ -495,11 +572,46 @@ function buildSchool(){
   colliders.push({minX:-9999,maxX:X_MIN,minY:0,maxY:WH,minZ:-HW-0.5,maxZ:-HW});
   colliders.push({minX:-9999,maxX:X_MIN,minY:0,maxY:WH,minZ:HW,maxZ:HW+0.5});
 
-  const post=rooms['0_s_0'];
+  const post=rooms['s_0'];
   if(post) pcPos.set(post.cx-1.6,1.2,post.cz+3);
+
+  // ═══ СПАВН ПРЕДМЕТОВ ═══
+  spawnItems();
 }
 
-function fillRoom(type,b,y0,f,i,side){
+function spawnItems(){
+  // Еда в столовой
+  for(const k in rooms){
+    if(rooms[k].type==='cafe'){
+      const r=rooms[k];
+      for(let j=0;j<4;j++){
+        const x=r.x0+2+j*1.5;
+        spawnItem(x, 0.9, r.cz, 'food', 0xffa050);
+      }
+    }
+    if(rooms[k].type==='doctor'){
+      const r=rooms[k];
+      for(let j=0;j<3;j++){
+        spawnItem(r.cx-1.5+j*1.2, 0.9, r.cz-2, 'medkit', 0xff3030);
+      }
+    }
+    if(rooms[k].type==='trud'){
+      const r=rooms[k];
+      spawnItem(r.cx-2, 0.9, r.cz+2, 'knife', 0xc0d0e0);
+      spawnItem(r.cx+2, 0.9, r.cz+2, 'knife', 0xc0d0e0);
+    }
+  }
+}
+function spawnItem(x,y,z,type,color){
+  const geo = type==='knife' ? new THREE.BoxGeometry(0.5,0.05,0.08) : new THREE.BoxGeometry(0.3,0.3,0.3);
+  const mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({color, emissive: type==='medkit'?0x300000:0x000000}));
+  mesh.position.set(x, y, z);
+  mesh.matrixAutoUpdate=false;mesh.updateMatrix();
+  world.add(mesh);
+  G.items.push({mesh, type, x, y, z, taken:false});
+}
+
+function fillRoom(type,b,y0,i,side){
   const isClass=type.startsWith('class');
   const frontZ=side==='n'?b.z1-0.2:b.z0+0.2;
 
@@ -519,7 +631,6 @@ function fillRoom(type,b,y0,f,i,side){
     bd.rotation.y=side==='n'?Math.PI:0;
     bd.matrixAutoUpdate=false;bd.updateMatrix();world.add(bd);
     addBox(b.cx+4.5,y0+0.45,b.cz+3,1.6,0.85,0.8,M.wood);
-    addBox(b.x0+1,y0+1.0,b.cz+5,0.6,2.0,1.0,M.wood);
   }
   else if(type==='english'){
     for(let r=0;r<2;r++) for(let c=0;c<2;c++){
@@ -531,32 +642,22 @@ function fillRoom(type,b,y0,f,i,side){
       colliders.push({minX:x-0.7,maxX:x+0.7,minY:y0,maxY:y0+0.85,minZ:z-0.4,maxZ:z+0.4});
       addBox(x,y0+0.4,z+0.6,0.4,0.05,0.4,M.chair,false);
     }
-    const c=document.createElement('canvas');c.width=256;c.height=128;
-    const g=c.getContext('2d');
-    g.fillStyle='#17301f';g.fillRect(0,0,256,128);
-    g.fillStyle='#c0f0d0';g.font='bold 20px Consolas';
-    g.fillText('apple — яблоко',10,32);
-    g.fillText('dog — собака',10,60);
-    g.fillText('house — дом',10,88);
-    g.fillText('cat — кот',10,116);
-    const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;
-    const bd=new THREE.Mesh(new THREE.PlaneGeometry(4.5,2.2),new THREE.MeshBasicMaterial({map:t}));
+    const bd=new THREE.Mesh(new THREE.PlaneGeometry(4.5,2.2),new THREE.MeshBasicMaterial({map:makeEnglishBoard()}));
     const bz=side==='n'?b.z1-0.2:b.z0+0.2;
     bd.position.set(b.cx,y0+2.0,bz);
     bd.rotation.y=side==='n'?Math.PI:0;
     bd.matrixAutoUpdate=false;bd.updateMatrix();world.add(bd);
     addBox(b.cx+4,y0+0.45,b.cz+3,1.6,0.85,0.8,M.wood);
-    addBox(b.x0+1,y0+1.0,b.cz+5,0.6,2.0,1.2,M.wood);
   }
-  else if(type==='cafe'&&i===4){
+  else if(type==='cafe'&&i%2===0){
     for(let c=0;c<3;c++){
       const x=b.x0+3+c*3.5;
       addBox(x,y0+0.75,b.cz,1.4,0.08,0.8,M.desk,false);
     }
     addBox(b.x0+2,y0+0.5,b.cz+5,3,1,1,M.metal);
   }
-  else if(type==='gym'&&i===5){
-    for(let k=0;k<2;k++) addBox(b.x0+2+k*3,y0+0.35,b.z1-1.5,2.2,0.15,0.4,M.wood);
+  else if(type==='gym'){
+    for(let k=0;k<3;k++) addBox(b.x0+2+k*3,y0+0.35,b.z1-1.5,2.2,0.15,0.4,M.wood);
   }
   else if(type==='gym2'){
     addBox(b.cx,y0+0.3,b.cz-3,2,0.15,0.4,M.wood);
@@ -566,15 +667,15 @@ function fillRoom(type,b,y0,f,i,side){
     ring.matrixAutoUpdate=false;ring.updateMatrix();world.add(ring);
   }
   else if(type==='wc1'||type==='wc2'||type==='wc3'||type==='wc4'){
-    for(let k=0;k<2;k++) addBox(b.x0+3+k*4,y0+0.5,b.z1-1.5,1.2,2,0.15,M.metal,false);
+    for(let k=0;k<3;k++) addBox(b.x0+3+k*3.5,y0+0.5,b.z1-1.5,1.2,2,0.15,M.metal,false);
     addBox(b.cx,y0+0.85,b.z0+1.5,3,0.2,0.6,M.white);
   }
-  else if(type==='post'&&f===0&&i===0){
+  else if(type==='post'&&i===0){
     addBox(b.cx-1.6,y0+0.45,b.cz+3,1.8,0.9,0.9,M.wood);
     addBox(b.cx-1.6,y0+1.2,b.cz+3,1.0,0.65,0.1,M.dark,false);
     addBox(b.cx+3,y0+0.4,b.cz-4.5,2,0.5,1.1,M.dark);
   }
-  else if(type==='director'&&f===0){
+  else if(type==='director'){
     addBox(b.cx,y0+0.45,b.cz+3.5,2.4,0.85,1.2,M.wood);
     addBox(b.cx,y0+0.45,b.cz+5,0.6,0.9,0.6,M.black,false);
     addBox(b.x0+1.5,y0+1.0,b.cz-3,0.8,2.0,1.2,M.wood);
@@ -586,11 +687,11 @@ function fillRoom(type,b,y0,f,i,side){
       addBox(cx,y0+0.7,cz,0.6,0.1,0.6,M.chair,false);
     }
   }
-  else if(type==='doctor'&&f===0){
+  else if(type==='doctor'){
     addBox(b.cx-1.5,y0+0.4,b.cz+3,2,0.5,1.1,M.white);
     addBox(b.x0+1.5,y0+1.0,b.cz-3,0.6,2,1.2,M.white);
   }
-  else if(type==='trud'&&f===0){
+  else if(type==='trud'){
     for(let k=0;k<2;k++) addBox(b.x0+3+k*5,y0+0.45,b.cz+2,2,0.9,1,M.wood);
     addBox(b.cx,y0+1,b.cz-4,3,2,0.7,M.metal);
   }
@@ -611,9 +712,7 @@ function fillRoom(type,b,y0,f,i,side){
       addBox(x,y0+0.75,z,1.8,0.08,1,M.desk,false);
       addBox(x-0.4,y0+0.95,z,0.12,0.25,0.12,M.red,false);
       addBox(x+0.4,y0+0.95,z,0.12,0.25,0.12,M.green,false);
-      colliders.push({minX:x-0.9,maxX:x+0.9,minY:y0,maxY:y0+0.85,minZ:z-0.5,maxZ:z+0.5});
     }
-    addBox(b.cx+4.5,y0+0.45,b.cz+3,1.6,0.85,0.8,M.wood);
   }
   else if(type==='physics'){
     for(let k=0;k<2;k++) for(let j=0;j<2;j++){
@@ -621,24 +720,23 @@ function fillRoom(type,b,y0,f,i,side){
       addBox(x,y0+0.75,z,1.8,0.08,1,M.desk,false);
       addBox(x-0.5,y0+1.0,z,0.4,0.4,0.3,M.metal,false);
     }
-    addBox(b.cx+4.5,y0+0.45,b.cz+3,1.6,0.85,0.8,M.wood);
   }
   else if(type==='math'||type==='history'||type==='geography'||type==='biology'){
     for(let r=0;r<2;r++) for(let c=0;c<2;c++){
       const x=b.x0+3+c*5.5,z=b.cz-2+r*4;
       addBox(x,y0+0.75,z,1.4,0.08,0.7,M.desk,false);
-      addBox(x-0.5,y0+0.4,z,0.08,0.7,0.1,M.wood,false);
-      addBox(x+0.5,y0+0.4,z,0.08,0.7,0.1,M.wood,false);
       addBox(x,y0+0.4,z+0.6,0.4,0.05,0.4,M.chair,false);
     }
-    addBox(b.cx+4.5,y0+0.45,b.cz+3,1.6,0.85,0.8,M.wood);
   }
   else if(type==='computer'){
     for(let k=0;k<3;k++) for(let j=0;j<2;j++){
       const x=b.x0+2.5+k*3.5,z=b.cz-2.5+j*5;
       addBox(x,y0+0.75,z,1.4,0.08,0.75,M.desk,false);
       addBox(x,y0+1.15,z-0.15,0.7,0.5,0.1,M.dark,false);
-      colliders.push({minX:x-0.8,maxX:x+0.8,minY:y0,maxY:y0+0.85,minZ:z-0.4,maxZ:z+0.4});
+      const scr=new THREE.Mesh(new THREE.PlaneGeometry(0.6,0.4),new THREE.MeshBasicMaterial({color:0x40a0a0}));
+      scr.position.set(x,y0+1.15,z-0.21);
+      scr.rotation.y=side==='n'?Math.PI:0;
+      scr.matrixAutoUpdate=false;scr.updateMatrix();world.add(scr);
     }
   }
   else if(type==='music'){
@@ -648,6 +746,18 @@ function fillRoom(type,b,y0,f,i,side){
   else if(type==='teachers'){
     for(let k=0;k<3;k++) addBox(b.x0+3+k*4,y0+0.45,b.cz,1.8,0.85,1,M.wood);
   }
+}
+function makeEnglishBoard(){
+  const c=document.createElement('canvas');c.width=256;c.height=128;
+  const g=c.getContext('2d');
+  g.fillStyle='#17301f';g.fillRect(0,0,256,128);
+  g.fillStyle='#c0f0d0';g.font='bold 20px Consolas';
+  g.fillText('apple — яблоко',10,32);
+  g.fillText('dog — собака',10,60);
+  g.fillText('house — дом',10,88);
+  g.fillText('cat — кот',10,116);
+  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;
+  return t;
 }
 
 const P={x:0,z:0,yaw:0,pitch:0,radius:0.38,floor:0};
@@ -680,7 +790,6 @@ function nameSprite(text,color){
 function spawnNPC(id,x,y,z,name,kind,color,opts){
   const existing = npcs.find(n=>n.id===id);
   if(existing) removeNPC(existing);
-
   opts=opts||{};
   const g=makeHuman(opts.shirt||color||0x6677aa,opts.pants||0x333a44,opts.skin,opts.scale);
   g.position.set(x,y,z);world.add(g);
@@ -705,225 +814,152 @@ function spawnNPC(id,x,y,z,name,kind,color,opts){
 const findNPC=id=>npcs.find(n=>n.id===id);
 const removeNPC=n=>{if(!n)return;world.remove(n.obj);const i=npcs.indexOf(n);if(i>=0)npcs.splice(i,1);};
 
-// ═══════════════════════════════════════════════════════════
-// ВРЕМЯ: 20:00 → 17:00 (21 игровой час за 5 реальных минут)
-// ═══════════════════════════════════════════════════════════
-function gameHour(){
-  const t = G.dayTime / DAY_SECONDS;
-  const h = 20 + t * CYCLE_HOURS;
-  return h % 24;
-}
-function timeStr(){
-  const h=gameHour();
-  return String(Math.floor(h)).padStart(2,'0')+':'+String(Math.floor((h-Math.floor(h))*60)).padStart(2,'0');
-}
-function isNight(){
-  const h=gameHour();
-  return h >= 20 || h < 7.5;
-}
-function isDay(){
-  const h=gameHour();
-  return h >= 7.5 && h < 17;
-}
+function gameHour(){const t=G.dayTime/DAY_SECONDS;return (20+t*CYCLE_HOURS)%24;}
+function timeStr(){const h=gameHour();return String(Math.floor(h)).padStart(2,'0')+':'+String(Math.floor((h-Math.floor(h))*60)).padStart(2,'0');}
+function isNight(){const h=gameHour();return h>=20||h<7.5;}
+function isDay(){const h=gameHour();return h>=7.5&&h<17;}
 function skyHex(){
-  const h=gameHour();
-  const horror=isHorror();
-  // 20:00-21:00 сумерки
+  const h=gameHour();const horror=isHorror();
   if(h>=20 && h<21) return horror?0x0a0a12:0x2a2038;
-  // 21:00-04:30 ночь
   if(h>=21 || h<4.5) return horror?0x020204:0x0a1018;
-  // 04:30-06:00 предрассвет
   if(h<6) return horror?0x08080e:0x1a2438;
-  // 06:00-07:30 рассвет
   if(h<7.5) return horror?0x1a1820:0x7a5a70;
-  // 07:30-09:00 утро
   if(h<9) return 0x88a8c8;
-  // 09:00-16:00 день
   if(h<16) return 0x88b8d8;
-  // 16:00-17:00 закат
   if(h<17) return 0xd09060;
   return horror?0x020204:0x0a1018;
 }
-function updateSky(){
-  if(!scene)return;
-  const c=skyHex();
-  scene.background.setHex(c);
-  scene.fog.color.setHex(c);
-}
-// Освещение в зависимости от времени
+function updateSky(){if(!scene)return;const c=skyHex();scene.background.setHex(c);scene.fog.color.setHex(c);}
 function updateLighting(){
   if(!scene) return;
   const h=gameHour();
-  // Яркость дня: 0 = ночь, 1 = полдень
-  let dayBright = 0;
-  if(h>=6 && h<8) dayBright = (h-6)/2;
-  else if(h>=8 && h<16) dayBright = 1;
-  else if(h>=16 && h<19) dayBright = 1-(h-16)/3;
-  else if(h>=19 && h<21) dayBright = 0;
-  else if(h>=21 || h<4) dayBright = 0;
-  else if(h>=4 && h<6) dayBright = (h-4)/2;
-
-  const baseAmb = isHorror() ? 0.35 : 0.55;
-  const baseHemi = isHorror() ? 0.3 : 0.5;
-
-  if(ambLight) ambLight.intensity = (baseAmb + dayBright*0.65) * (isHorror()?1:1);
-  if(hemiLight) hemiLight.intensity = (baseHemi + dayBright*0.5);
-  // Фонарик днём не нужен, но если включен — работает
-  if(torch) torch.intensity = G.flashlightOn ? (isHorror()?2.5:1.8) : 0;
+  let dayBright=0;
+  if(h>=6 && h<8) dayBright=(h-6)/2;
+  else if(h>=8 && h<16) dayBright=1;
+  else if(h>=16 && h<19) dayBright=1-(h-16)/3;
+  else if(h>=19 && h<21) dayBright=0;
+  else if(h>=21 || h<4) dayBright=0;
+  else if(h>=4 && h<6) dayBright=(h-4)/2;
+  const baseAmb=isHorror()?0.35:0.55;
+  const baseHemi=isHorror()?0.3:0.5;
+  if(ambLight) ambLight.intensity=baseAmb+dayBright*0.65;
+  if(hemiLight) hemiLight.intensity=baseHemi+dayBright*0.5;
+  if(sunLight) sunLight.intensity=0.1+dayBright*0.55;
+  if(torch) torch.intensity=G.flashlightOn?(isHorror()?2.5:1.8):0;
 }
 
-// ═══ АНОМАЛИИ ═══
+function removeAllAnomalies(){
+  let k=0;
+  for(const n of npcs.slice()){if(n.kind==='anomaly'){removeNPC(n);k++;}}
+  return k;
+}
 function spawnNightAnomalies(dt){
   if(!isNight()||G.code1) return;
-  const mul=DIFF[difficulty].anomMul,y=G.floor*FH,h=gameHour();
-
+  const mul=DIFF[difficulty].anomMul,h=gameHour();
   if(!findNPC('daywatch') && !G.code1 && Math.random()<dt*0.008*mul){
-    spawnNPC('daywatch',X_MAX-5,y,0,'ДНЕВНОЙ СТОРОЖ','anomaly',0x554466,{hostile:true,speed:isHorror()?3.0:2.0,state:'chase',
+    spawnNPC('daywatch',X_MAX-5,0,0,'ДНЕВНОЙ СТОРОЖ','anomaly',0x554466,{hostile:true,speed:isHorror()?3.0:2.0,state:'chase',
       shirt:0x3a3a48,skin:0xb0b0b0,onContact:()=>{if(!G.code1) killPlayer('Правило 1: Дневной сторож.');}});
     pushObj('⚠ ДНЕВНОЙ СТОРОЖ! На пост → КОД 1 (R).');toast('ДНЕВНОЙ СТОРОЖ');
     if(isHorror()) triggerScreamer();
   }
   if(h>=2.7166 && h<=2.8666 && !findNPC('director')){
-    spawnNPC('director',0,y,0,'ДИРЕКТОР','staff',0x334466,{shirt:0x2c3a55,pants:0x1e2636,skin:0xdcb89c,
+    spawnNPC('director',0,0,0,'ДИРЕКТОР','staff',0x334466,{shirt:0x2c3a55,pants:0x1e2636,skin:0xdcb89c,
       state:'idle',noMove:true,speed:0,dialogue:['Директор смотрит.','Помашите (E).']});
     pushObj('🕑 Директор. Помашите (E).');
   }
   if(h>2.8666){const d=findNPC('director');if(d)removeNPC(d);}
-
   if(!findNPC('fizruk_night') && h>0.5 && h<5 && !G.fiz.done && Math.random()<dt*0.006*mul){
-    spawnNPC('fizruk_night',X_MAX-8,y,0,'ФИЗРУК','anomaly',0xcc7733,{hostile:true,speed:isHorror()?3.2:2.5,state:'chase',
+    spawnNPC('fizruk_night',X_MAX-8,0,0,'ФИЗРУК','anomaly',0xcc7733,{hostile:true,speed:isHorror()?3.2:2.5,state:'chase',
       shirt:0xcc7733,onContact:()=>{if(!G.fiz.done) killPlayer('Правило 3: Физрук.');}});
     G.fiz.active=true;G.fiz.t=60;
     pushObj('⚠ ФИЗРУК! Спортзал → 4 прыжка.');toast('ФИЗРУК');
   }
-
   if(!findNPC('anton') && h>1 && h<5 && Math.random()<dt*0.006*mul){
-    spawnNPC('anton',0,y,-1,'Антон','anomaly',0xdddddd,{hostile:true,speed:isHorror()?2.0:1.5,state:'chase',
+    spawnNPC('anton',0,0,-1,'Антон','anomaly',0xdddddd,{hostile:true,speed:isHorror()?2.0:1.5,state:'chase',
       shirt:0xdde5ee,skin:0xf0c8a8,scale:0.75,
-      onContact:()=>{if(G.hasBun){G.hasBun=false;unlock('Пекарь');removeNPC(findNPC('anton'));}
+      onContact:()=>{if(G.inv.food>0){G.inv.food--;updateInventory();unlock('Пекарь');removeNPC(findNPC('anton'));toast('Антон: спасибо!');}
         else killPlayer('Правило 6: Антон.');}});
     toast('Антон');
   }
 }
-
-// ═══ УДАЛИТЬ ВСЕХ АНОМАЛИЙ ═══
-function removeAllAnomalies(){
-  let k=0;
-  for(const n of npcs.slice()){
-    if(n.kind==='anomaly'){removeNPC(n);k++;}
-  }
-  return k;
-}
-
-// ═══ ДНЕВНЫЕ NPC ═══
 function spawnDayNPCs(){
   if(G.daySpawned) return;
   G.daySpawned=true;
 
-  // Английский — Жанна + ученики
-  const eng=rooms['0_s_3'];
-  if(eng){
-    spawnNPC('zhanna', eng.cx+4, 0, eng.cz+3, 'Жанна Викторовна', 'staff', 0xd060a0, {
-      shirt: 0xd060a0, pants: 0x3a2a40, skin: 0xf0c8b0,
-      state: 'idle', noMove: true, pose: 'teach', isDayOnly: true,
-      dialogue: ['Жанна Викторовна: «Здравствуйте!»']
-    });
-    const names=['Аня','Дима','Маша','Вова'];
-    for(let k=0;k<4;k++){
-      const nx=eng.x0+3+(k%2)*5.5;
-      const nz=eng.cz-2+Math.floor(k/2)*4;
-      spawnNPC('eng_pupil'+k, nx, 0, nz, names[k], 'neutral', 0x7080a0, {
-        shirt: [0x7080a0,0xa08060,0x6090a0,0x9060a0][k],
-        pants: 0x303040, state: 'idle', noMove: true, pose: 'sit', isDayOnly: true,
-        dialogue: ['«Привет.»']
+  // Жанна
+  for(const k in rooms){
+    if(rooms[k].type==='english'){
+      const r=rooms[k];
+      spawnNPC('zhanna', r.cx+4, 0, r.cz+3, 'Жанна Викторовна', 'staff', 0xd060a0, {
+        shirt:0xd060a0, pants:0x3a2a40, skin:0xf0c8b0,
+        state:'idle', noMove:true, pose:'teach', isDayOnly:true,
+        dialogue:['Жанна Викторовна: «Здравствуйте!»']
       });
     }
   }
 
-  // Классы с учителями
+  // Учителя в классах
   const classes=[
-    {room:'0_n_1', teacher:'Марья Ивановна', tColor:0xa08060, pupils:['Петя','Ваня','Катя','Соня'], y:0},
-    {room:'0_n_2', teacher:'Ольга Петровна', tColor:0x8090c0, pupils:['Кира','Рома','Таня'], y:0},
-    {room:'1_n_1', teacher:'Ирина Сергеевна', tColor:0x90a060, pupils:['Макс','Лена','Стёпа','Юля'], y:FH},
-    {room:'1_n_2', teacher:'Наталья Дмитриевна', tColor:0xa080a0, pupils:['Ксюша','Илья','Даша','Гриша'], y:FH},
-    {room:'1_n_5', teacher:'Галина Ивановна', tColor:0x80a0a0, pupils:['Артём','Вика','Слава'], y:FH}
+    {type:'class1a',teacher:'Марья Ивановна',tColor:0xa08060,pupils:['Петя','Ваня','Катя']},
+    {type:'class1b',teacher:'Ольга Петровна',tColor:0x8090c0,pupils:['Кира','Рома']},
+    {type:'class5a',teacher:'Ирина Сергеевна',tColor:0x90a060,pupils:['Макс','Лена']},
+    {type:'class6a',teacher:'Наталья Дмитриевна',tColor:0xa080a0,pupils:['Ксюша','Илья']},
+    {type:'class7a',teacher:'Галина Ивановна',tColor:0x80a0a0,pupils:['Артём','Вика']},
+    {type:'class4b',teacher:'Учитель 4Б',tColor:0xaa4455,pupils:['Амир','Максим']}
   ];
-  for(const c of classes){
-    const r=rooms[c.room];
-    if(!r) continue;
-    spawnNPC('t_'+c.room, r.cx+4, c.y, r.cz+3, c.teacher, 'staff', c.tColor, {
+  let ci=0;
+  for(const k in rooms){
+    const c=classes.find(cl=>cl.type===rooms[k].type);
+    if(!c) continue;
+    const r=rooms[k];
+    spawnNPC('t_'+k, r.cx+4, 0, r.cz+3, c.teacher, 'staff', c.tColor, {
       shirt:c.tColor, pants:0x403040, skin:0xe8c8a8,
       state:'idle', noMove:true, pose:'teach', isDayOnly:true,
       dialogue:[c.teacher+': «Урок идёт.»']
     });
-    for(let k=0;k<c.pupils.length;k++){
-      const nx=r.x0+3+(k%2)*5.5;
-      const nz=r.cz-2.5+Math.floor(k/2)*2.8;
-      spawnNPC('p_'+c.room+'_'+k, nx, c.y, nz, c.pupils[k], 'neutral', 0x6070a0, {
-        shirt:[0x6070a0,0xa07090,0x7090a0,0x9080a0][k%4],
+    for(let j=0;j<c.pupils.length;j++){
+      const nx=r.x0+3+(j%2)*5.5;
+      const nz=r.cz-2.5+Math.floor(j/2)*2.8;
+      spawnNPC('p_'+k+'_'+j, nx, 0, nz, c.pupils[j], 'neutral', 0x6070a0, {
+        shirt:[0x6070a0,0xa07090,0x7090a0][j%3],
         pants:0x404050, state:'idle', noMove:true, pose:'sit', isDayOnly:true,
-        dialogue:[c.pupils[k]+': «Скучно…»']
+        dialogue:[c.pupils[j]+': «Скучно…»']
       });
     }
-  }
-
-  // Спецкабинеты
-  const spec=[
-    {room:'1_s_1', name:'Пётр Аркадьевич', color:0x80a080},
-    {room:'1_n_6', name:'Игорь Львович', color:0x90a0b0},
-    {room:'1_s_4', name:'Алексей Викторович', color:0x6080a0},
-    {room:'1_s_5', name:'Эльвира Робертовна', color:0xc0a060},
-    {room:'1_s_6', name:'Сергей Николаевич', color:0x9a8060},
-    {room:'1_s_7', name:'Марина Юрьевна', color:0x6080a0}
-  ];
-  for(const s of spec){
-    const r=rooms[s.room];
-    if(!r) continue;
-    spawnNPC('spec_'+s.room, r.cx+4, FH, r.cz+3, s.name, 'staff', s.color, {
-      shirt:s.color, pants:0x404040, skin:0xe8c8a8,
-      state:'idle', noMove:true, pose:'teach', isDayOnly:true,
-      dialogue:[s.name+': «Работаем, дети.»']
-    });
   }
 
   // Прогульщики
-  const dirRoom=rooms['0_s_1'];
-  if(dirRoom){
-    const truants=[
-      {name:'Костя',shirt:0x5060a0,dialogue:['Костя: «Прогулял 6 уроков…»','«Мамка убьёт.»']},
-      {name:'Влад',shirt:0xa05060,dialogue:['Влад: «Мы просто в туалете сидели.»']},
-      {name:'Стас',shirt:0x60a050,dialogue:['Стас: «Когда предки придут?»']}
-    ];
-    for(let k=0;k<3;k++){
-      const t=truants[k];
-      spawnNPC('truant'+k, dirRoom.cx-2.5+k*2.5, 0, dirRoom.cz+1.8, t.name, 'truant', t.shirt, {
-        shirt:t.shirt, pants:0x303040, skin:0xe8c8a8,
-        state:'idle', noMove:true, pose:'sit', isDayOnly:true,
-        dialogue:t.dialogue
-      });
+  for(const k in rooms){
+    if(rooms[k].type==='director'){
+      const r=rooms[k];
+      const truants=[
+        {name:'Костя',shirt:0x5060a0},
+        {name:'Влад',shirt:0xa05060},
+        {name:'Стас',shirt:0x60a050}
+      ];
+      for(let j=0;j<3;j++){
+        spawnNPC('truant'+j, r.cx-2.5+j*2.5, 0, r.cz+1.8, truants[j].name, 'truant', truants[j].shirt, {
+          shirt:truants[j].shirt, pants:0x303040, skin:0xe8c8a8,
+          state:'idle', noMove:true, pose:'sit', isDayOnly:true,
+          dialogue:[truants[j].name+': «Прогуливаем…»']
+        });
+      }
     }
   }
 
-  toast('☀ УЧЕНИКИ И УЧИТЕЛЯ ПРИШЛИ В ШКОЛУ');
-  pushObj('7:30 — Уроки начались. Ученики и учителя в классах.');
+  toast('☀ УЧЕНИКИ И УЧИТЕЛЯ ПРИШЛИ');
+  pushObj('7:30 — Уроки начались.');
 }
-
 function removeDayNPCs(){
   if(!G.daySpawned) return;
   let k=0;
-  for(const n of npcs.slice()){
-    if(n.isDayOnly){removeNPC(n);k++;}
-  }
+  for(const n of npcs.slice()){if(n.isDayOnly){removeNPC(n);k++;}}
   G.daySpawned=false;
-  if(k>0){
-    toast('🌙 УЧЕНИКИ И УЧИТЕЛЯ УШЛИ ДОМОЙ');
-    pushObj('20:00 — Уроки закончились. Все ушли. Начинается ночная смена.');
-  }
+  if(k>0){toast('🌙 УЧЕНИКИ УШЛИ ДОМОЙ');pushObj('20:00 — Уроки закончились.');}
 }
 
-// ═══ ПОСТОЯННЫЕ NPC ═══
 function spawnAllNPCs(){
-  const pr=rooms['0_s_0'];
+  const pr=rooms['s_0'];
   if(pr){
     const helpers=[
       {id:'helper_leha', name:'Леха', color:0x6080c0},
@@ -933,111 +969,105 @@ function spawnAllNPCs(){
     ];
     for(let k=0;k<helpers.length;k++){
       const h=helpers[k];
-      const x = pr.cx - 3.6 + k * 2.4;
-      const z = pr.cz - 5;
-      spawnNPC(h.id, x, 0, z, h.name, 'friendly', h.color, {
-        shirt: h.color, pants: 0x303040, skin: 0xe8c8a8,
-        state: 'idle', noMove: true,
-        dialogue: [h.name + ': «Мы поможем.»', '«Если что — обращайся.»']
+      spawnNPC(h.id, pr.cx - 3.6 + k * 2.4, 0, pr.cz - 5, h.name, 'friendly', h.color, {
+        shirt:h.color, pants:0x303040, skin:0xe8c8a8,
+        state:'idle', noMove:true,
+        dialogue:[h.name+': «Поможем.»']
       });
     }
     spawnNPC('helper_sanya', pr.cx + 5, 0, pr.cz - 5, 'Саня', 'friendly', 0xc060a0, {
-      shirt: 0xc060a0, pants: 0x402050, skin: 0xf0d0b0,
-      state: 'idle', noMove: true,
-      dialogue: ['Саня: «Я создал эту школу.»', '«Не сломай ничего.»']
+      shirt:0xc060a0, pants:0x402050, skin:0xf0d0b0,
+      state:'idle', noMove:true,
+      dialogue:['Саня: «Я создал эту школу.»','«Карта: '+MAPS[G.mapId].name+'»']
     });
     const helpLabel=bigLabelSprite('ПОМОЩНИКИ','#9ad0ff');
-    helpLabel.position.set(pr.cx - 1.2, 3.8, pr.cz - 5);
-    world.add(helpLabel);
+    helpLabel.position.set(pr.cx - 1.2, 3.8, pr.cz - 5);world.add(helpLabel);
     const creatorLabel=bigLabelSprite('СОЗДАТЕЛЬ','#ffd76a');
-    creatorLabel.position.set(pr.cx + 5, 3.8, pr.cz - 5);
-    world.add(creatorLabel);
+    creatorLabel.position.set(pr.cx + 5, 3.8, pr.cz - 5);world.add(creatorLabel);
   }
 
-  spawnNPC('guard_night', -20, 0, 0, 'Сторож Николай', 'staff', 0x506070, {
-    shirt: 0x506070, pants: 0x2a2a3a, skin: 0xd8b890,
-    state: 'wander', speed: 0.8,
-    dialogue: ['Николай: «О, напарник.»', '«Я тут 15 лет работаю.»']
+  // Сторожа
+  spawnNPC('guard_night', -25, 0, 0, 'Сторож Николай', 'staff', 0x506070, {
+    shirt:0x506070, pants:0x2a2a3a, skin:0xd8b890,
+    state:'wander', speed:0.8,
+    dialogue:['Николай: «О, напарник.»','«Я тут 15 лет.»']
   });
-  spawnNPC('guard_up', 20, FH, 0, 'Сторож Пётр', 'staff', 0x606878, {
-    shirt: 0x606878, pants: 0x303040, skin: 0xe0c0a0,
-    state: 'wander', speed: 0.7,
-    dialogue: ['Пётр: «Ты новенький?»']
-  });
-
   if(pr) spawnNPC('vahter_always', pr.x1-2, 0, pr.cz+4, 'Вахтерша Тамара', 'staff', 0xb0b0d0, {
-    shirt: 0xb0b0d0, pants: 0x505060, skin: 0xe8c8b0,
-    state: 'idle', noMove: true,
-    dialogue: ['Тамара: «Здравствуй, сынок.»', '«Хочешь чаю?»']
+    shirt:0xb0b0d0, pants:0x505060, skin:0xe8c8b0,
+    state:'idle', noMove:true,
+    dialogue:['Тамара: «Здравствуй, сынок.»','«Хочешь чаю?»']
   });
 
-  const trud=rooms['0_s_7'];
-  if(trud) spawnNPC('buhov', trud.cx+2, 0, trud.cz-2, 'Трудовик Бухов', 'staff', 0x88a0ff, {
-    shirt: 0x5a6a9a, pants: 0x2a2a3a, skin: 0xe0b890,
-    state: 'idle', noMove: true,
-    dialogue: ['Бухов: «Держи нож.»']
-  });
-
-  const cafe=rooms['0_s_4'];
-  if(cafe) spawnNPC('tetya', cafe.cx+2, 0, cafe.cz+4, 'Тётя Валя', 'staff', 0xffb0c0, {
-    shirt: 0xffb0c0, pants: 0x4a4a5a,
-    state: 'idle', noMove: true,
-    dialogue: ['Тётя Валя: «Возьми булочку.»']
-  });
-
-  const doc=rooms['0_s_2'];
-  if(doc){
-    spawnNPC('doctor1', doc.cx-2, 0, doc.cz+3, 'Доктор Иванов', 'staff', 0xf0f0f0, {
-      shirt: 0xf0f0f0, pants: 0xf0f0f0, skin: 0xe8c0a0,
-      state: 'idle', noMove: true, dialogue: ['Доктор: «Как самочувствие?»']
-    });
-    spawnNPC('doctor2', doc.cx+2, 0, doc.cz-2, 'Медсестра Ольга', 'staff', 0xe8f0f8, {
-      shirt: 0xe8f0f8, pants: 0xe8f0f8, skin: 0xe8c8b0,
-      state: 'idle', noMove: true, dialogue: ['Ольга: «Прививки!»']
-    });
-  }
-
-  const gym=rooms['0_n_5'];
-  if(gym){
-    spawnNPC('fizruk_day', gym.cx-3, 0, gym.cz+4, 'Физрук', 'staff', 0xcc7733, {
-      shirt: 0xcc7733, pants: 0x3a3a4a, skin: 0xe0a880,
-      state: 'idle', noMove: true, dialogue: ['Физрук: «Тренировка. Иди отсюда.»']
-    });
-    for(let k=0;k<3;k++){
-      spawnNPC('athlete'+k, gym.cx+1+k*2.5, 0, gym.cz+2+(k%2)*1.5, 'Атлет', 'neutral', 0x8a5a3a, {
-        shirt: 0x3a2010, pants: 0x2a1a10, skin: 0x8a5a3a, scale: 1.15,
-        state: 'idle', noMove: true, pose: 'oiled',
-        dialogue: ['Атлет: «Эй, тут массаж!»']
+  // Бухов
+  for(const k in rooms){
+    if(rooms[k].type==='trud'){
+      const r=rooms[k];
+      spawnNPC('buhov', r.cx+2, 0, r.cz-2, 'Трудовик Бухов', 'staff', 0x88a0ff, {
+        shirt:0x5a6a9a, pants:0x2a2a3a, skin:0xe0b890,
+        state:'idle', noMove:true,
+        dialogue:['Бухов: «Возьми нож из мастерской.»']
       });
     }
   }
 
-  const wc1=rooms['0_n_3'];
-  if(wc1){
-    for(let k=0;k<2;k++){
-      spawnNPC('smearer'+k, wc1.cx+(k-0.5)*2, 0, wc1.cz+3, 'Первоклассник', 'neutral', 0xd0d0d0, {
-        shirt: 0xd0d0d0, pants: 0x4a4a5a, skin: 0xf0c8a8, scale: 0.7,
-        state: 'idle', noMove: true, pose: 'smearing',
-        dialogue: ['Первоклассник: «Мы тут украшаем…»']
+  // Тётя Валя
+  for(const k in rooms){
+    if(rooms[k].type==='cafe'){
+      const r=rooms[k];
+      spawnNPC('tetya_'+k, r.cx+2, 0, r.cz+4, 'Тётя Валя', 'staff', 0xffb0c0, {
+        shirt:0xffb0c0, pants:0x4a4a5a,
+        state:'idle', noMove:true,
+        dialogue:['Тётя Валя: «Бери еду, родной.»']
       });
-    }
-    for(let k=0;k<6;k++){
-      const x=wc1.x0+1.5+k*1.4;
-      addBox(x,1.2+(k%3)*0.4,wc1.z1-0.25,0.7,0.6,0.05,M.brown,false);
+      break;
     }
   }
 
-  const wc3=rooms['1_n_3'];
-  if(wc3){
-    for(let k=0;k<3;k++){
-      const angle=(k/3)*Math.PI*2;
-      const x=wc3.cx+Math.cos(angle)*1.3;
-      const z=wc3.cz+Math.sin(angle)*1.3;
-      spawnNPC('smoker'+k, x, FH, z, 'Старшеклассник', 'neutral', 0x3a3a4a, {
-        shirt: 0x2a2a3a, pants: 0x1a1a28, skin: 0xe8c8a8,
-        state: 'idle', noMove: true, pose: 'smoking',
-        dialogue: ['Старшеклассник: «Ты нас не видел.»']
+  // Доктор
+  for(const k in rooms){
+    if(rooms[k].type==='doctor'){
+      const r=rooms[k];
+      spawnNPC('doctor1', r.cx, 0, r.cz+3, 'Доктор', 'staff', 0xf0f0f0, {
+        shirt:0xf0f0f0, pants:0xf0f0f0, skin:0xe8c0a0,
+        state:'idle', noMove:true,
+        dialogue:['Доктор: «Возьми аптечку со стола.»']
       });
+      break;
+    }
+  }
+
+  // Физрук + атлеты
+  for(const k in rooms){
+    if(rooms[k].type==='gym'){
+      const r=rooms[k];
+      spawnNPC('fizruk_day', r.cx-3, 0, r.cz+4, 'Физрук', 'staff', 0xcc7733, {
+        shirt:0xcc7733, pants:0x3a3a4a, skin:0xe0a880,
+        state:'idle', noMove:true,
+        dialogue:['Физрук: «Тренировка.»']
+      });
+      for(let j=0;j<3;j++){
+        spawnNPC('athlete'+j, r.cx+1+j*2.5, 0, r.cz+2, 'Атлет', 'neutral', 0x8a5a3a, {
+          shirt:0x3a2010, pants:0x2a1a10, skin:0x8a5a3a, scale:1.15,
+          state:'idle', noMove:true, pose:'oiled',
+          dialogue:['Атлет: «Массаж!»']
+        });
+      }
+      break;
+    }
+  }
+
+  // Первоклашки в туалете
+  for(const k in rooms){
+    if(rooms[k].type==='wc1'){
+      const r=rooms[k];
+      for(let j=0;j<2;j++){
+        spawnNPC('smearer'+j, r.cx+(j-0.5)*2, 0, r.cz+3, 'Первоклассник', 'neutral', 0xd0d0d0, {
+          shirt:0xd0d0d0, pants:0x4a4a5a, skin:0xf0c8a8, scale:0.7,
+          state:'idle', noMove:true, pose:'smearing',
+          dialogue:['«Мы тут украшаем…»']
+        });
+      }
+      break;
     }
   }
 }
@@ -1072,7 +1102,6 @@ function updateSmoke(dt){
     c.group.children.forEach(s=>{s.material.opacity=0.32*fade;s.position.copy(s.userData.off).multiplyScalar(0.6+t*1.4);s.position.y+=t*0.6;});
   }
 }
-
 function triggerScreamer(){
   if(!isHorror()||G.screamerCD>0) return;
   G.screamerCD=8+Math.random()*12;
@@ -1087,17 +1116,22 @@ function triggerScreamer(){
 }
 function updateSanityHUD(){
   const w=document.getElementById('sanityWrap');
-  if(isHorror()){
-    w.style.display='block';
-    const s=document.getElementById('sanity');
-    s.style.width=G.sanity+'%';
+  if(isHorror()){w.style.display='block';
+    const s=document.getElementById('sanity');s.style.width=G.sanity+'%';
     s.classList.toggle('low',G.sanity<25);
     s.classList.toggle('mid',G.sanity<60&&G.sanity>=25);
   } else w.style.display='none';
 }
+function updateInventory(){
+  const el=document.getElementById('inventory');
+  el.innerHTML='';
+  if(G.inv.food>0) el.innerHTML+=`<div class="inv-item">🍞 ${G.inv.food}</div>`;
+  if(G.inv.medkit>0) el.innerHTML+=`<div class="inv-item">💊 ${G.inv.medkit}</div>`;
+  if(G.inv.ammo>0) el.innerHTML+=`<div class="inv-item">🔪 ${G.inv.ammo}</div>`;
+}
 
 function collide(){
-  const r=P.radius,yLo=G.floor*FH+0.2,yHi=G.floor*FH+1.9;
+  const r=P.radius,yLo=0.2,yHi=1.9;
   for(let it=0;it<2;it++){
     let pushed=false;
     for(let ci=0;ci<colliders.length;ci++){
@@ -1115,44 +1149,38 @@ function collide(){
     if(!pushed) break;
   }
 }
-function checkStairs(){
-  if(G.tpCD>0 || !layout) return;
-  const L=layout[G.floor];
-  for(let i=0;i<8;i++){
-    if(L.n[i]!=='stairs') continue;
-    const r=rooms[`${G.floor}_n_${i}`];
-    if(!r) continue;
-    if(P.x>r.x0+1.5 && P.x<r.x1-1.5 && P.z>r.z0+1.5 && P.z<r.z1-1.5){
-      G.floor=1-G.floor;G.tpCD=1.5;
-      const nr=rooms[`${G.floor}_n_${i}`];
-      if(nr){P.x=(nr.x0+nr.x1)/2;P.z=nr.z0+3;}
-      toast('Этаж '+(G.floor+1));
-      return;
-    }
-  }
-}
 
 let curInt=null;
 function collect(){
-  const list=[];const y=G.floor*FH;
+  const list=[];
   if(G.dead) return list;
-  if(Math.abs(pcPos.y-y)<3) list.push({pos:pcPos,label:'Рабочий ПК',r:3,a:openPC});
+  if(Math.abs(pcPos.y)<3) list.push({pos:pcPos,label:'Рабочий ПК',r:3,a:openPC});
   for(const n of npcs){
-    if(Math.abs(n.obj.position.y-y)>1.5) continue;
     list.push({pos:n.obj.position,label:'Говорить: '+n.name,r:2.4,a:()=>talkNPC(n)});
   }
-  if(G.fiz.active){
-    const g=rooms['0_n_6']||rooms['0_n_5'];
-    if(g) list.push({pos:new THREE.Vector3(g.cx,y+0.7,g.cz-3),label:'Прыгнуть ('+G.fiz.jumps+'/4)',r:3,a:doJump});
+  // Предметы
+  for(const it of G.items){
+    if(it.taken) continue;
+    list.push({
+      pos:new THREE.Vector3(it.x,it.y,it.z),
+      label:it.type==='food'?'Взять еду':(it.type==='medkit'?'Взять аптечку':'Взять нож'),
+      r:1.8,
+      a:()=>{
+        it.taken=true;world.remove(it.mesh);
+        if(it.type==='food'){G.inv.food++;toast('🍞 Еда +1');}
+        else if(it.type==='medkit'){G.inv.medkit++;toast('💊 Аптечка +1');}
+        else if(it.type==='knife'){G.inv.ammo++;G.hasKnife=true;toast('🔪 Нож +1');}
+        updateInventory();unlock('Собиратель');
+      }
+    });
   }
-  for(const k in rooms){
-    const r=rooms[k];
-    if(r.type==='cafe' && k.startsWith(G.floor+'_'))
-      list.push({pos:new THREE.Vector3(r.x0+2,y+1.2,r.cz+5),label:'Взять булочку',r:3,
-        a:()=>{G.hunger=Math.min(100,G.hunger+45);G.hasBun=true;toast('Булочка.');}});
-    if(r.type==='doctor' && k.startsWith('0_'))
-      list.push({pos:new THREE.Vector3(r.cx,y+1.2,r.cz+2),label:'Полечиться (+30)',r:3,
-        a:()=>{G.sanity=Math.min(100,G.sanity+30);G.stam=Math.min(100,G.stam+20);updateSanityHUD();toast('Легче.');}});
+  if(G.fiz.active){
+    for(const k in rooms){
+      if(rooms[k].type==='gym2'){
+        const r=rooms[k];
+        list.push({pos:new THREE.Vector3(r.cx,0.7,r.cz-3),label:'Прыгнуть ('+G.fiz.jumps+'/4)',r:3,a:doJump});
+      }
+    }
   }
   return list;
 }
@@ -1179,14 +1207,19 @@ function doJump(){
   if(G.fiz.jumps>=4){G.fiz.active=false;G.fiz.done=true;G.fiz.jumps=0;unlock('Мастер спорта');
     const f=findNPC('fizruk_night');if(f){f.state='wander';f.speed=0.8;f.hostile=false;}}
 }
+function useFood(){
+  if(G.inv.food>0){G.inv.food--;G.hunger=Math.min(100,G.hunger+40);updateInventory();toast('🍞 Поел.');}
+  else if(G.inv.medkit>0){G.inv.medkit--;G.health=Math.min(100,G.health+50);G.sanity=Math.min(100,G.sanity+20);updateInventory();toast('💊 Полечился.');updateSanityHUD();}
+  else toast('Нет еды!');
+}
 
 let dlgQ=[],dlgCB=null;
 function talkNPC(n){
   if(!G.running||G.dead) return;
   if(n.id==='zhanna' && !G.quizDone){ startQuiz(); return; }
   if(n.id==='director'){unlock('Вежливость');removeNPC(n);dlgQ=['Помахали.'];startDlg();return;}
-  if(n.id==='buhov' && !G.hasKnife){G.hasKnife=true;unlock('Инструмент');dlgQ=['Бухов: «Держи нож.»'];startDlg();return;}
-  if(n.id==='tetya'){G.hasBun=true;G.hunger=Math.min(100,G.hunger+40);dlgQ=['Тётя Валя: «Возьми булочку.»'];startDlg();return;}
+  if(n.id==='buhov'){if(!G.hasKnife){G.hasKnife=true;G.inv.ammo++;updateInventory();unlock('Инструмент');}dlgQ=['Бухов: «Держи нож.»'];startDlg();return;}
+  if(n.id&&n.id.startsWith('tetya')){G.inv.food+=2;updateInventory();dlgQ=['Тётя Валя: «Держи 2 булочки.»'];startDlg();return;}
   if(n.dialogue){dlgQ=n.dialogue.slice();startDlg();return;}
   dlgQ=[n.name+' молчит.'];startDlg();
 }
@@ -1227,9 +1260,9 @@ function showQ(){
 function finishQuiz(){
   document.getElementById('quizPanel').style.display='none';
   G.quizDone=true;
-  if(qs>=4){unlock('Отличник');dlgQ=['Жанна Викторовна: «'+qs+'/5 — отлично!»','«Ставлю пятёрку!»'];}
-  else if(qs>=3){unlock('Хорошист');dlgQ=['Жанна Викторовна: «'+qs+'/5 — неплохо.»'];}
-  else {dlgQ=['Жанна Викторовна: «'+qs+'/5…»','«Пересдашь завтра.»'];}
+  if(qs>=4){unlock('Отличник');dlgQ=['Жанна: «'+qs+'/5 — отлично!»'];}
+  else if(qs>=3){unlock('Хорошист');dlgQ=['Жанна: «'+qs+'/5 — неплохо.»'];}
+  else {dlgQ=['Жанна: «'+qs+'/5…»'];}
   const zh=findNPC('zhanna');
   if(zh) startDlg(); else requestLock();
 }
@@ -1238,9 +1271,9 @@ function openPC(){
   if(G.dead) return;
   document.getElementById('pcPanel').style.display='flex';
   document.getElementById('pcInfo').innerHTML='День: <b>'+G.day+'/5</b> • Время: <b>'+timeStr()+'</b><br>'+
-    'Этаж: <b>'+(G.floor+1)+'</b> • '+DIFF[difficulty].label+'<br>'+
+    'Карта: <b>'+MAPS[G.mapId].name+'</b><br>'+
     'Фаза: '+(isDay()?'<b style="color:#ffd76a">☀ ДЕНЬ</b>':'<b style="color:#7a8acf">🌙 НОЧЬ</b>')+'<br>'+
-    'Кодов 1: <b>'+G.code1Count+'</b> • Статус: '+(G.code1?'<b style="color:#7f9">изгнано</b>':(G.bell?'<b style="color:#fa0">ЗВОНОК</b>':'<b style="color:#7f9">норма</b>'));
+    'Кодов 1: <b>'+G.code1Count+'</b>';
   document.getElementById('pcLog').textContent='Терминал готов.';
   if(document.pointerLockElement) document.exitPointerLock();
 }
@@ -1249,8 +1282,8 @@ document.getElementById('pcPanel').addEventListener('click',e=>{
   const cmd=b.dataset.cmd,log=document.getElementById('pcLog');
   if(cmd==='code1'){sendRadio(1);}
   else if(cmd==='code3'){sendRadio(3);}
-  else if(cmd==='bell'){if(G.bell){G.bell=false;G.bellT=0;document.getElementById('bellIcon').classList.add('hidden');log.textContent='>> ЗВОНОК ВЫКЛ.';}else log.textContent='>> ОК.';}
-  else if(cmd==='sched'){log.textContent='>> Уроки: 7:30-17:00. Ночь: 20:00-7:30.';}
+  else if(cmd==='bell'){if(G.bell){G.bell=false;G.bellT=0;log.textContent='>> ЗВОНОК ВЫКЛ.';}else log.textContent='>> ОК.';}
+  else if(cmd==='sched'){log.textContent='>> Уроки 7:30-17:00. Ночь 20:00-7:30.';}
   else if(cmd==='close'){document.getElementById('pcPanel').style.display='none';requestLock();}
 });
 
@@ -1266,7 +1299,6 @@ document.getElementById('radioPanel').addEventListener('click',e=>{
   if(b.dataset.cmd==='close'){closeRadio();return;}
   const code=parseInt(b.dataset.radio);if(code) sendRadio(code);
 });
-
 function sendRadio(code){
   if(G.dead) return;
   const log=document.getElementById('radioLog');
@@ -1275,28 +1307,20 @@ function sendRadio(code){
       G.code1=true;G.code1T=60;G.code1Count++;
       G.fiz.active=false;G.larionovActive=false;
       const bf=document.getElementById('blueflash');
-      bf.classList.add('on');
-      setTimeout(()=>{bf.classList.remove('on');},350);
+      bf.classList.add('on');setTimeout(()=>{bf.classList.remove('on');},350);
       const killed=removeAllAnomalies();
       const fiz=findNPC('fizruk_night');if(fiz)removeNPC(fiz);
-      const lar=findNPC('larionov');if(lar)removeNPC(lar);
-      if(killed>0){
-        log.textContent='>> КОД 1: ИЗГНАНО СУЩНОСТЕЙ: '+killed;
-        toast('🚨 КОД 1 — изгнано: '+killed);
-      } else {
-        log.textContent='>> КОД 1: ЧИСТО, СУЩНОСТЕЙ НЕТ.';
-        toast('КОД 1 — чисто');
-      }
-      pushObj('Код 1 объявлен. Сущности изгнаны.');
+      log.textContent='>> КОД 1: ИЗГНАНО: '+killed;
+      toast('🚨 КОД 1 — изгнано: '+killed);
       unlock('Код 1');
       break;
     }
-    case 2: log.textContent='>> КОД 2: ОБХОД.';toast('КОД 2');break;
+    case 2: log.textContent='>> КОД 2.';toast('КОД 2');break;
     case 3: G.code3Count++;endGame('code3','КОД 3','Смена прервана.');return;
     case 4:
       G.stam=Math.min(100,G.stam+50);G.sanity=Math.min(100,G.sanity+20);
-      updateSanityHUD();log.textContent='>> КОД 4: СИЛЫ.';toast('КОД 4');break;
-    case 5: log.textContent='>> КОД 5: ЧИСТО.';toast('КОД 5');break;
+      updateSanityHUD();log.textContent='>> КОД 4.';toast('КОД 4');break;
+    case 5: log.textContent='>> КОД 5.';toast('КОД 5');break;
   }
 }
 function toggleFlashlight(){
@@ -1311,8 +1335,8 @@ function killPlayer(reason){
   setTimeout(()=>{document.getElementById('dmg').style.opacity=0;},600);
   setTimeout(()=>endGame('death','ВЫ ПОГИБЛИ',reason),500);
 }
-const ENDINGS={survive:{t:'ВСЕ 5 ДНЕЙ',d:'Вы выжили.'},code3:{t:'КОД 3',d:''},escape:{t:'ПОБЕГ',d:''},
-death:{t:'ВЫ ПОГИБЛИ',d:''},madness:{t:'БЕСКОНЕЧНОСТЬ',d:''},killer:{t:'КРОВАВАЯ СМЕНА',d:''}};
+const ENDINGS={survive:{t:'ВСЕ 5 ДНЕЙ',d:'Вы выжили.'},code3:{t:'КОД 3',d:''},
+death:{t:'ВЫ ПОГИБЛИ',d:''},madness:{t:'БЕСКОНЕЧНОСТЬ',d:''}};
 function endGame(k,title,text){
   G.running=false;G.paused=true;
   if(document.pointerLockElement) document.exitPointerLock();
@@ -1321,16 +1345,15 @@ function endGame(k,title,text){
   document.getElementById('endX').textContent=e.d;
   document.getElementById('endS').innerHTML=
     'День: <b>'+G.day+'/5</b> • Время: <b>'+timeStr()+'</b><br>'+
+    'Карта: <b>'+MAPS[G.mapId].name+'</b><br>'+
     'Сложность: <b>'+DIFF[difficulty].label+'</b><br>'+
     'Смертей: <b>'+G.deaths+'</b><br>'+
-    'Кодов 1: <b>'+G.code1Count+'</b> • Кодов 3: <b>'+G.code3Count+'</b>';
+    'Кодов 1: <b>'+G.code1Count+'</b>';
   document.getElementById('endPanel').style.display='flex';
   document.getElementById('hud').style.display='none';
   document.getElementById('touchUI').classList.remove('on');
   document.getElementById('radioPanel').style.display='none';
   document.getElementById('pcPanel').style.display='none';
-  document.getElementById('dlgPanel').style.display='none';
-  document.getElementById('quizPanel').style.display='none';
 }
 document.getElementById('endR').onclick=()=>{document.getElementById('endPanel').style.display='none';startGame(true);};
 
@@ -1341,7 +1364,9 @@ document.addEventListener('pointerlockchange',()=>{mouseLocked=document.pointerL
 document.addEventListener('mousemove',e=>{
   if(!mouseLocked||!G.running||G.paused||G.dead) return;
   const s=0.0022*cfg.sens;
-  P.yaw-=e.movementX*s;P.pitch=Math.max(-1.5,Math.min(1.5,P.pitch-e.movementY*s));
+  const inv=cfg.inv?-1:1;
+  P.yaw-=e.movementX*s;
+  P.pitch=Math.max(-1.5,Math.min(1.5,P.pitch-e.movementY*s*inv));
 });
 document.addEventListener('keydown',e=>{
   if(['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Tab'].includes(e.code)) e.preventDefault();
@@ -1352,6 +1377,7 @@ document.addEventListener('keydown',e=>{
   if(e.code==='KeyV') useVape();
   if(e.code==='KeyR'){if(G.radioOpen)closeRadio();else openRadio();}
   if(e.code==='KeyF') toggleFlashlight();
+  if(e.code==='KeyQ') useFood();
   if(e.code==='Escape' && document.pointerLockElement) document.exitPointerLock();
 });
 document.addEventListener('keyup',e=>{keys[e.code]=false;});
@@ -1381,6 +1407,7 @@ function setupTouch(){
   bind('btnVape',()=>useVape());
   bind('btnRadio',()=>openRadio());
   bind('btnTorch',()=>toggleFlashlight());
+  bind('btnEat',()=>useFood());
   const sprintBtn=document.getElementById('btnSprint');
   if(sprintBtn){
     const startSprint=e=>{e.preventDefault();e.stopPropagation();keys['ShiftLeft']=true;sprintBtn.classList.add('held');};
@@ -1388,9 +1415,6 @@ function setupTouch(){
     sprintBtn.addEventListener('touchstart',startSprint,{passive:false});
     sprintBtn.addEventListener('touchend',stopSprint);
     sprintBtn.addEventListener('touchcancel',stopSprint);
-    sprintBtn.addEventListener('mousedown',startSprint);
-    sprintBtn.addEventListener('mouseup',stopSprint);
-    sprintBtn.addEventListener('mouseleave',stopSprint);
   }
 }
 
@@ -1421,13 +1445,14 @@ function loop(now){
     const speed=sprint?5.5:3.0;
     G.stam=sprint?Math.max(0,G.stam-dt*D.stamRate):Math.min(100,G.stam+dt*D.stamRate*0.65);
     G.hunger=Math.max(0,G.hunger-dt*D.hungRate);
-    if(G.hunger<=0)G.stam=Math.max(0,G.stam-dt*8);
+    if(G.hunger<=0){G.stam=Math.max(0,G.stam-dt*8);G.health=Math.max(0,G.health-dt*1);}
+    if(G.health<=0) killPlayer('Вы умерли от голода.');
 
     if(isHorror() && D.sanityRate>0 && isNight()){
       let nearAnomaly=false;
       for(const n of npcs){if(n.kind!=='anomaly'||!n.hostile)continue;
         const d=Math.hypot(n.obj.position.x-P.x,n.obj.position.z-P.z);
-        if(d<8&&Math.abs(n.obj.position.y-G.floor*FH)<2){nearAnomaly=true;break;}}
+        if(d<8){nearAnomaly=true;break;}}
       if(nearAnomaly)G.sanity=Math.max(0,G.sanity-dt*D.sanityRate*2);
       else G.sanity=Math.min(100,G.sanity+dt*0.15);
       updateSanityHUD();
@@ -1442,13 +1467,11 @@ function loop(now){
     collide();
     if(P.x>X_MIN-1&&P.x<X_MAX+1)P.z=Math.max(-Z_ROOM+0.5,Math.min(Z_ROOM-0.5,P.z));
     P.x=Math.max(X_MIN-100+1,Math.min(X_MAX+0.4,P.x));
-    G.tpCD=Math.max(0,G.tpCD-dt);checkStairs();
     if(P.x<-80){unlock('Бесконечность');endGame('madness','БЕСКОНЕЧНОСТЬ','');return;}
 
     bobT+=dt*(sprint?12:8)*(mag>0.01?1:0);
     const bob=(mag>0.01)?Math.sin(bobT)*0.03:0;
-    const fY=G.floor*FH;
-    camera.position.set(P.x,fY+1.65+bob,P.z);
+    camera.position.set(P.x,1.65+bob,P.z);
     camera.rotation.y=P.yaw;camera.rotation.x=P.pitch;
     if(G.vapeCD>0)G.vapeCD-=dt;
     frameSkip++;
@@ -1456,52 +1479,33 @@ function loop(now){
     updateSmoke(dt);updateSky();updateLighting();updatePrompt();
     if(!isMobile||frameSkip%3===0)spawnNightAnomalies(dt*(isMobile?3:1));
 
-    // ═══ СМЕНА ДНЯ И НОЧИ ═══
     G.dayTime+=dt;
     if(G.dayTime>=DAY_SECONDS){
       G.dayTime-=DAY_SECONDS;G.day++;
-      if(G.day>MAX_DAY){
-        unlock('Выживший');
-        endGame('survive','ВСЕ 5 ДНЕЙ','Вы выжили!');
-        return;
-      }
-      unlock('День '+G.day);
-      toast('📅 День '+G.day+'/5');
+      if(G.day>MAX_DAY){unlock('Выживший');endGame('survive','ВСЕ 5 ДНЕЙ','Вы выжили!');return;}
+      unlock('День '+G.day);toast('📅 День '+G.day+'/5');
       G.fiz={active:false,t:0,jumps:0,done:false};G.larionovActive=false;
       G.sanity=Math.min(100,G.sanity+30);updateSanityHUD();
-      // Убираем всех аномалий при переходе на новый день
       removeAllAnomalies();
     }
 
-    // ═══ ПЕРЕХОД МЕЖДУ НОЧЬЮ И ДНЁМ ═══
     const h=gameHour();
-    const nowDay = (h >= 7.5 && h < 17);
-
-    // Начало дня (7:30)
+    const nowDay=(h>=7.5&&h<17);
     if(nowDay && !G.daySpawned){
-      // Убираем аномалии
       removeAllAnomalies();
       const fiz=findNPC('fizruk_night');if(fiz)removeNPC(fiz);
       const dw=findNPC('daywatch');if(dw)removeNPC(dw);
       const ant=findNPC('anton');if(ant)removeNPC(ant);
-      // Спавним дневных
       spawnDayNPCs();
-      // Мягкая жёлтая вспышка
       const df=document.getElementById('dayflash');
-      df.classList.add('on');
-      setTimeout(()=>{df.classList.remove('on');},800);
-      G.lastPhase='day';
+      df.classList.add('on');setTimeout(()=>{df.classList.remove('on');},800);
     }
-    // Начало ночи (после 17:00 или рано утром)
     if(!nowDay && G.daySpawned){
       removeDayNPCs();
-      G.lastPhase='night';
-      // Пуш-сообщение
       pushObj('Ночная смена. Обход каждые 30–40 мин.');
     }
-    G.lastPhase = nowDay ? 'day' : 'night';
 
-    if(G.bell){G.bellT-=dt;if(G.bellT<=0){G.bell=false;document.getElementById('bellIcon').classList.add('hidden');killPlayer('Звонок.');}}
+    if(G.bell){G.bellT-=dt;if(G.bellT<=0){G.bell=false;killPlayer('Звонок.');}}
     if(G.larionovActive){G.larionovT-=dt;if(G.larionovT<=0){G.larionovActive=false;const n=findNPC('larionov');if(n)removeNPC(n);if(!G.code1&&!G.dead)killPlayer('Правило 5.');}}
     if(G.fiz.active){G.fiz.t-=dt;if(G.fiz.t<=0){G.fiz.active=false;const n=findNPC('fizruk_night');if(n&&!G.fiz.done)killPlayer('Правило 3.');}}
     if(G.code1){G.code1T-=dt;if(G.code1T<=0)G.code1=false;}
@@ -1509,18 +1513,14 @@ function loop(now){
     document.getElementById('clock').textContent=timeStr();
     document.getElementById('dayBox').textContent='ДЕНЬ '+G.day+'/'+MAX_DAY;
     const phaseEl=document.getElementById('phaseBox');
-    if(nowDay){
-      phaseEl.textContent='☀ ДЕНЬ';
-      phaseEl.className='phase day';
-    } else {
-      phaseEl.textContent='🌙 НОЧЬ';
-      phaseEl.className='phase night';
-    }
+    if(nowDay){phaseEl.textContent='☀ ДЕНЬ';phaseEl.className='phase day';}
+    else{phaseEl.textContent='🌙 НОЧЬ';phaseEl.className='phase night';}
+    document.getElementById('health').style.width=G.health+'%';
     document.getElementById('stam').style.width=G.stam+'%';
     document.getElementById('hung').style.width=G.hunger+'%';
+    document.getElementById('health').classList.toggle('low',G.health<25);
     document.getElementById('stam').classList.toggle('low',G.stam<25);
     document.getElementById('hung').classList.toggle('low',G.hunger<25);
-    document.getElementById('tbox').classList.toggle('warn',!nowDay && h>=1 && h<5);
   }
   renderer.render(scene,camera);
 }
@@ -1528,7 +1528,6 @@ function loop(now){
 function updateNPCs(dt){
   const lod=cfg.lod,lod2=lod*lod;let processed=0;const maxNPC=cfg.npcCount;
   for(const n of npcs){
-    if(Math.abs(n.obj.position.y-G.floor*FH)>1.5 && n.state!=='chase') continue;
     if(n.noMove) continue;
     const dx0=n.obj.position.x-P.x,dz0=n.obj.position.z-P.z,d2=dx0*dx0+dz0*dz0;
     if(n.kind!=='anomaly' && d2>(lod*1.5)*(lod*1.5)){if(n.visible){n.obj.visible=false;n.visible=false;}continue;}
@@ -1559,6 +1558,23 @@ function pushObj(t){document.getElementById('obj').textContent=t;}
 function toast(t){const d=document.createElement('div');d.className='toast';d.textContent=t;document.getElementById('toasts').appendChild(d);setTimeout(()=>d.remove(),4000);}
 function unlock(n){if(G.ach.has(n))return;G.ach.add(n);toast('🏆 '+n);}
 
+function applyHudSettings(){
+  const clock=document.getElementById('tbox');
+  const bars=document.getElementById('bars');
+  const obj=document.getElementById('obj');
+  const cross=document.getElementById('cross');
+  const toasts=document.getElementById('toasts');
+  const inv=document.getElementById('inventory');
+  clock.style.display=cfg.hudClock?'block':'none';
+  bars.style.display=cfg.hudBars?'block':'none';
+  obj.style.display=cfg.hudObj?'block':'none';
+  cross.style.display=cfg.hudCross?'block':'none';
+  toasts.style.display=cfg.hudToasts?'flex':'none';
+  inv.style.display=cfg.hudInv?'flex':'none';
+  document.getElementById('hud').style.fontSize=(13*cfg.hud)+'px';
+  document.getElementById('hud').style.opacity=cfg.hudAlpha;
+}
+
 function startGame(newSeed){
   if(!renderer||!scene){alert('3D не загрузилось.');return;}
   document.getElementById('menu').classList.add('hidden');
@@ -1571,30 +1587,37 @@ function startGame(newSeed){
   document.getElementById('touchUI').classList.toggle('on',device==='touch');
 
   G.running=true;G.paused=false;G.dead=false;
-  G.day=1;G.dayTime=0;G.floor=0;
-  G.stam=100;G.hunger=100;G.sanity=100;
+  G.day=1;G.dayTime=0;
+  G.health=100;G.stam=100;G.hunger=100;G.sanity=100;
   G.bell=false;G.bellT=0;G.code1=false;G.code1T=0;
-  G.tpCD=0;G.hasKnife=false;G.hasBun=false;G.vapeCD=0;
+  G.hasKnife=false;G.hasBun=false;G.vapeCD=0;
   G.fiz={active:false,t:0,jumps:0,done:false};G.larionovActive=false;G.larionovT=0;
   G.deaths=0;G.ach.clear();G.quizDone=false;
   G.flashlightOn=true;G.radioOpen=false;G.screamerCD=isHorror()?20:999;
   G.code1Count=0;G.code3Count=0;
   G.daySpawned=false;
-  G.lastPhase=null;
+  G.inv={food:0,medkit:0,ammo:0};
 
   if(newSeed) G.seed=Math.floor(Math.random()*100000)+1;
+  G.mapId = Math.floor(Math.random()*MAP_COUNT);
   buildSchool();
 
   if(torch) torch.intensity=isHorror()?2.5:1.8;
 
-  const post=rooms['0_s_0'];
-  P.x=post.cx;P.z=post.cz+3;
-  P.yaw=0;P.pitch=0;P.floor=0;
+  const post=rooms['s_0'];
+  if(post){
+    P.x=post.cx;P.z=post.cz+3;
+  } else {
+    P.x=0;P.z=0;
+  }
+  P.yaw=0;P.pitch=0;
 
   spawnAllNPCs();
+  updateInventory();
+  applyHudSettings();
 
-  pushObj('День 1/5. Смена начинается в 20:00. Обход каждые 30–40 мин.');
-  toast('🌙 День 1/5 — 20:00');
+  pushObj('День 1/5. Карта: '+MAPS[G.mapId].name+'. Q — поесть, F — фонарик.');
+  toast('🌙 День 1/5 — '+MAPS[G.mapId].name);
   toast('☀ Ученики придут в 7:30');
   updateSanityHUD();
 
@@ -1614,23 +1637,27 @@ function renderMenu(){
       document.getElementById('rulesPanel').style.display='flex';
       document.getElementById('rulesText').innerHTML=
         '<h3>ЦЕЛЬ: 5 ДНЕЙ × 5 МИНУТ</h3>'+
-        'Каждый день = 5 реальных минут. Успеешь увидеть и ночь, и день!<br>'+
-        '<h3>РАСПИСАНИЕ</h3>'+
-        '🌙 <b>20:00–7:30</b> — ночь, только охранник и сущности<br>'+
-        '☀ <b>7:30–17:00</b> — день, приходят ученики и учителя<br>'+
-        '<h3>ПРАВИЛО 1</h3>Дневной сторож → <b>КОД 1</b> (R).<br>'+
-        '<h3>ПРАВИЛО 2</h3>Директор 2:43 → помахать (E).<br>'+
-        '<h3>ПРАВИЛО 3</h3>Физрук → 4 прыжка.<br>'+
-        '<h3>ПРАВИЛО 4</h3>Учитель 4Б.<br>'+
-        '<h3>ПРАВИЛО 5</h3>Ларионов → <b>КОД 3</b>.<br>'+
-        '<h3>ПРАВИЛО 6</h3>Антон → булочка.<br>'+
-        '<h3>💙 ПОМОЩНИКИ</h3>Леха, Илья, Максим, Амир — на посту.<br>'+
-        '<h3>👑 СОЗДАТЕЛЬ</h3>Саня — рядом.<br>'+
-        '<h3>ПК</h3><span class="kbd">WASD</span> • <span class="kbd">Shift</span> БЕГ • <span class="kbd">E</span> взаимодействие<br>'+
-        '<span class="kbd">V</span> вейп • <span class="kbd">R</span> РАЦИЯ • <span class="kbd">F</span> ФОНАРИК';
+        '<h3>ЦИКЛ ДЕНЬ/НОЧЬ</h3>'+
+        '🌙 <b>20:00–7:30</b> — ночь, сущности<br>'+
+        '☀ <b>7:30–17:00</b> — день, ученики и учителя<br>'+
+        '<h3>ПРАВИЛА</h3>'+
+        '1. Дневной сторож → КОД 1 (R)<br>'+
+        '2. Директор 2:43 → помахать (E)<br>'+
+        '3. Физрук → 4 прыжка<br>'+
+        '4. Учитель 4Б<br>'+
+        '5. Ларионов → КОД 3<br>'+
+        '6. Антон → булочка<br>'+
+        '<h3>ПРЕДМЕТЫ</h3>'+
+        '🍞 Еда — в столовой (+сытость)<br>'+
+        '💊 Аптечка — в медкабинете (+здоровье)<br>'+
+        '🔪 Нож — в кабинете труда<br>'+
+        'Нажми <b>E</b> чтобы подобрать.<br>'+
+        '<h3>УПРАВЛЕНИЕ (ПК)</h3>'+
+        '<span class="kbd">WASD</span> • <span class="kbd">Shift</span> БЕГ • <span class="kbd">E</span> взаимодействие<br>'+
+        '<span class="kbd">V</span> вейп • <span class="kbd">R</span> РАЦИЯ • <span class="kbd">F</span> ФОНАРИК • <span class="kbd">Q</span> ПОЕСТЬ';
     }]);
-    items.push(['НАСТРОЙКИ',openSettings]);
-    items.push(['ОБ ИГРЕ',()=>alert('ШКОЛА №43 v9\n\nЦИКЛ ДЕНЬ/НОЧЬ!\n20:00–7:30 ночь (сущности)\n7:30–17:00 день (ученики, учителя)\nКОД 1 изгоняет всех сущностей.')]);
+    items.push(['НАСТРОЙКИ (ГРАФИКА, HUD)',openSettings]);
+    items.push(['ОБ ИГРЕ',()=>alert('ШКОЛА №43 v10\n\n10 разных карт!\nОдин этаж, окна, предметы.\nЦикл день/ночь.\nНастройки графики и HUD для телефона.')]);
   } else if(screen==='setup'){
     items.push(['— СЛОЖНОСТЬ: '+DIFF[difficulty].label,()=>{
       const arr=['easy','normal','hard','horror'];
@@ -1660,33 +1687,54 @@ document.getElementById('rulesOk').onclick=()=>{document.getElementById('rulesPa
 
 function openSettings(){
   document.getElementById('setPanel').style.display='flex';
-  const map={s_sens:'sens',s_fov:'fov',s_bright:'bright',s_dist:'dist',s_hud:'hud',s_qual:'qual',s_fps:'fps',s_lod:'lod',s_npc:'npcCount',s_showfps:'showFps'};
+  const map={
+    s_sens:'sens', s_inv:'inv',
+    s_qual:'qual', s_fov:'fov', s_bright:'bright', s_dist:'dist',
+    s_aa:'aa', s_shadow:'shadow', s_fps:'fps', s_lod:'lod', s_npc:'npcCount', s_showfps:'showFps',
+    s_hud:'hud', s_hudAlpha:'hudAlpha',
+    s_hudClock:'hudClock', s_hudBars:'hudBars', s_hudObj:'hudObj',
+    s_hudCross:'hudCross', s_hudToasts:'hudToasts', s_hudInv:'hudInv'
+  };
   for(const id in map){
     const el=document.getElementById(id);if(!el) continue;
     el.value=cfg[map[id]];
     document.getElementById('v_'+map[id]).textContent=cfg[map[id]];
-    el.oninput=e=>{cfg[map[id]]=parseFloat(e.target.value);
+    el.oninput=e=>{
+      cfg[map[id]]=parseFloat(e.target.value);
       document.getElementById('v_'+map[id]).textContent=e.target.value;
-      applyS();localStorage.setItem('sh43v9',JSON.stringify(cfg));};
+      applyS();applyHudSettings();
+      localStorage.setItem('sh43v10',JSON.stringify(cfg));
+    };
   }
 }
 document.getElementById('setBack').onclick=()=>document.getElementById('setPanel').style.display='none';
-document.getElementById('setReset').onclick=()=>{cfg=Object.assign({},DEF);applyS();localStorage.setItem('sh43v9',JSON.stringify(cfg));openSettings();};
+document.getElementById('setReset').onclick=()=>{
+  cfg=Object.assign({},DEF);
+  applyS();applyHudSettings();
+  localStorage.setItem('sh43v10',JSON.stringify(cfg));
+  openSettings();
+};
 function applyS(){
   if(camera){camera.fov=cfg.fov;camera.updateProjectionMatrix();}
   if(scene){scene.fog.far=cfg.dist;}
-  document.getElementById('hud').style.fontSize=(13*cfg.hud)+'px';
-  if(renderer){const pr=isMobile?0.75:PR_OPTS[cfg.qual];renderer.setPixelRatio(pr);renderer.setSize(innerWidth,innerHeight);}
+  if(renderer){
+    const pr=isMobile?0.75:PR_OPTS[cfg.qual];
+    renderer.setPixelRatio(pr);
+    renderer.setSize(innerWidth,innerHeight);
+  }
   document.getElementById('fps').style.display=cfg.showFps?'block':'none';
+  applyHudSettings();
 }
 addEventListener('resize',()=>{if(camera){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}if(renderer)renderer.setSize(innerWidth,innerHeight);});
 
 renderMenu();
 setupTouch();
+applyHudSettings();
 
 try {
   initThree();initMaterials();applyS();
   G.seed=Math.floor(Math.random()*100000)+1;
+  G.mapId=0;
   buildSchool();
   menuSel=0;renderMenu();
   requestAnimationFrame(t=>{lastT=t;lastFrameTime=t;lastFpsUpdate=t;loop(t);});
