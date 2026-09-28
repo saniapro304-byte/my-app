@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
-<title>ШКОЛА №43 — v10.5 фикс багов</title>
+<title>ШКОЛА №43 — V11.5 Beta</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;font-family:Consolas,monospace;color:#cfe;position:fixed;touch-action:none}
@@ -16,6 +16,7 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 #min{position:absolute;inset:0;z-index:7;display:flex;flex-direction:column;padding:14px 16px;overflow-y:auto}
 #min h1{font-size:15px;letter-spacing:2px;color:#5f9;text-shadow:0 0 8px #0f0;margin-bottom:3px}
 #min .sub{font-size:9px;color:#2a7;margin-bottom:14px;letter-spacing:1.5px}
+.beta-tag{display:inline-block;background:#f80;color:#000;padding:2px 6px;border-radius:3px;font-weight:bold;font-size:10px;letter-spacing:1px;margin-left:6px;vertical-align:middle}
 .mbtn{background:rgba(13,42,28,.55);border:1px solid #1d5;color:#9fecbf;font-family:inherit;font-size:13px;text-align:left;padding:11px 12px;cursor:pointer;letter-spacing:1.2px;border-radius:5px;transition:.1s;margin-bottom:6px}
 .mbtn:hover,.mbtn:active{background:#1d5;color:#021}
 .mbtn.danger{color:#ffa0a0;border-color:#a02020}
@@ -24,6 +25,7 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 .mbtn.small{font-size:11px;padding:8px 12px}
 #tvlb{position:absolute;bottom:10px;left:0;right:0;text-align:center;color:#6a5340;font-size:10px;letter-spacing:6px;font-weight:bold}
 #hud{position:fixed;inset:0;pointer-events:none;z-index:30;display:none}
+#betaTag{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(6px + env(safe-area-inset-bottom));font-size:9px;color:#f80;letter-spacing:2px;background:rgba(0,0,0,.6);padding:2px 8px;border-radius:3px;border:1px solid rgba(255,136,0,.4);z-index:31}
 #cross{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;opacity:.6}
 #cross::before,#cross::after{content:'';position:absolute;background:#fff}
 #cross::before{left:5px;top:0;width:2px;height:4px}
@@ -63,6 +65,11 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 #dayflash.on{opacity:.3}
 #redflash{position:fixed;inset:0;background:#ff0000;opacity:0;pointer-events:none;z-index:27;transition:opacity .1s}
 #redflash.on{opacity:.6}
+#almondflash{position:fixed;inset:0;background:#a0d8ff;opacity:0;pointer-events:none;z-index:28;transition:opacity .3s}
+#almondflash.on{opacity:.35}
+#betaglitch{position:fixed;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,136,0,.15) 50%,transparent 100%);opacity:0;pointer-events:none;z-index:29;mix-blend-mode:overlay}
+#betaglitch.on{animation:bg .15s steps(3) 3}
+@keyframes bg{0%{opacity:.5;transform:translateX(-5px)}50%{opacity:.8;transform:translateX(5px)}100%{opacity:0;transform:translateX(0)}}
 #fps{position:fixed;left:8px;bottom:8px;font-size:11px;color:#4dff9b;background:rgba(0,0,0,.6);padding:3px 8px;border-radius:2px;z-index:35;font-family:monospace;line-height:1.4}
 #fps b{color:#fa0}
 #screamer{position:fixed;inset:0;background:#000;z-index:99;display:none;pointer-events:none}
@@ -117,6 +124,8 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 #btnSprint{left:145px;bottom:calc(85px + env(safe-area-inset-bottom));width:56px;height:56px;background:rgba(255,100,100,.3);border-color:rgba(255,100,100,.6);color:#ffd0d0;font-size:9.5px}
 #btnSprint.held{background:rgba(255,100,100,.85);color:#fff;transform:scale(.9)}
 #btnEat{right:18px;bottom:calc(60px + env(safe-area-inset-bottom));width:56px;height:56px;background:rgba(255,150,80,.3);border-color:rgba(255,150,80,.6);color:#ffe0c0;font-size:9.5px}
+#btnAlmond{right:80px;bottom:calc(60px + env(safe-area-inset-bottom));width:56px;height:56px;background:rgba(120,180,255,.35);border-color:rgba(160,200,255,.7);color:#e0eeff;font-size:9.5px}
+#btnAlmond:active{background:rgba(120,180,255,.85);transform:scale(.9)}
 </style>
 </head>
 <body>
@@ -124,8 +133,8 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <div id="menu"><div id="tv"><div id="scr">
 <div id="crt"></div>
 <div id="min">
-<h1>ШКОЛА №43<br>НОЧНАЯ СМЕНА</h1>
-<div class="sub">v11 • БОЛЬШЕ ХОРРОРА</div>
+<h1>ШКОЛА №43<br>НОЧНАЯ СМЕНА<span class="beta-tag">BETA</span></h1>
+<div class="sub">V11.5 Beta • 10 КАРТ • ХОРРОР</div>
 <div id="menuList"></div>
 </div>
 </div><div id="tvlb">ГОРИЗОНТ-43</div></div></div>
@@ -147,11 +156,14 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <div id="inventory"></div>
 <div id="prompt"></div>
 <div id="toasts"></div>
+<div id="betaTag">⚡ V11.5 BETA ⚡</div>
 </div>
 <div id="dmg"></div>
 <div id="blueflash"></div>
 <div id="dayflash"></div>
 <div id="redflash"></div>
+<div id="almondflash"></div>
+<div id="betaglitch"></div>
 <div id="heartbeat"></div>
 <div id="screamer"><div id="screamerFace">☠</div></div>
 <div id="fps"><b id="fpsVal">--</b> FPS | <span id="fpsInfo">dc:-- tri:--</span></div>
@@ -165,10 +177,11 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <button class="tbtn" id="btnTorch">🔦</button>
 <button class="tbtn" id="btnSprint">БЕГ</button>
 <button class="tbtn" id="btnEat">🍞</button>
+<button class="tbtn" id="btnAlmond">💧</button>
 </div>
 
 <div class="panel" id="pcPanel"><div class="pbox">
-<h2>ПОСТ ОХРАНЫ</h2>
+<h2>ПОСТ ОХРАНЫ • BETA</h2>
 <div id="pcInfo"></div>
 <div id="pcBtns" style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
 <button data-cmd="code1" class="danger">КОД 1</button>
@@ -204,19 +217,17 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 </div></div>
 
 <div class="panel" id="rulesPanel"><div class="pbox">
-<h2>ПРАВИЛА</h2>
+<h2>ПРАВИЛА • BETA</h2>
 <div class="rules" id="rulesText"></div>
 <button id="rulesOk" class="primary">ПОНЯЛ</button>
 </div></div>
 
 <div class="panel" id="setPanel"><div class="pbox">
 <h2>НАСТРОЙКИ</h2>
-
 <div class="sg"><h3>УПРАВЛЕНИЕ</h3>
 <div class="sr"><span>Чувствительность</span><input id="s_sens" type="range" min="0.3" max="3" step="0.05"><span class="sv" id="v_sens"></span></div>
 <div class="sr"><span>Инверсия мыши</span><input id="s_inv" type="range" min="0" max="1" step="1"><span class="sv" id="v_inv"></span></div>
 </div>
-
 <div class="sg"><h3>ГРАФИКА</h3>
 <div class="sr"><span>Качество</span><input id="s_qual" type="range" min="0" max="3" step="1"><span class="sv" id="v_qual"></span></div>
 <div class="sr"><span>Угол обзора</span><input id="s_fov" type="range" min="60" max="110" step="1"><span class="sv" id="v_fov"></span></div>
@@ -229,7 +240,6 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <div class="sr"><span>NPC (кол-во)</span><input id="s_npc" type="range" min="3" max="40" step="1"><span class="sv" id="v_npc"></span></div>
 <div class="sr"><span>Показ FPS</span><input id="s_showfps" type="range" min="0" max="1" step="1"><span class="sv" id="v_showfps"></span></div>
 </div>
-
 <div class="sg"><h3>HUD ДЛЯ ТЕЛЕФОНА</h3>
 <div class="sr"><span>Показ часов</span><input id="s_hudClock" type="range" min="0" max="1" step="1"><span class="sv" id="v_hudClock"></span></div>
 <div class="sr"><span>Показ баров</span><input id="s_hudBars" type="range" min="0" max="1" step="1"><span class="sv" id="v_hudBars"></span></div>
@@ -240,7 +250,9 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 <div class="sr"><span>Размер HUD</span><input id="s_hud" type="range" min="0.7" max="1.5" step="0.05"><span class="sv" id="v_hud"></span></div>
 <div class="sr"><span>Прозрачность</span><input id="s_hudAlpha" type="range" min="0.3" max="1" step="0.05"><span class="sv" id="v_hudAlpha"></span></div>
 </div>
-
+<div class="sg"><h3>BETA ФИЧИ</h3>
+<div class="sr"><span>Бета-глюки</span><input id="s_betaGlitch" type="range" min="0" max="1" step="1"><span class="sv" id="v_betaGlitch"></span></div>
+</div>
 <div style="margin-top:14px">
 <button id="setBack" class="primary">НАЗАД</button>
 <button id="setReset">СБРОС</button>
@@ -257,16 +269,18 @@ input[type=range]{flex:1;height:4px;accent-color:#4dff9b}
 import * as THREE from 'three';
 
 const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) || (navigator.maxTouchPoints>0);
+const VERSION = 'V11.5 Beta';
 
 const DEF={
   sens:1.5, inv:0,
   qual:isMobile?0:1, fov:78, bright:1.5, dist:isMobile?35:60, aa:0, shadow:0,
   fps:0, lod:isMobile?25:40, npcCount:isMobile?25:40, showFps:1,
   hud:1.0, hudAlpha:0.9,
-  hudClock:1, hudBars:1, hudObj:1, hudCross:1, hudToasts:1, hudInv:1
+  hudClock:1, hudBars:1, hudObj:1, hudCross:1, hudToasts:1, hudInv:1,
+  betaGlitch:1
 };
 let cfg=Object.assign({},DEF);
-try{Object.assign(cfg,JSON.parse(localStorage.getItem('sh43v11')||'{}'));}catch(e){}
+try{Object.assign(cfg,JSON.parse(localStorage.getItem('sh43v115')||'{}'));}catch(e){}
 
 const PR_OPTS=[0.5,0.75,1.0,1.5];
 const FPS_OPTS=[0,60,30,45,120];
@@ -295,17 +309,19 @@ const G={
   fiz:{active:false,t:0,jumps:0,done:false},
   larionovActive:false,larionovT:0,
   rulesShown:false,flashlightOn:true,radioOpen:false,
-  screamerCD:0, screamerCount:0, doubleScreamerChance:0,
+  screamerCD:0, screamerCount:0,
   fps:60,fpsAcc:0,fpsFrames:0,
   code1Count:0,code3Count:0,
   daySpawned:false,
   items:[],
-  inv:{food:0,medkit:0,ammo:0},
-  // статистика для концовок
+  inv:{food:0,medkit:0,ammo:0,almond:0},
   killsByKnife:0, vapeUses:0, missedObhods:0,
-  lastTalkTime:0, lonelyTimer:0,
-  bathroomTimer:0, lastPos:{x:0,z:0}, stillTimer:0,
-  saidHiToDirector:false
+  lonelyTimer:0,
+  bathroomTimer:0,
+  stillTimer:0,
+  almondImmunity:0,
+  betaGlitchCount:0,
+  betaGlitchCD:10
 };
 
 let renderer=null,scene=null,camera=null,torch=null,world=null,canvas=null;
@@ -376,6 +392,7 @@ function initMaterials(){
   M.food=new THREE.MeshLambertMaterial({color:0xffa050});
   M.medkit=new THREE.MeshLambertMaterial({color:0xff3030,emissive:0x300000});
   M.knife=new THREE.MeshLambertMaterial({color:0xc0d0e0});
+  M.almond=new THREE.MeshLambertMaterial({color:0xa0c8ff,emissive:0x204060});
 }
 
 const MAPS=[
@@ -571,10 +588,34 @@ function spawnItems(){
       spawnItem(r.cx+2, 0.9, r.cz+2, 'knife', 0xc0d0e0);
     }
   }
+  for(let i=0;i<8;i++){
+    const x = X_MIN + 6 + Math.random()*(X_MAX-X_MIN-12);
+    const z = (Math.random()<0.5)?2:-2;
+    spawnItem(x, 0.9, z, 'almond', 0xa0c8ff);
+  }
+  for(const k in rooms){
+    if(rooms[k].type==='library'){
+      const r=rooms[k];
+      for(let j=0;j<3;j++) spawnItem(r.x0+2+j*2, 0.9, r.cz-2, 'almond', 0xa0c8ff);
+      break;
+    }
+  }
+  for(const k in rooms){
+    if(rooms[k].type==='doctor'){
+      const r=rooms[k];
+      spawnItem(r.cx-1, 0.9, r.cz-3, 'almond', 0xa0c8ff);
+      spawnItem(r.cx+1, 0.9, r.cz-3, 'almond', 0xa0c8ff);
+      break;
+    }
+  }
 }
 function spawnItem(x,y,z,type,color){
-  const geo = type==='knife' ? new THREE.BoxGeometry(0.5,0.05,0.08) : new THREE.BoxGeometry(0.3,0.3,0.3);
-  const mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({color, emissive: type==='medkit'?0x300000:0x000000}));
+  let geo;
+  if(type==='knife') geo = new THREE.BoxGeometry(0.5,0.05,0.08);
+  else if(type==='almond') geo = new THREE.CylinderGeometry(0.12,0.15,0.4,8);
+  else geo = new THREE.BoxGeometry(0.3,0.3,0.3);
+  const emissive = type==='medkit'?0x300000:(type==='almond'?0x204060:0x000000);
+  const mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({color, emissive}));
   mesh.position.set(x, y, z);
   mesh.matrixAutoUpdate=false;mesh.updateMatrix();
   world.add(mesh);
@@ -586,7 +627,6 @@ function fillRoom(type,b,y0,i,side){
   const frontZ=side==='n'?b.z1-0.2:b.z0+0.2;
 
   if(isClass){
-    // Учебные места — где будут сидеть ученики
     for(let r=0;r<3;r++) for(let c=0;c<2;c++){
       const x=b.x0+3+c*5.5;
       const z=b.cz-2.5+r*2.8;
@@ -594,7 +634,6 @@ function fillRoom(type,b,y0,i,side){
       addBox(x-0.5,y0+0.4,z,0.08,0.7,0.1,M.wood,false);
       addBox(x+0.5,y0+0.4,z,0.08,0.7,0.1,M.wood,false);
       colliders.push({minX:x-0.7,maxX:x+0.7,minY:y0,maxY:y0+0.85,minZ:z-0.4,maxZ:z+0.4});
-      // Стул позади парты
       addBox(x,y0+0.4,z+0.6,0.4,0.05,0.4,M.chair,false);
       addBox(x,y0+0.75,z+0.8,0.4,0.5,0.08,M.chair,false);
     }
@@ -818,14 +857,12 @@ function removeAllAnomalies(){
   for(const n of npcs.slice()){if(n.kind==='anomaly'){removeNPC(n);k++;}}
   return k;
 }
-
-// ═══ АНОМАЛИИ ═══
 function spawnNightAnomalies(dt){
   if(!isNight()||G.code1) return;
   const mul=DIFF[difficulty].anomMul,h=gameHour();
   if(!findNPC('daywatch') && !G.code1 && Math.random()<dt*0.008*mul){
     spawnNPC('daywatch',X_MAX-5,0,0,'ДНЕВНОЙ СТОРОЖ','anomaly',0x554466,{hostile:true,speed:isHorror()?3.5:2.2,state:'chase',
-      shirt:0x3a3a48,skin:0xb0b0b0,onContact:()=>{if(!G.code1) killPlayer('Правило 1: Дневной сторож.');}});
+      shirt:0x3a3a48,skin:0xb0b0b0,onContact:()=>{if(!G.code1) killPlayer('Правило 1: Дневной сторож.','death');}});
     pushObj('⚠ ДНЕВНОЙ СТОРОЖ! На пост → КОД 1 (R).');toast('ДНЕВНОЙ СТОРОЖ');
     if(isHorror()) triggerScreamer();
   }
@@ -837,7 +874,7 @@ function spawnNightAnomalies(dt){
   if(h>2.8666){const d=findNPC('director');if(d)removeNPC(d);}
   if(!findNPC('fizruk_night') && h>0.5 && h<5 && !G.fiz.done && Math.random()<dt*0.006*mul){
     spawnNPC('fizruk_night',X_MAX-8,0,0,'ФИЗРУК','anomaly',0xcc7733,{hostile:true,speed:isHorror()?4.0:2.5,state:'chase',
-      shirt:0xcc7733,onContact:()=>{if(!G.fiz.done) killPlayer('Правило 3: Физрук.');}});
+      shirt:0xcc7733,onContact:()=>{if(!G.fiz.done) killPlayer('Правило 3: Физрук.','death');}});
     G.fiz.active=true;G.fiz.t=60;
     pushObj('⚠ ФИЗРУК! Спортзал → 4 прыжка.');toast('ФИЗРУК');
   }
@@ -847,7 +884,7 @@ function spawnNightAnomalies(dt){
       onContact:()=>{
         if(G.hasKnife){G.killsByKnife++;unlock('Убийца');removeNPC(findNPC('anton'));toast('Антон убит ножом!');}
         else if(G.inv.food>0){G.inv.food--;updateInventory();unlock('Пекарь');removeNPC(findNPC('anton'));toast('Антон: спасибо!');}
-        else killPlayer('Правило 6: Антон съел вас.');
+        else killPlayer('Правило 6: Антон съел вас.','eaten');
       }});
     toast('Антон');
   }
@@ -855,33 +892,29 @@ function spawnNightAnomalies(dt){
     G.larionovActive=true;G.larionovT=30;
     spawnNPC('larionov',rooms['n_5']?rooms['n_5'].cx:20,0,rooms['n_5']?rooms['n_5'].cz:0,'ЛАРИОНОВ','anomaly',0x902020,{hostile:true,speed:0,state:'idle',
       shirt:0x3a2020,skin:0xa06060,
-      onContact:()=>{if(!G.code1) killPlayer('Правило 5: Ларионов.');}});
+      onContact:()=>{if(!G.code1) killPlayer('Правило 5: Ларионов.','death');}});
     pushObj('☣ ЛАРИОНОВ! КОД 3 за 30 сек!');
     if(isHorror()) triggerScreamer();
   }
 }
 
-// ═══ ДНЕВНЫЕ NPC (СИДЯТ НА МЕСТАХ) ═══
 function spawnDayNPCs(){
   if(G.daySpawned) return;
   G.daySpawned=true;
 
-  // Жанна Викторовна — учитель
   for(const k in rooms){
     if(rooms[k].type==='english'){
       const r=rooms[k];
       spawnNPC('zhanna', r.cx+4, 0, r.cz+3, 'Жанна Викторовна', 'staff', 0xd060a0, {
         shirt:0xd060a0, pants:0x3a2a40, skin:0xf0c8b0,
         state:'idle', noMove:true, pose:'teach', isDayOnly:true,
-        dialogue:['Жанна Викторовна: «Здравствуйте!»','«Урок идёт, не мешайте.»']
+        dialogue:['Жанна Викторовна: «Здравствуйте!»','«Урок идёт.»']
       });
-      // Ученики сидят за партами
       const engNames=['Аня','Дима','Маша','Вова'];
-      let pi=0;
       for(let j=0;j<4;j++){
         const nx=r.x0+3+(j%2)*5.5;
         const nz=r.cz-2+Math.floor(j/2)*4;
-        spawnNPC('eng_pupil'+j, nx, 0, nz+0.6, engNames[pi++], 'neutral', 0x7080a0, {
+        spawnNPC('eng_pupil'+j, nx, 0, nz+0.6, engNames[j], 'neutral', 0x7080a0, {
           shirt:[0x7080a0,0xa08060,0x6090a0,0x9060a0][j%4],
           pants:0x303040, state:'idle', noMove:true, pose:'sit', isDayOnly:true,
           dialogue:['Ученик: «Английский…»']
@@ -890,7 +923,6 @@ function spawnDayNPCs(){
     }
   }
 
-  // Учителя и ученики в классах
   const classes=[
     {type:'class1a',teacher:'Марья Ивановна',tColor:0xa08060,pupils:['Петя','Ваня','Катя','Соня','Миша','Люба']},
     {type:'class1b',teacher:'Ольга Петровна',tColor:0x8090c0,pupils:['Кира','Рома','Таня','Дима','Света','Костя']},
@@ -903,13 +935,11 @@ function spawnDayNPCs(){
     const room=rooms[k];
     const c=classes.find(cl=>cl.type===room.type);
     if(!c) continue;
-    // Учитель стоит у доски
     spawnNPC('t_'+k, room.cx+4, 0, room.cz+3, c.teacher, 'staff', c.tColor, {
       shirt:c.tColor, pants:0x403040, skin:0xe8c8a8,
       state:'idle', noMove:true, pose:'teach', isDayOnly:true,
       dialogue:[c.teacher+': «Урок идёт, тихо!»']
     });
-    // Ученики СИДЯТ за партами
     let pi=0;
     for(let r=0;r<3;r++) for(let col=0;col<2;col++){
       if(pi>=c.pupils.length) break;
@@ -924,7 +954,6 @@ function spawnDayNPCs(){
     }
   }
 
-  // Прогульщики СИДЯТ в кабинете директора
   for(const k in rooms){
     if(rooms[k].type==='director'){
       const r=rooms[k];
@@ -974,7 +1003,7 @@ function spawnAllNPCs(){
     spawnNPC('helper_sanya', pr.cx + 5, 0, pr.cz - 5, 'Саня', 'friendly', 0xc060a0, {
       shirt:0xc060a0, pants:0x402050, skin:0xf0d0b0,
       state:'idle', noMove:true,
-      dialogue:['Саня: «Я создал эту школу.»','«Карта: '+MAPS[G.mapId].name+'»','«Хоррор — не для слабых.»']
+      dialogue:['Саня: «Я создал эту школу.»','«Карта: '+MAPS[G.mapId].name+'»','«V11.5 Beta — экспериментальная версия!»']
     });
     const helpLabel=bigLabelSprite('ПОМОЩНИКИ','#9ad0ff');
     helpLabel.position.set(pr.cx - 1.2, 3.8, pr.cz - 5);world.add(helpLabel);
@@ -1021,7 +1050,7 @@ function spawnAllNPCs(){
       spawnNPC('doctor1', r.cx, 0, r.cz+3, 'Доктор', 'staff', 0xf0f0f0, {
         shirt:0xf0f0f0, pants:0xf0f0f0, skin:0xe8c0a0,
         state:'idle', noMove:true,
-        dialogue:['Доктор: «Как самочувствие?»']
+        dialogue:['Доктор: «Миндальная вода — лучшее лекарство.»']
       });
       break;
     }
@@ -1072,8 +1101,7 @@ function useVape(){
   G.vapeCD=2.5;
   G.vapeUses++;
   if(G.vapeUses>=15 && isHorror()){
-    // Передоз вейпа
-    killPlayer('Переборщили с вейпом. Организм не выдержал.');
+    killPlayer('Переборщили с вейпом.','overdose');
     return;
   }
   const dir=new THREE.Vector3();camera.getWorldDirection(dir);
@@ -1096,18 +1124,16 @@ function updateSmoke(dt){
   }
 }
 
-// ═══ СКРИМЕРЫ — БОЛЬШЕ В ХОРРОРЕ ═══
 function triggerScreamer(){
   if(!isHorror()) return;
-  // Не блокируем кулдауном — вызывается из разных мест
+  if(G.almondImmunity>0) return;
   G.screamerCount++;
   const el=document.getElementById('screamer'),face=document.getElementById('screamerFace');
-  const faces=['☠','👁','💀','👹','👻','▄▀▄','╬','ЖУТЬ'];
+  const faces=['☠','👁','💀','👹','👻','▄▀▄','╬','ЖУТЬ','BETA','ERR'];
   const alt = Math.random()<0.3;
   el.classList.toggle('alt', alt);
   face.textContent=faces[Math.floor(Math.random()*faces.length)];
 
-  // Красная вспышка
   const rf=document.getElementById('redflash');
   rf.classList.add('on');
   setTimeout(()=>{rf.classList.remove('on');},120);
@@ -1122,17 +1148,19 @@ function triggerScreamer(){
 
   G.sanity=Math.max(0,G.sanity-12);
   updateSanityHUD();
-  if(G.sanity<=0){killPlayer('Рассудок не выдержал.');return;}
-
-  // Тряска камеры
-  if(cfg.shake!==0){
-    let shakeT=0.5;
-    const shakeInt=setInterval(()=>{
-      shakeT-=0.05;
-      camera.position.x+=(Math.random()-0.5)*0.3;
-      camera.position.y+=(Math.random()-0.5)*0.3;
-      if(shakeT<=0) clearInterval(shakeInt);
-    },30);
+  if(G.sanity<=0){killPlayer('Рассудок не выдержал.','sanLoss');return;}
+}
+function triggerBetaGlitch(){
+  if(!cfg.betaGlitch) return;
+  G.betaGlitchCount++;
+  const el=document.getElementById('betaglitch');
+  el.classList.remove('on');void el.offsetWidth;el.classList.add('on');
+  setTimeout(()=>{el.classList.remove('on');},500);
+  // Лёгкий "сбой"
+  if(Math.random()<0.3){
+    const dmg=document.getElementById('dmg');
+    dmg.style.opacity=0.15;
+    setTimeout(()=>{dmg.style.opacity=0;},200);
   }
 }
 function updateSanityHUD(){
@@ -1149,6 +1177,7 @@ function updateInventory(){
   if(G.inv.food>0) el.innerHTML+=`<div class="inv-item">🍞 ${G.inv.food}</div>`;
   if(G.inv.medkit>0) el.innerHTML+=`<div class="inv-item">💊 ${G.inv.medkit}</div>`;
   if(G.inv.ammo>0) el.innerHTML+=`<div class="inv-item">🔪 ${G.inv.ammo}</div>`;
+  if(G.inv.almond>0) el.innerHTML+=`<div class="inv-item" style="color:#a0c8ff;border-color:#a0c8ff">💧 ${G.inv.almond}</div>`;
 }
 
 function collide(){
@@ -1183,13 +1212,14 @@ function collect(){
     if(it.taken) continue;
     list.push({
       pos:new THREE.Vector3(it.x,it.y,it.z),
-      label:it.type==='food'?'Взять еду':(it.type==='medkit'?'Взять аптечку':'Взять нож'),
+      label:it.type==='food'?'Взять еду':(it.type==='medkit'?'Взять аптечку':(it.type==='almond'?'Взять миндальную воду':'Взять нож')),
       r:1.8,
       a:()=>{
         it.taken=true;world.remove(it.mesh);
         if(it.type==='food'){G.inv.food++;toast('🍞 Еда +1');}
         else if(it.type==='medkit'){G.inv.medkit++;toast('💊 Аптечка +1');}
         else if(it.type==='knife'){G.inv.ammo++;G.hasKnife=true;toast('🔪 Нож +1');}
+        else if(it.type==='almond'){G.inv.almond++;toast('💧 Миндальная вода +1');unlock('Миндаль');}
         updateInventory();unlock('Собиратель');
       }
     });
@@ -1232,16 +1262,33 @@ function useFood(){
   else if(G.inv.medkit>0){G.inv.medkit--;G.health=Math.min(100,G.health+50);G.sanity=Math.min(100,G.sanity+20);updateInventory();toast('💊 Полечился.');updateSanityHUD();}
   else toast('Нет еды!');
 }
+function useAlmond(){
+  if(G.inv.almond>0){
+    G.inv.almond--;
+    G.sanity=Math.min(100,G.sanity+50);
+    G.health=Math.min(100,G.health+10);
+    G.almondImmunity=15;
+    updateInventory();
+    updateSanityHUD();
+    const af=document.getElementById('almondflash');
+    af.classList.add('on');setTimeout(()=>af.classList.remove('on'),350);
+    toast('💧 Миндальная вода! Рассудок +50, скримеры выкл 15с');
+    unlock('Целитель');
+  } else {
+    useFood();
+  }
+}
 
 let dlgQ=[],dlgCB=null;
 function talkNPC(n){
   if(!G.running||G.dead) return;
-  G.lastTalkTime=G.dayTime;
   G.lonelyTimer=0;
   if(n.id==='zhanna' && !G.quizDone){ startQuiz(); return; }
   if(n.id==='director'){unlock('Вежливость');removeNPC(n);dlgQ=['Помахали.'];startDlg();return;}
   if(n.id==='buhov'){if(!G.hasKnife){G.hasKnife=true;G.inv.ammo++;updateInventory();unlock('Инструмент');}dlgQ=['Бухов: «Держи нож.»'];startDlg();return;}
   if(n.id&&n.id.startsWith('tetya')){G.inv.food+=2;updateInventory();dlgQ=['Тётя Валя: «Держи 2 булочки.»'];startDlg();return;}
+  if(n.id==='doctor1'){G.inv.almond+=2;updateInventory();dlgQ=['Доктор: «Вот тебе миндальная вода.»'];startDlg();return;}
+  if(n.id==='helper_sanya'){G.inv.almond++;updateInventory();dlgQ=['Саня: «Держи миндальную воду.»','«V11.5 Beta — не багуй!»'];startDlg();return;}
   if(n.dialogue){dlgQ=n.dialogue.slice();startDlg();return;}
   dlgQ=[n.name+' молчит.'];startDlg();
 }
@@ -1292,11 +1339,12 @@ function finishQuiz(){
 function openPC(){
   if(G.dead) return;
   document.getElementById('pcPanel').style.display='flex';
-  document.getElementById('pcInfo').innerHTML='День: <b>'+G.day+'/5</b> • Время: <b>'+timeStr()+'</b><br>'+
+  document.getElementById('pcInfo').innerHTML='Версия: <b>'+VERSION+'</b><br>'+
+    'День: <b>'+G.day+'/5</b> • Время: <b>'+timeStr()+'</b><br>'+
     'Карта: <b>'+MAPS[G.mapId].name+'</b><br>'+
     'Фаза: '+(isDay()?'<b style="color:#ffd76a">☀ ДЕНЬ</b>':'<b style="color:#7a8acf">🌙 НОЧЬ</b>')+'<br>'+
-    'Скримеров: <b>'+G.screamerCount+'</b> • КОД 1: <b>'+G.code1Count+'</b>';
-  document.getElementById('pcLog').textContent='Терминал готов.';
+    'Скримеров: <b>'+G.screamerCount+'</b> • Бета-глюков: <b>'+G.betaGlitchCount+'</b>';
+  document.getElementById('pcLog').textContent='Терминал V11.5 Beta.';
   if(document.pointerLockElement) document.exitPointerLock();
 }
 document.getElementById('pcPanel').addEventListener('click',e=>{
@@ -1358,28 +1406,23 @@ function killPlayer(reason,endingKey){
   const key=endingKey||'death';
   setTimeout(()=>endGame(key,'ВЫ ПОГИБЛИ',reason),500);
 }
-
-// ═══ КОНЦОВКИ — БОЛЬШЕ ═══
 const ENDINGS={
-  // Хорошие
-  survive:{t:'🏆 ВСЕ 5 ДНЕЙ',d:'Вы выжили все 5 ночей! Настоящий охранник.'},
-  master:{t:'👑 МАСТЕР',d:'Ни одной смерти, все 5 дней, все правила соблюдены. ЛЕГЕНДА!'},
-  hunter:{t:'🗡 ОХОТНИК',d:'Вы перебили всех сущностей ножом. Школа в безопасности.'},
-  // Нейтральные
-  code3:{t:'📻 КОД 3',d:'Смена прервана. Инспектор разберётся.'},
-  escape:{t:'🚪 ПОБЕГ',d:'Вы ушли со смены через кабинет директора.'},
-  fired:{t:'📋 УВОЛЕН',d:'Директор узнал, что вы не выполняли обход. Уволены.'},
-  // Плохие
+  survive:{t:'🏆 ВСЕ 5 ДНЕЙ',d:'Вы выжили все 5 ночей!'},
+  master:{t:'👑 МАСТЕР',d:'Ни одной смерти + 3 убийства ножом.'},
+  hunter:{t:'🗡 ОХОТНИК',d:'Перебили всех сущностей ножом.'},
+  code3:{t:'📻 КОД 3',d:'Смена прервана.'},
+  escape:{t:'🚪 ПОБЕГ',d:'Ушли со смены.'},
+  fired:{t:'📋 УВОЛЕН',d:'3 дня без обхода.'},
+  noObrods:{t:'⏰ НЕ НА ОБХОДЕ',d:'Уволены.'},
   death:{t:'💀 ВЫ ПОГИБЛИ',d:''},
-  madness:{t:'🌌 БЕСКОНЕЧНОСТЬ',d:'Коридор 0 этажа не закончился. Закончились вы.'},
+  madness:{t:'🌌 БЕСКОНЕЧНОСТЬ',d:'Коридор не закончился.'},
   killer:{t:'🔪 КРОВАВАЯ СМЕНА',d:'Нож нашел применение.'},
-  eaten:{t:'🍔 СЪЕДЕН',d:'Антон съел вас. Не дали булочку.'},
-  overdose:{t:'💨 ПЕРЕДОЗ',d:'Слишком много вейпа в хорроре.'},
-  bathroom:{t:'🚽 ЗАСТРЯЛ',d:'Вы застряли в туалете на всю смену.'},
-  lonely:{t:'😶 ОДИНОЧЕСТВО',d:'Вы ни с кем не разговаривали всю смену. Сторож-невидимка.'},
-  bell:{t:'🔔 ЗВОНОК',d:'Не отключили звонок-аномалию.'},
-  noObrods:{t:'⏰ НЕ НА ОБХОДЕ',d:'Три дня подряд не делали обход. Уволили.'},
-  sanLoss:{t:'🧠 СУМАСШЕСТВИЕ',d:'Рассудок не выдержал хоррор-режима.'}
+  eaten:{t:'🍔 СЪЕДЕН',d:'Антон съел вас.'},
+  overdose:{t:'💨 ПЕРЕДОЗ',d:'Слишком много вейпа.'},
+  bathroom:{t:'🚽 ЗАСТРЯЛ',d:'Застряли в туалете.'},
+  lonely:{t:'😶 ОДИНОЧЕСТВО',d:'Ни с кем не говорили.'},
+  bell:{t:'🔔 ЗВОНОК',d:'Не отключили звонок.'},
+  sanLoss:{t:'🧠 СУМАСШЕСТВИЕ',d:'Рассудок не выдержал.'}
 };
 function endGame(k,title,text){
   G.running=false;G.paused=true;
@@ -1388,10 +1431,12 @@ function endGame(k,title,text){
   document.getElementById('endT').textContent=e.t;
   document.getElementById('endX').textContent=e.d||text;
   document.getElementById('endS').innerHTML=
+    'Версия: <b>'+VERSION+'</b><br>'+
     'День: <b>'+G.day+'/5</b> • Время: <b>'+timeStr()+'</b><br>'+
     'Карта: <b>'+MAPS[G.mapId].name+'</b><br>'+
     'Сложность: <b>'+DIFF[difficulty].label+'</b><br>'+
     'Смертей: <b>'+G.deaths+'</b> • Скримеров: <b>'+G.screamerCount+'</b><br>'+
+    'Бета-глюков: <b>'+G.betaGlitchCount+'</b><br>'+
     'Убийств: <b>'+G.killsByKnife+'</b> • Вейпов: <b>'+G.vapeUses+'</b>';
   document.getElementById('endPanel').style.display='flex';
   document.getElementById('hud').style.display='none';
@@ -1422,6 +1467,7 @@ document.addEventListener('keydown',e=>{
   if(e.code==='KeyR'){if(G.radioOpen)closeRadio();else openRadio();}
   if(e.code==='KeyF') toggleFlashlight();
   if(e.code==='KeyQ') useFood();
+  if(e.code==='KeyZ') useAlmond();
   if(e.code==='Escape' && document.pointerLockElement) document.exitPointerLock();
 });
 document.addEventListener('keyup',e=>{keys[e.code]=false;});
@@ -1452,6 +1498,7 @@ function setupTouch(){
   bind('btnRadio',()=>openRadio());
   bind('btnTorch',()=>toggleFlashlight());
   bind('btnEat',()=>useFood());
+  bind('btnAlmond',()=>useAlmond());
   const sprintBtn=document.getElementById('btnSprint');
   if(sprintBtn){
     const startSprint=e=>{e.preventDefault();e.stopPropagation();keys['ShiftLeft']=true;sprintBtn.classList.add('held');};
@@ -1492,21 +1539,28 @@ function loop(now){
     if(G.hunger<=0){G.stam=Math.max(0,G.stam-dt*8);G.health=Math.max(0,G.health-dt*1);}
     if(G.health<=0) killPlayer('Вы умерли от голода.','death');
 
-    // ═══ СКРИМЕРЫ (только хоррор) ═══
+    if(G.almondImmunity>0) G.almondImmunity-=dt;
+
+    // BETA глюки — раз в N секунд
+    if(cfg.betaGlitch){
+      G.betaGlitchCD-=dt;
+      if(G.betaGlitchCD<=0 && Math.random()<0.6){
+        triggerBetaGlitch();
+        G.betaGlitchCD=20+Math.random()*40;
+      }
+    }
+
     if(isHorror()){
       G.screamerCD-=dt;
-      // Обычные скримеры — чаще
-      if(G.screamerCD<=0 && Math.random()<dt*0.03){
+      if(G.screamerCD<=0 && Math.random()<dt*0.03 && G.almondImmunity<=0){
         triggerScreamer();
         G.screamerCD=2+Math.random()*4;
       }
-      // Случайный двойной скример
-      if(Math.random()<dt*0.008){
+      if(Math.random()<dt*0.008 && G.almondImmunity<=0){
         triggerScreamer();
         setTimeout(()=>triggerScreamer(),300);
         G.screamerCD=4+Math.random()*4;
       }
-      // Рассудок падает от близких сущностей
       if(D.sanityRate>0 && isNight()){
         let nearAnomaly=false;
         for(const n of npcs){if(n.kind!=='anomaly'||!n.hostile)continue;
@@ -1517,7 +1571,7 @@ function loop(now){
         updateSanityHUD();
         const hb=document.getElementById('heartbeat');
         if(G.sanity<60)hb.style.opacity=0.3+Math.sin(now*0.005)*0.15;else hb.style.opacity=0;
-        if(G.sanity<=0){killPlayer('Рассудок не выдержал хоррор-режима.','sanLoss');return;}
+        if(G.sanity<=0){killPlayer('Рассудок не выдержал.','sanLoss');return;}
       }
     }
 
@@ -1538,14 +1592,8 @@ function loop(now){
     updateSmoke(dt);updateSky();updateLighting();updatePrompt();
     if(!isMobile||frameSkip%3===0)spawnNightAnomalies(dt*(isMobile?3:1));
 
-    // ═══ ТАЙМЕРЫ ДЛЯ КОНЦОВОК ═══
-    // Lonely — если долго ни с кем не говорил (2.5 мин = 1 день игры)
     G.lonelyTimer+=dt;
-    if(G.lonelyTimer>150 && G.day>=3){ // 2.5 мин на 3-м дне
-      unlock('Одиночка');
-      endGame('lonely');return;
-    }
-    // Bathroom — если 90 секунд в туалете не двигался
+    if(G.lonelyTimer>150 && G.day>=3){unlock('Одиночка');endGame('lonely');return;}
     const inBathroom = (()=>{
       for(const k in rooms){
         if(!rooms[k].type.startsWith('wc')) continue;
@@ -1554,32 +1602,22 @@ function loop(now){
       }
       return false;
     })();
-    if(inBathroom){
-      G.bathroomTimer+=dt;
-      if(G.bathroomTimer>120){unlock('Застрял');endGame('bathroom');return;}
-    } else G.bathroomTimer=0;
+    if(inBathroom){G.bathroomTimer+=dt;if(G.bathroomTimer>120){unlock('Застрял');endGame('bathroom');return;}}
+    else G.bathroomTimer=0;
 
     G.dayTime+=dt;
     if(G.dayTime>=DAY_SECONDS){
       G.dayTime-=DAY_SECONDS;G.day++;
       if(G.day>MAX_DAY){
-        // Финальная концовка зависит от статистики
-        if(G.deaths===0 && G.killsByKnife>=3){
-          unlock('Мастер');endGame('master');return;
-        }
-        if(G.deaths===0){
-          unlock('Выживший');endGame('survive');return;
-        }
-        unlock('Выживший');endGame('survive');return;
+        if(G.deaths===0 && G.killsByKnife>=3){unlock('Мастер');endGame('master');return;}
+        if(G.deaths===0){unlock('Выживший');endGame('survive');return;}
+        endGame('survive');return;
       }
       unlock('День '+G.day);toast('📅 День '+G.day+'/5');
       G.fiz={active:false,t:0,jumps:0,done:false};G.larionovActive=false;
       G.sanity=Math.min(100,G.sanity+30);updateSanityHUD();
       removeAllAnomalies();
-      // Если 3+ дня подряд без обхода — уволен
-      if(G.missedObhods>=3){
-        endGame('noObrods');return;
-      }
+      if(G.missedObhods>=3){endGame('noObrods');return;}
     }
 
     const h=gameHour();
@@ -1603,10 +1641,7 @@ function loop(now){
     if(G.fiz.active){G.fiz.t-=dt;if(G.fiz.t<=0){G.fiz.active=false;const n=findNPC('fizruk_night');if(n&&!G.fiz.done)killPlayer('Правило 3.','death');}}
     if(G.code1){G.code1T-=dt;if(G.code1T<=0)G.code1=false;}
 
-    // Если игрок убил всех сущностей ножом — концовка «Охотник»
-    if(G.killsByKnife>=3 && !G.dead && isNight()){
-      unlock('Охотник');endGame('hunter');return;
-    }
+    if(G.killsByKnife>=3 && !G.dead && isNight()){unlock('Охотник');endGame('hunter');return;}
 
     document.getElementById('clock').textContent=timeStr();
     document.getElementById('dayBox').textContent='ДЕНЬ '+G.day+'/'+MAX_DAY;
@@ -1696,10 +1731,11 @@ function startGame(newSeed){
   G.screamerCount=0;
   G.code1Count=0;G.code3Count=0;
   G.daySpawned=false;
-  G.inv={food:0,medkit:0,ammo:0};
+  G.inv={food:0,medkit:0,ammo:0,almond:0};
   G.killsByKnife=0;G.vapeUses=0;G.missedObhods=0;
-  G.lastTalkTime=0;G.lonelyTimer=0;
-  G.bathroomTimer=0;
+  G.lonelyTimer=0;G.bathroomTimer=0;G.stillTimer=0;
+  G.almondImmunity=0;
+  G.betaGlitchCount=0;G.betaGlitchCD=15;
 
   if(newSeed) G.seed=Math.floor(Math.random()*100000)+1;
   G.mapId = Math.floor(Math.random()*MAP_COUNT);
@@ -1716,10 +1752,11 @@ function startGame(newSeed){
   updateInventory();
   applyHudSettings();
 
-  pushObj('День 1/5. Карта: '+MAPS[G.mapId].name+'. Q — поесть, F — фонарик.');
-  toast('🌙 День 1/5 — '+MAPS[G.mapId].name);
-  if(isHorror()) toast('😱 ХОРРОР — скримеры включены!');
+  pushObj('V11.5 Beta — карта: '+MAPS[G.mapId].name+'. Z — миндаль, Q — еда.');
+  toast('⚡ V11.5 BETA — '+MAPS[G.mapId].name);
+  if(isHorror()) toast('😱 ХОРРОР + Бета-глюки!');
   toast('☀ Ученики придут в 7:30');
+  toast('💧 Миндальная вода — в коридоре, библиотеке');
   updateSanityHUD();
 
   if(!G.rulesShown){
@@ -1737,29 +1774,25 @@ function renderMenu(){
     items.push(['ПРАВИЛА И УПРАВЛЕНИЕ',()=>{
       document.getElementById('rulesPanel').style.display='flex';
       document.getElementById('rulesText').innerHTML=
+        '<h3>V11.5 BETA — ЭКСПЕРИМЕНТАЛЬНАЯ</h3>'+
+        'Новые фичи могут работать нестабильно. Спасибо за тест!<br>'+
         '<h3>ЦЕЛЬ: 5 ДНЕЙ × 5 МИНУТ</h3>'+
         '<h3>ЦИКЛ ДЕНЬ/НОЧЬ</h3>'+
         '🌙 <b>20:00–7:30</b> — ночь, сущности<br>'+
         '☀ <b>7:30–17:00</b> — день, ученики СИДЯТ за партами<br>'+
-        '<h3>ХОРРОР</h3>'+
-        'Много скримеров, рассудок падает, тёмное небо.<br>'+
-        '<h3>КОНЦОВКИ (много!)</h3>'+
-        '🏆 Выжил 5 дней<br>'+
-        '👑 Мастер — без смертей + убил 3 ножом<br>'+
-        '🗡 Охотник — убил 3 сущностей ножом<br>'+
-        '🚪 Побег — через директора<br>'+
-        '🍔 Съеден — Антон поймал<br>'+
-        '💨 Передоз — 15+ вейпов в хорроре<br>'+
-        '🚽 Застрял — 2 минуты в туалете<br>'+
-        '😶 Одиночество — ни с кем не говорил<br>'+
-        '📋 Уволен — 3 дня без обхода<br>'+
-        '🧠 Сумасшествие — рассудок на нуле<br>'+
+        '<h3>💧 МИНДАЛЬНАЯ ВОДА</h3>'+
+        '+50 рассудка, +10 здоровья, <b>15 сек иммунитета от скримеров</b><br>'+
+        'Клавиша <b>Z</b> на ПК / кнопка 💧 на телефоне.<br>'+
+        '<h3>⚡ BETA ФИЧИ</h3>'+
+        '• Случайные "глюки" экрана (помехи)<br>'+
+        '• Больше скримеров в хорроре<br>'+
+        '• Пометка BETA в углу<br>'+
         '<h3>УПРАВЛЕНИЕ ПК</h3>'+
         '<span class="kbd">WASD</span> • <span class="kbd">Shift</span> БЕГ • <span class="kbd">E</span> взаимодействие<br>'+
-        '<span class="kbd">V</span> вейп • <span class="kbd">R</span> РАЦИЯ • <span class="kbd">F</span> ФОНАРИК • <span class="kbd">Q</span> ПОЕСТЬ';
+        '<span class="kbd">V</span> вейп • <span class="kbd">R</span> РАЦИЯ • <span class="kbd">F</span> ФОНАРИК • <span class="kbd">Q</span> ЕДА • <span class="kbd">Z</span> МИНДАЛЬ';
     }]);
     items.push(['НАСТРОЙКИ (ГРАФИКА, HUD)',openSettings]);
-    items.push(['ОБ ИГРЕ',()=>alert('ШКОЛА №43 v11\n\n10 карт, 1 этаж, окна.\nМного скримеров в хорроре.\nМного концовок.\nУченики сидят на местах.')]);
+    items.push(['ОБ ИГРЕ',()=>alert('ШКОЛА №43 — '+VERSION+'\n\n10 карт, миндальная вода.\nСкримеры в хорроре, бета-глюки.\nУченики сидят на местах.\n\nСпасибо за тестирование Beta!')]);
   } else if(screen==='setup'){
     items.push(['— СЛОЖНОСТЬ: '+DIFF[difficulty].label,()=>{
       const arr=['easy','normal','hard','horror'];
@@ -1795,7 +1828,8 @@ function openSettings(){
     s_aa:'aa', s_shadow:'shadow', s_fps:'fps', s_lod:'lod', s_npc:'npcCount', s_showfps:'showFps',
     s_hud:'hud', s_hudAlpha:'hudAlpha',
     s_hudClock:'hudClock', s_hudBars:'hudBars', s_hudObj:'hudObj',
-    s_hudCross:'hudCross', s_hudToasts:'hudToasts', s_hudInv:'hudInv'
+    s_hudCross:'hudCross', s_hudToasts:'hudToasts', s_hudInv:'hudInv',
+    s_betaGlitch:'betaGlitch'
   };
   for(const id in map){
     const el=document.getElementById(id);if(!el) continue;
@@ -1805,7 +1839,7 @@ function openSettings(){
       cfg[map[id]]=parseFloat(e.target.value);
       document.getElementById('v_'+map[id]).textContent=e.target.value;
       applyS();applyHudSettings();
-      localStorage.setItem('sh43v11',JSON.stringify(cfg));
+      localStorage.setItem('sh43v115',JSON.stringify(cfg));
     };
   }
 }
@@ -1813,7 +1847,7 @@ document.getElementById('setBack').onclick=()=>document.getElementById('setPanel
 document.getElementById('setReset').onclick=()=>{
   cfg=Object.assign({},DEF);
   applyS();applyHudSettings();
-  localStorage.setItem('sh43v11',JSON.stringify(cfg));
+  localStorage.setItem('sh43v115',JSON.stringify(cfg));
   openSettings();
 };
 function applyS(){
