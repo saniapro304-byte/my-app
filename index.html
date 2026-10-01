@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#000">
-<title>ШКОЛА №43 — V24.2</title>
+<title>ШКОЛА №43 — V24.3</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-tap-highlight-color:transparent;font-family:Consolas,monospace}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;position:fixed;touch-action:none}
@@ -12,96 +12,104 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 .h{display:none!important}
 #mc{z-index:1}
 
-/* BOOT */
-#boot{position:fixed;inset:0;z-index:200;background:radial-gradient(circle at 30% 20%,#1a3a6a,#0a1020 60%,#000);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity 1s;overflow:hidden}
-#boot.off{opacity:0;pointer-events:none}
-.bootStars{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.bootStar{position:absolute;width:2px;height:2px;background:#5f9;border-radius:50%;box-shadow:0 0 6px #5f9;animation:starTwinkle 3s infinite}
-@keyframes starTwinkle{0%,100%{opacity:.2;transform:scale(.5)}50%{opacity:1;transform:scale(1.4)}}
-.bootLogoBig{position:absolute;top:8%;left:50%;transform:translateX(-50%);text-align:center;color:#5f9;text-shadow:0 0 30px #0f0,0 0 60px #0f0;font-size:32px;letter-spacing:12px;font-weight:bold;animation:logoPulse 2s infinite}
-@keyframes logoPulse{50%{text-shadow:0 0 50px #0f0,0 0 100px #0f0;transform:translateX(-50%) scale(1.05)}}
-.bootLogoSub{position:absolute;top:15%;left:50%;transform:translateX(-50%);color:#7ab;font-size:11px;letter-spacing:6px;opacity:.7}
-.deskIcon{position:absolute;width:110px;text-align:center;color:#fff;cursor:pointer;padding:12px 8px;border-radius:10px;transition:.25s;border:2px solid transparent}
-.deskIcon:hover{background:rgba(95,255,155,.12);border-color:rgba(95,255,155,.5);transform:scale(1.08)}
-.deskIcon .em{font-size:52px;display:block;text-shadow:0 0 20px #5f9;animation:iconFloat 3s infinite}
-@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.deskIcon .lb{font-size:13px;color:#cfe;letter-spacing:2px;margin-top:8px;font-weight:bold}
-.deskIcon .desc{font-size:9px;color:#7ab;margin-top:3px}
-.deskIcon.main{left:80px;top:120px}
-.deskIcon.mods{left:80px;top:250px}
-.deskIcon.tit{left:80px;top:380px}
-.deskIcon.chg{left:80px;top:510px}
-/* КУРСОР — настоящий X-курсор как в Windows */
-.bootCursor{position:absolute;width:32px;height:32px;pointer-events:none;transition:all 1.6s cubic-bezier(.55,.05,.4,.95);z-index:10;transform-origin:0 0}
-.bootCursor svg{width:100%;height:100%;filter:drop-shadow(0 2px 3px rgba(0,0,0,.9))}
-.bootCursor.click{transform:scale(.7) rotate(-15deg)}
-.bootCursor.c1{left:135px;top:160px}
-.bootCursor.c2{left:135px;top:290px}
-.bootCursor.c3{left:135px;top:420px}
-.bootCursor.c4{left:135px;top:550px}
-.bootCursor.start{left:50%;top:50%;opacity:0}
-.deskbar{position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(180deg,rgba(10,20,40,.95),rgba(0,5,15,.98));border-top:2px solid #3fd18a;display:flex;align-items:center;padding:0 16px;color:#5f9;font-size:13px;letter-spacing:1.5px}
-.deskbar b{color:#ffd76a;padding:4px 12px;background:rgba(0,0,0,.5);border-radius:4px;border:1px solid #3fd18a;cursor:pointer}
-.btime{margin-left:auto;color:#9fecbf;font-size:12px}
-.bootHint{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);color:#9ee;font-size:12px;letter-spacing:2.5px;opacity:.6;animation:hintBlink 1.5s infinite}
-@keyframes hintBlink{50%{opacity:.3}}
-.bootTray{position:absolute;bottom:52px;right:16px;display:flex;gap:8px;color:#5f9;font-size:16px;opacity:.7}
+/* ═══════ ENTRANCE INTRO ═══════ */
+#intro{position:fixed;inset:0;z-index:200;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity 1.1s;overflow:hidden}
+#intro.off{opacity:0;pointer-events:none}
+#introCanvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+.introOverlay{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.75) 100%);z-index:2}
+.introFlicker{position:absolute;inset:0;pointer-events:none;background:rgba(80,255,140,.015);animation:crtFlicker .18s infinite;z-index:3}
+@keyframes crtFlicker{0%,100%{opacity:.5}50%{opacity:.9}}
+.introSub{position:absolute;bottom:12%;left:50%;transform:translateX(-50%);color:#5f9;font-size:clamp(11px,1.5vmin,14px);letter-spacing:clamp(2px,.8vw,6px);text-shadow:0 0 12px #5f9;opacity:0;transition:opacity .8s;font-family:Consolas,monospace;z-index:5;text-align:center;padding:0 16px}
+.introSub.on{opacity:.85}
+.introTitle{position:absolute;top:12%;left:50%;transform:translateX(-50%);text-align:center;opacity:0;transition:opacity 1s;z-index:5}
+.introTitle.on{opacity:1}
+.introTitle .t1{font-size:clamp(20px,4.5vmin,40px);color:#5f9;letter-spacing:clamp(4px,1.5vw,14px);text-shadow:0 0 20px #5f9,0 0 40px #0f0;font-weight:bold}
+.introTitle .t2{font-size:clamp(9px,1.4vmin,12px);color:#7ab;letter-spacing:clamp(2px,.8vw,8px);margin-top:6px}
+.introSkip{position:absolute;bottom:24px;right:24px;color:#5f9;font-size:11px;letter-spacing:2px;opacity:.5;animation:hintBlink 1.6s infinite;z-index:6;padding:8px 14px;border:1px solid rgba(80,255,140,.4);border-radius:6px;background:rgba(0,20,10,.4);cursor:pointer;font-family:Consolas,monospace}
+@keyframes hintBlink{50%{opacity:.2}}
 
-/* COMPACT MENU */
-#menu{position:fixed;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;padding:14px;pointer-events:none;overflow-y:auto}
-#mb{pointer-events:auto;width:100%;max-width:420px;padding:16px 18px;border-radius:14px;background:linear-gradient(160deg,rgba(10,22,16,.96),rgba(6,14,10,.98));border:1px solid rgba(80,255,140,.5);box-shadow:0 0 60px rgba(0,255,120,.22),inset 0 1px 0 rgba(80,255,140,.2);max-height:95vh;overflow-y:auto;backdrop-filter:blur(8px);position:relative}
-#mb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#5f9,transparent);border-radius:14px 14px 0 0}
-#mb h1{font-size:13px;color:#5f9;letter-spacing:2px;text-shadow:0 0 10px #0f0;margin-bottom:2px;text-align:center;font-weight:bold}
-#mb .s{font-size:9px;color:#2a7;margin-bottom:12px;letter-spacing:2px;text-align:center}
-#mb .h2{font-size:10.5px;color:#9ee;line-height:1.45;margin-bottom:10px;text-align:center}
-#mb .h2 b{color:#5f9}#mb .h2 i{color:#ffd76a;font-style:normal}
-.ms{display:flex;flex-direction:column;gap:2px}
-.ms.h{display:none}
-.b{background:rgba(13,42,28,.65);border:1px solid rgba(30,120,60,.7);color:#9fecbf;font-family:inherit;font-size:11px;text-align:left;padding:7px 11px;cursor:pointer;letter-spacing:1px;border-radius:6px;transition:all .12s;width:100%;position:relative;overflow:hidden}
-.b::before{content:'▸ ';opacity:.5;color:#5f9}
-.b:hover{background:linear-gradient(90deg,rgba(29,85,50,.9),rgba(20,60,40,.7));color:#dfffee;transform:translateX(4px);box-shadow:0 3px 12px rgba(0,255,120,.15)}
+/* ═══════ NEW MENU ═══════ */
+#menu{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;background:linear-gradient(180deg,#020a06 0%,#010502 100%)}
+#menu.on{display:flex}
+.mHead{position:relative;display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid rgba(80,255,140,.25);background:linear-gradient(180deg,rgba(10,25,15,.85),rgba(5,12,8,.6));flex-shrink:0}
+.mHeadLogo{font-size:26px;filter:drop-shadow(0 0 12px #5f9)}
+.mHeadTitle{flex:1}
+.mHeadTitle .a{font-size:15px;color:#5f9;letter-spacing:4px;font-weight:bold;text-shadow:0 0 12px #5f9}
+.mHeadTitle .b{font-size:9.5px;color:#2a7;letter-spacing:3px;margin-top:2px}
+.mHeadRight{display:flex;align-items:center;gap:14px;font-size:10px;color:#7ab;letter-spacing:1.5px}
+.mHeadRight .badge{background:rgba(80,255,140,.12);border:1px solid rgba(80,255,140,.45);padding:3px 8px;border-radius:4px;color:#9fecbf}
+.mHeadRight .clk{color:#ffd76a;font-size:12px;letter-spacing:2px}
+.mBody{flex:1;display:flex;min-height:0}
+.mPreview{flex:1.1;position:relative;overflow:hidden;background:#000;min-width:0}
+#menuCanvas{position:absolute;inset:0;width:100%!important;height:100%!important}
+.mPreview .pvOverlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.7) 100%);pointer-events:none}
+.mPreview .pvScan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0px,rgba(0,0,0,0) 2px,rgba(0,0,0,.18) 3px,rgba(0,0,0,.18) 4px);pointer-events:none;mix-blend-mode:multiply}
+.mPreview .pvInfo{position:absolute;top:16px;left:18px;color:#5f9;font-size:10px;letter-spacing:2.5px;text-shadow:0 0 8px #5f9;background:rgba(0,0,0,.5);padding:4px 10px;border-left:2px solid #5f9;font-family:Consolas,monospace}
+.mPreview .pvInfo b{color:#ffd76a}
+.mPreview .pvBottom{position:absolute;left:18px;bottom:18px;right:18px;color:#9fecbf;font-size:10px;letter-spacing:1.5px;text-shadow:0 0 8px #000;background:rgba(0,0,0,.55);padding:8px 12px;border-radius:6px;border:1px solid rgba(80,255,140,.3);font-family:Consolas,monospace}
+.mPreview .pvBottom b{color:#5f9}
+.mPanel{flex:0 0 340px;overflow-y:auto;padding:18px 20px;background:linear-gradient(180deg,rgba(4,10,7,.6),rgba(2,6,4,.9));border-left:1px solid rgba(80,255,140,.15)}
+.mPanel::-webkit-scrollbar{width:6px}
+.mPanel::-webkit-scrollbar-track{background:rgba(0,0,0,.3)}
+.mPanel::-webkit-scrollbar-thumb{background:rgba(80,255,140,.35);border-radius:3px}
+#mScreens{display:block}
+.msH{display:none}
+.msH.on{display:block}
+.mTitle{font-size:12px;color:#5f9;letter-spacing:3px;margin-bottom:4px;text-shadow:0 0 8px rgba(80,255,140,.4)}
+.mSub{font-size:10px;color:#7ab;letter-spacing:1.5px;margin-bottom:14px;line-height:1.5}
+.mSub b{color:#9fecbf}
+
+.b{background:linear-gradient(90deg,rgba(13,42,28,.75),rgba(8,25,16,.6));border:1px solid rgba(30,120,60,.7);color:#9fecbf;font-family:inherit;font-size:11.5px;text-align:left;padding:10px 13px;cursor:pointer;letter-spacing:1px;border-radius:7px;transition:all .14s;width:100%;position:relative;overflow:hidden;margin-bottom:5px}
+.b::before{content:'▸';position:absolute;left:6px;top:50%;transform:translateY(-50%);opacity:.45;color:#5f9;font-size:12px}
+.b:hover{background:linear-gradient(90deg,rgba(29,85,50,.9),rgba(20,60,40,.7));color:#dfffee;transform:translateX(3px);box-shadow:0 3px 14px rgba(0,255,120,.18);border-color:#4dff9b}
 .b:hover::before{opacity:1}
-.b:active{transform:translateX(6px) scale(.98)}
-.b.d{color:#faa;border-color:rgba(170,0,34,.6)}
-.b.d:hover{background:linear-gradient(90deg,#a02,rgba(90,20,30,.7));color:#fff;box-shadow:0 3px 12px rgba(255,50,50,.2)}
+.b:active{transform:translateX(5px) scale(.985)}
+.b.d{color:#faa;border-color:rgba(170,0,34,.6);background:linear-gradient(90deg,rgba(40,5,15,.7),rgba(25,3,10,.6))}
+.b.d:hover{background:linear-gradient(90deg,#a02,rgba(90,20,30,.7));color:#fff}
 .b.h{color:#f66;border-color:#800;background:rgba(60,0,0,.6)}
-.b.s{font-size:10px;padding:6px 10px}
+.b.s{font-size:10px;padding:7px 11px}
 .b.r{background:rgba(40,30,80,.7);border-color:#5060a0;color:#c0c8ff}
-.b.r:hover{background:linear-gradient(90deg,#5060a0,rgba(50,40,90,.7));color:#fff;box-shadow:0 3px 12px rgba(120,140,255,.2)}
+.b.r:hover{background:linear-gradient(90deg,#5060a0,rgba(50,40,90,.7));color:#fff}
 .b.r2{background:rgba(80,30,50,.7);border-color:#a05060;color:#ffc0d0}
 .b.r2:hover{background:linear-gradient(90deg,#a05060,rgba(90,40,60,.7));color:#fff}
 .b.gold{color:#ffd76a;border-color:#a08020;background:rgba(80,60,10,.6)}
-.b.gold:hover{background:linear-gradient(90deg,#a08020,rgba(90,70,20,.7));color:#fff;box-shadow:0 3px 12px rgba(255,215,106,.2)}
+.b.gold:hover{background:linear-gradient(90deg,#a08020,rgba(90,70,20,.7));color:#fff;box-shadow:0 3px 14px rgba(255,215,106,.25)}
 .b.cyan{color:#a0e8ff;border-color:#2080a0;background:rgba(10,50,80,.6)}
-.b.cyan:hover{background:linear-gradient(90deg,#2080a0,rgba(20,70,100,.7));color:#fff;box-shadow:0 3px 12px rgba(100,220,255,.2)}
+.b.cyan:hover{background:linear-gradient(90deg,#2080a0,rgba(20,70,100,.7));color:#fff}
 .b.red{color:#f88;border-color:#a02020;background:rgba(60,10,10,.6)}
 .b.red:hover{background:linear-gradient(90deg,#a02020,rgba(80,20,20,.7));color:#fff}
 .b.green{color:#5f9;border-color:#1d5;background:rgba(10,60,30,.8)}
 .b.green:hover{background:linear-gradient(90deg,#1d5,rgba(20,80,40,.7));color:#021}
 .b.pink{color:#f0a;border-color:#a0a;background:rgba(60,10,60,.6)}
-.b.pink:hover{background:linear-gradient(90deg,#a0a,rgba(90,30,90,.7));color:#fff;box-shadow:0 3px 12px rgba(255,80,255,.2)}
-.b.big{font-size:12px;padding:10px 12px;text-align:center;letter-spacing:2.5px;margin:4px 0;font-weight:bold}
-.b.big::before{content:''}
+.b.pink:hover{background:linear-gradient(90deg,#a0a,rgba(90,30,90,.7));color:#fff}
+.b.big{font-size:13px;padding:14px 14px 14px 22px;text-align:center;letter-spacing:2.5px;margin:6px 0 8px;font-weight:bold}
+.b.big::before{display:none}
 .b.pc{border-color:#5f9;color:#5f9;background:rgba(10,60,30,.6)}
 .b.pc:hover{background:linear-gradient(90deg,#5f9,rgba(30,120,70,.7));color:#000}
 .b.mob{border-color:#a0e8ff;color:#a0e8ff;background:rgba(10,50,80,.6)}
 .b.mob:hover{background:linear-gradient(90deg,#a0e8ff,rgba(30,90,120,.7));color:#000}
-#mb .f{margin-top:8px;font-size:8.5px;color:#2a7;letter-spacing:1px;text-align:center}
-#mb .f i{color:#ffd76a;font-style:normal}
-.modRow{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:5px;background:rgba(10,30,20,.4);border:1px solid rgba(30,90,60,.5);margin:2px 0;cursor:pointer;position:relative;transition:.12s}
-.modRow:hover{background:rgba(20,60,40,.6);transform:translateX(2px)}
-.modRow.on{background:linear-gradient(90deg,rgba(80,60,10,.7),rgba(60,40,10,.5));border-color:#ffd76a;box-shadow:0 0 12px rgba(255,215,106,.15)}
+.mGrid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px}
+.mGrid .b{margin:0}
+.mFoot{margin-top:14px;padding-top:10px;border-top:1px dashed rgba(80,255,140,.25);font-size:9.5px;color:#5a7a6a;letter-spacing:1px;line-height:1.7;text-align:center}
+.mFoot i{color:#ffd76a;font-style:normal}
+.modRow{display:flex;align-items:center;gap:6px;padding:6px 9px;border-radius:5px;background:rgba(10,30,20,.5);border:1px solid rgba(30,90,60,.5);margin:3px 0;cursor:pointer;position:relative;transition:.12s}
+.modRow:hover{background:rgba(20,60,40,.7);transform:translateX(2px)}
+.modRow.on{background:linear-gradient(90deg,rgba(80,60,10,.75),rgba(60,40,10,.55));border-color:#ffd76a;box-shadow:0 0 14px rgba(255,215,106,.18)}
 .modRow .ico{font-size:14px;width:20px;text-align:center}
 .modRow .info{flex:1;font-size:10px;color:#9ee}
 .modRow.on .info{color:#ffd76a}
-.modRow .info b{display:block;font-size:10px;letter-spacing:1px;margin-bottom:1px}
+.modRow .info b{display:block;font-size:10.5px;letter-spacing:1px;margin-bottom:1px}
 .modRow .info span{font-size:8.5px;opacity:.7}
-.modRow .gear{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.5;padding:4px;border-radius:4px;transition:.15s}
-.modRow .gear:hover{opacity:1;background:rgba(255,215,106,.2);transform:translateY(-50%) rotate(45deg)}
+.modRow .gear{position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.55;padding:4px;border-radius:4px}
+.modRow .gear:hover{opacity:1;background:rgba(255,215,106,.2)}
 .modRow.hasSet{padding-right:32px}
-.setPanel{background:rgba(10,30,20,.6);border:1px solid #3fd18a;border-radius:8px;padding:10px;margin:4px 0 10px}
+.modCat{font-size:9.5px;color:#5f9;letter-spacing:2px;margin:10px 0 4px;padding-bottom:2px;border-bottom:1px dashed rgba(63,209,138,.3);text-transform:uppercase}
+.modSearch{width:100%;background:rgba(0,0,0,.5);border:1px solid #1d5;color:#9fecbf;font-family:inherit;font-size:11px;padding:8px 11px;border-radius:6px;margin-bottom:6px;letter-spacing:1px}
+.modSearch::placeholder{color:#4a6b5a}
+.modCount{font-size:9px;color:#5f9;margin:3px 0 6px;letter-spacing:1px;text-align:center}
+.setPanel{background:rgba(10,30,20,.65);border:1px solid #3fd18a;border-radius:8px;padding:11px;margin:6px 0 10px}
 .setPanel h3{color:#5f9;font-size:11px;letter-spacing:2px;margin-bottom:8px;padding-bottom:5px;border-bottom:1px dashed #1d5}
-.setRow{display:flex;align-items:center;gap:8px;padding:5px 7px;border-radius:4px;font-size:10.5px;color:#bfe;cursor:pointer;transition:.1s}
+.setRow{display:flex;align-items:center;gap:8px;padding:6px 7px;border-radius:4px;font-size:10.5px;color:#bfe;cursor:pointer;transition:.1s}
 .setRow:hover{background:rgba(63,209,138,.08)}
 .setRow .lbl{flex:1;color:#9ee}
 .setRow .val{color:#ffd76a;font-size:10px;font-weight:bold;min-width:36px;text-align:right}
@@ -115,14 +123,8 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 .setBtnRow button.p{background:#1a5c3a;color:#dfffe9;border-color:#3fd18a}
 .setBtnRow button.d{background:#4a1414;color:#ffbaba;border-color:#a02020}
 .setInfo{font-size:9px;color:#7ab;line-height:1.5;margin-top:6px;padding:5px 7px;background:rgba(0,0,0,.3);border-radius:3px;border-left:2px solid #3fd18a}
-.modCat{font-size:9.5px;color:#5f9;letter-spacing:2px;margin:8px 0 3px;padding-bottom:2px;border-bottom:1px dashed rgba(63,209,138,.3);text-transform:uppercase}
-.modSearch{width:100%;background:rgba(0,0,0,.4);border:1px solid #1d5;color:#9fecbf;font-family:inherit;font-size:10.5px;padding:6px 10px;border-radius:6px;margin-bottom:5px;letter-spacing:1px}
-.modSearch::placeholder{color:#4a6b5a}
-.modCount{font-size:9px;color:#5f9;margin:3px 0;letter-spacing:1px;text-align:center}
-
-/* CHANGELOG */
-.chgBlock{background:rgba(10,30,20,.4);border-left:3px solid #5f9;border-radius:6px;padding:10px 12px;margin:8px 0;font-size:10.5px;line-height:1.55;color:#dfffe9}
-.chgBlock.recent{border-left-color:#ffd76a;background:rgba(80,60,10,.25);box-shadow:0 0 15px rgba(255,215,106,.1)}
+.chgBlock{background:rgba(10,30,20,.45);border-left:3px solid #5f9;border-radius:6px;padding:10px 12px;margin:8px 0;font-size:10.5px;line-height:1.55;color:#dfffe9}
+.chgBlock.recent{border-left-color:#ffd76a;background:rgba(80,60,10,.25)}
 .chgBlock h4{color:#5f9;font-size:11.5px;letter-spacing:2px;margin-bottom:3px}
 .chgBlock.recent h4{color:#ffd76a}
 .chgBlock .date{color:#7ab;font-size:9px;letter-spacing:1px;margin-bottom:6px}
@@ -130,14 +132,13 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 .chgBlock li{padding:2px 0 2px 14px;position:relative;color:#bfe;font-size:10px}
 .chgBlock li::before{content:'▸';position:absolute;left:0;color:#5f9;font-weight:bold}
 .chgBlock.recent li::before{color:#ffd76a}
-.chgBlock li b{color:#ffd76a}
-.chgBlock li .tag{display:inline-block;font-size:8.5px;padding:1px 5px;border-radius:3px;margin-right:4px;letter-spacing:1px;vertical-align:middle}
+.chgBlock li .tag{display:inline-block;font-size:8.5px;padding:1px 5px;border-radius:3px;margin-right:4px;letter-spacing:1px}
 .tag.new{background:#1d5;color:#000}
 .tag.fix{background:#a02;color:#fff}
 .tag.upd{background:#5060a0;color:#fff}
 .tag.mod{background:#a0a;color:#fff}
 
-/* HUD */
+/* ═══════ HUD ═══════ */
 #hud{position:fixed;inset:0;pointer-events:none;z-index:30;display:none}
 #cr{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;opacity:.6}
 #cr::before,#cr::after{content:'';position:absolute;background:#fff}
@@ -314,11 +315,23 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 .crBlock b{color:#ffd76a}
 .crBlock .role{color:#5f9;font-weight:bold;font-size:11.5px;letter-spacing:1.5px}
 .crBlock .name{color:#a0e8ff}
+
+@media (max-width:820px){
+  .mBody{flex-direction:column}
+  .mPreview{flex:0 0 32%;min-height:180px}
+  .mPanel{flex:1;border-left:none;border-top:1px solid rgba(80,255,140,.2);padding:14px}
+  .mHead{padding:10px 14px;gap:10px}
+  .mHeadTitle .a{font-size:13px;letter-spacing:3px}
+  .mHeadTitle .b{font-size:8.5px;letter-spacing:2px}
+  .mHeadRight{font-size:9px;gap:8px}
+  .mHeadRight .clk{font-size:10px}
+}
 @media (max-width:600px){
-  #mb{padding:12px 14px;max-width:400px}
-  #mb h1{font-size:12px}
-  .b{font-size:10px;padding:6px 10px}
-  .b.s{font-size:9.5px;padding:5px 9px}
+  .b{font-size:10.5px;padding:9px 12px}
+  .b.s{font-size:9.5px;padding:6px 10px}
+  .mPreview{flex:0 0 28%;min-height:140px}
+  .mPreview .pvBottom{font-size:9px;padding:6px 9px;left:12px;right:12px;bottom:12px}
+  .mPreview .pvInfo{font-size:9px;padding:3px 8px;top:10px;left:12px}
   #tb .dy{font-size:11px}#tb .ph{font-size:9.5px}
   #brs{width:95px}#ob{font-size:9px}
   .tb2{font-size:7.5px}
@@ -332,131 +345,141 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
   #jb{width:96px;height:96px}
   #jk{width:42px;height:42px;margin:-21px 0 0 -21px}
   #speedrunTimer{font-size:14px;padding:3px 10px}
-  .deskIcon{width:80px}
-  .deskIcon .em{font-size:38px}
-  .deskIcon .lb{font-size:10px}
-  .deskIcon.main{left:40px;top:100px}
-  .deskIcon.mods{left:40px;top:210px}
-  .deskIcon.tit{left:40px;top:320px}
-  .deskIcon.chg{left:40px;top:430px}
-  .bootCursor.c1{left:85px;top:135px}
-  .bootCursor.c2{left:85px;top:245px}
-  .bootCursor.c3{left:85px;top:355px}
-  .bootCursor.c4{left:85px;top:465px}
-  .bootLogoBig{font-size:22px;letter-spacing:8px}
 }
 </style>
 </head>
 <body>
 <canvas id="mc"></canvas>
 
-<div id="boot">
-  <div class="bootStars" id="bootStars"></div>
-  <div class="bootLogoBig">● USER-PC ●</div>
-  <div class="bootLogoSub">OPERATING SYSTEM v24.2</div>
-  <div class="deskIcon main" id="iconGames"><span class="em">🎮</span><span class="lb">Games</span><span class="desc">ШКОЛА №43</span></div>
-  <div class="deskIcon mods" id="iconMods"><span class="em">🧪</span><span class="lb">Mods</span><span class="desc">100 модов</span></div>
-  <div class="deskIcon tit" id="iconTit"><span class="em">🎬</span><span class="lb">Credits</span><span class="desc">титры</span></div>
-  <div class="deskIcon chg" id="iconChg"><span class="em">📋</span><span class="lb">Changes</span><span class="desc">обновления</span></div>
-  <div class="bootCursor start" id="bootCursor">
-    <svg viewBox="0 0 32 32">
-      <path d="M6 4 L6 26 L11 21 L15 29 L19 27 L15 19 L23 19 Z" fill="#fff" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/>
-      <path d="M6 4 L6 26 L11 21 L15 29 L19 27 L15 19 L23 19 Z" fill="url(#cg)" opacity=".15"/>
-      <defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5f9"/><stop offset="1" stop-color="#000"/></linearGradient></defs>
-    </svg>
+<div id="intro">
+  <canvas id="introCanvas"></canvas>
+  <div class="introOverlay"></div>
+  <div class="introFlicker"></div>
+  <div class="introTitle" id="introTitle">
+    <div class="t1">ШКОЛА №43</div>
+    <div class="t2">НОЧНАЯ СМЕНА • V24.3</div>
   </div>
-  <div class="deskbar"><b>▣ ПУСК</b><span style="margin-left:20px">📁 Games</span><span style="margin-left:16px">🧪 Mods</span><span style="margin-left:16px">🎬 Credits</span><span style="margin-left:16px">📋 Changes</span><span class="btime" id="bootTime">22:43</span></div>
-  <div class="bootTray">🔊 🌐 🔋</div>
-  <div class="bootHint">Курсор сам откроет игру...</div>
+  <div class="introSub" id="introSub">входим в школу...</div>
+  <div class="introSkip" id="introSkip">ПРОПУСТИТЬ ▸</div>
 </div>
 
-<div id="menu" style="display:none"><div id="mb">
-<h1>▌ ШКОЛА №43 ▌</h1>
-<div class="s">V24.2 «MENU REDESIGN»</div>
+<div id="menu">
+  <div class="mHead">
+    <div class="mHeadLogo">🦉</div>
+    <div class="mHeadTitle">
+      <div class="a">ШКОЛА №43</div>
+      <div class="b">НОЧНАЯ СМЕНА • V24.3 «ENTRANCE»</div>
+    </div>
+    <div class="mHeadRight">
+      <span class="badge" id="devBadge">PC</span>
+      <span class="clk" id="mClock">22:43</span>
+    </div>
+  </div>
+  <div class="mBody">
+    <div class="mPreview">
+      <canvas id="menuCanvas"></canvas>
+      <div class="pvScan"></div>
+      <div class="pvOverlay"></div>
+      <div class="pvInfo">● LIVE • <b>CAM-43</b> • 20:00</div>
+      <div class="pvBottom" id="pvBottom">Ночная смена начинается. <b>7 правил</b> • <b>5 дней</b> • <b>выжить</b>.</div>
+    </div>
+    <div class="mPanel">
+      <div id="mScreens">
 
-<div id="mdev" class="ms">
-<div class="h2"><b>Привет!</b> Выбери устройство.</div>
-<button class="b big pc" data-dev="pc">🖥 ПК</button>
-<button class="b big mob" data-dev="mobile">📱 ТЕЛЕФОН</button>
-<button class="b s" data-a="auto">🤖 АВТО</button>
-</div>
+        <div class="msH" id="mdev">
+          <div class="mTitle">▸ УСТРОЙСТВО</div>
+          <div class="mSub">Выбери, где играешь. Настройки подберутся автоматически.</div>
+          <button class="b big pc" data-dev="pc">🖥 ПК</button>
+          <button class="b big mob" data-dev="mobile">📱 ТЕЛЕФОН</button>
+          <button class="b s" data-a="auto">🤖 АВТО-ОПРЕДЕЛЕНИЕ</button>
+        </div>
 
-<div id="mm" class="ms h">
-<button class="b big" data-a="ng" style="background:linear-gradient(90deg,rgba(29,85,50,.9),rgba(20,60,40,.7));border-color:#5f9">▶ НОВАЯ СМЕНА</button>
-<button class="b" data-a="cont" id="bCont">⏵ ПРОДОЛЖИТЬ</button>
-<button class="b cyan" data-a="coop">🌐 ОНЛАЙН</button>
-<button class="b gold" data-a="speed">⏱ СПИДРАН</button>
-<button class="b pink" data-a="mods">🧪 100 МОДОВ</button>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px">
-<button class="b s" data-a="mode" style="margin:0">🎮 РЕЖИМЫ</button>
-<button class="b s" data-a="st" style="margin:0">⚙ НАСТР</button>
-<button class="b s" data-a="ac" style="margin:0">🏆 АЧИВ</button>
-<button class="b s" data-a="jo" style="margin:0">📔 ЖУРНАЛ</button>
-<button class="b s" data-a="cr" style="margin:0">🎬 ТИТРЫ</button>
-<button class="b s" data-a="chg" style="margin:0">📋 ЛОГ</button>
-<button class="b s" data-a="ab" style="margin:0">ℹ ИНФО</button>
-<button class="b s" data-a="dev" style="margin:0">🔄 ДЕВ</button>
-</div>
-</div>
+        <div class="msH on" id="mm">
+          <div class="mTitle">▸ ГЛАВНОЕ МЕНЮ</div>
+          <div class="mSub">Выбери, что делать. Рекорд спидрана: <b id="srBestTxt">—</b></div>
+          <button class="b big green" data-a="ng">▶ НОВАЯ СМЕНА</button>
+          <button class="b" data-a="cont" id="bCont">⏵ ПРОДОЛЖИТЬ</button>
+          <button class="b cyan" data-a="coop">🌐 ОНЛАЙН (WebRTC)</button>
+          <button class="b gold" data-a="speed">⏱ СПИДРАН</button>
+          <button class="b pink" data-a="mods">🧪 100+ МОДОВ</button>
+          <div class="mGrid">
+            <button class="b s" data-a="mode">🎮 РЕЖИМЫ</button>
+            <button class="b s" data-a="st">⚙ НАСТРОЙКИ</button>
+            <button class="b s" data-a="ac">🏆 АЧИВКИ</button>
+            <button class="b s" data-a="jo">📔 ЖУРНАЛ</button>
+            <button class="b s" data-a="cr">🎬 ТИТРЫ</button>
+            <button class="b s" data-a="chg">📋 ЛОГ</button>
+            <button class="b s" data-a="ab">ℹ ИНФО</button>
+            <button class="b s" data-a="dev">🔄 УСТРОЙСТВО</button>
+          </div>
+          <div class="mFoot">WASD • E • R рация • B маркер • N бумеранг<br>M карта • J журнал • C камеры • Esc пауза</div>
+        </div>
 
-<div id="mmods" class="ms h">
-<div class="h2"><b>🧪 МОДЫ</b> — клик вкл/выкл • ⚙ настройки</div>
-<input id="modSearch" class="modSearch" placeholder="🔍 Поиск...">
-<div class="modCount" id="modCount"></div>
-<div id="modsList"></div>
-<button class="b s" data-a="modsBack" style="margin-top:6px">← НАЗАД</button>
-</div>
+        <div class="msH" id="mmods">
+          <div class="mTitle">▸ МОДЫ</div>
+          <div class="mSub">Клик — вкл/выкл. ⚙ — настройки.</div>
+          <input id="modSearch" class="modSearch" placeholder="🔍 Поиск...">
+          <div class="modCount" id="modCount"></div>
+          <div id="modsList"></div>
+          <button class="b s" data-a="modsBack" style="margin-top:8px">← НАЗАД</button>
+        </div>
 
-<div id="mr" class="ms h">
-<div class="h2" style="font-size:10px;margin-bottom:6px">Выбери роль:</div>
-<button class="b r" data-a="rg">🛡 ОХРАННИК</button>
-<button class="b r2" data-a="rs">👨‍🎓 ШКОЛЬНИК 7А</button>
-<button class="b gold" data-a="rc">🧹 УБОРЩИЦА</button>
-<button class="b s" data-a="bm">← НАЗАД</button>
-</div>
+        <div class="msH" id="mr">
+          <div class="mTitle">▸ РОЛЬ</div>
+          <div class="mSub">Кем ты будешь в эту смену?</div>
+          <button class="b r" data-a="rg">🛡 ОХРАННИК — доступ к камерам и ПК</button>
+          <button class="b r2" data-a="rs">👨‍🎓 ШКОЛЬНИК 7А — без поста охраны</button>
+          <button class="b gold" data-a="rc">🧹 УБОРЩИЦА — видит следы сущностей</button>
+          <button class="b s" data-a="bm">← НАЗАД</button>
+        </div>
 
-<div id="md" class="ms h">
-<div class="h2" style="font-size:10px;margin-bottom:6px">Сложность:</div>
-<button class="b" data-d="easy">ЛЕГКО</button>
-<button class="b d" data-d="normal">НОРМА</button>
-<button class="b d" data-d="hard">СЛОЖНО</button>
-<button class="b h" data-d="horror">ХОРРОР</button>
-<button class="b h" data-d="extreme">ЭКСТРИМ</button>
-<button class="b h" data-d="nightmare">КОШМАР</button>
-<button class="b red" data-d="rare">🔥 РЕДКИ (×5)</button>
-<button class="b gold" data-d="bag">🎒 BAG</button>
-<button class="b s" data-a="bagcfg" style="color:#f0a;border-color:#a0a;background:rgba(60,10,60,.6)">⚙ BAG НАСТР</button>
-<button class="b s" data-a="br">← НАЗАД</button>
-</div>
+        <div class="msH" id="md">
+          <div class="mTitle">▸ СЛОЖНОСТЬ</div>
+          <div class="mSub">Влияет на сущностей, лут и рассудок.</div>
+          <button class="b" data-d="easy">ЛЕГКО</button>
+          <button class="b d" data-d="normal">НОРМА</button>
+          <button class="b d" data-d="hard">СЛОЖНО</button>
+          <button class="b h" data-d="horror">ХОРРОР (рассудок + скримеры)</button>
+          <button class="b h" data-d="extreme">ЭКСТРИМ</button>
+          <button class="b h" data-d="nightmare">КОШМАР</button>
+          <button class="b red" data-d="rare">🔥 РЕДКИ (Герман ×5)</button>
+          <button class="b gold" data-d="bag">🎒 BAG (сломанная игра)</button>
+          <button class="b s" data-a="bagcfg" style="color:#f0a;border-color:#a0a;background:rgba(60,10,60,.6)">⚙ НАСТРОЙКИ BAG</button>
+          <button class="b s" data-a="br">← НАЗАД</button>
+        </div>
 
-<div id="mmodes" class="ms h">
-<div class="h2" style="font-size:10px;margin-bottom:6px">Режим:</div>
-<button class="b" data-mode="story">📖 СЮЖЕТ</button>
-<button class="b gold" data-mode="endless">🎲 БЕСКОНЕЧНО</button>
-<button class="b gold" data-mode="sandbox">🧪 ПЕСОЧНИЦА</button>
-<button class="b cyan" data-mode="speedrun">⏱ СПИДРАН</button>
-<button class="b s" data-a="maps">🗺 КАРТА</button>
-<button class="b s" data-a="bm2">← НАЗАД</button>
-</div>
+        <div class="msH" id="mmodes">
+          <div class="mTitle">▸ РЕЖИМ</div>
+          <div class="mSub">Как будем играть?</div>
+          <button class="b" data-mode="story">📖 СЮЖЕТ — 5 дней</button>
+          <button class="b gold" data-mode="endless">🎲 БЕСКОНЕЧНАЯ НОЧЬ</button>
+          <button class="b gold" data-mode="sandbox">🧪 ПЕСОЧНИЦА</button>
+          <button class="b cyan" data-mode="speedrun">⏱ СПИДРАН</button>
+          <button class="b s" data-a="maps">🗺 ВЫБРАТЬ КАРТУ</button>
+          <button class="b s" data-a="bm2">← НАЗАД</button>
+        </div>
 
-<div id="mmaps" class="ms h">
-<div class="h2" style="font-size:10px;margin-bottom:6px">Карта:</div>
-<button class="b" data-map="0">СТАНДАРТ</button>
-<button class="b" data-map="1">ВОСТОЧНАЯ</button>
-<button class="b" data-map="2">МУЗЫКАЛЬНАЯ</button>
-<button class="b" data-map="3">НАУЧНАЯ</button>
-<button class="b" data-map="4">СПОРТИВНАЯ</button>
-<button class="b" data-map="5">БИБЛИОТЕЧНАЯ</button>
-<button class="b" data-map="6">КОМПЬЮТЕРНАЯ</button>
-<button class="b" data-map="7">ХУДОЖЕСТВЕННАЯ</button>
-<button class="b" data-map="8">ИСТОРИЧЕСКАЯ</button>
-<button class="b" data-map="9">СЛОЖНАЯ</button>
-<button class="b" data-map="r">🎲 СЛУЧАЙНАЯ</button>
-<button class="b s" data-a="bm4">← НАЗАД</button>
-</div>
+        <div class="msH" id="mmaps">
+          <div class="mTitle">▸ КАРТА</div>
+          <div class="mSub">Расположение комнат в школе.</div>
+          <button class="b" data-map="0">СТАНДАРТ</button>
+          <button class="b" data-map="1">ВОСТОЧНАЯ</button>
+          <button class="b" data-map="2">МУЗЫКАЛЬНАЯ</button>
+          <button class="b" data-map="3">НАУЧНАЯ</button>
+          <button class="b" data-map="4">СПОРТИВНАЯ</button>
+          <button class="b" data-map="5">БИБЛИОТЕЧНАЯ</button>
+          <button class="b" data-map="6">КОМПЬЮТЕРНАЯ</button>
+          <button class="b" data-map="7">ХУДОЖЕСТВЕННАЯ</button>
+          <button class="b" data-map="8">ИСТОРИЧЕСКАЯ</button>
+          <button class="b" data-map="9">СЛОЖНАЯ</button>
+          <button class="b" data-map="r">🎲 СЛУЧАЙНАЯ</button>
+          <button class="b s" data-a="bm4">← НАЗАД</button>
+        </div>
 
-<div class="f">WASD • E • R • B • N • C камеры • M • J • Esc</div>
-</div></div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="hud">
 <div id="cr"><i class="l"></i><i class="r"></i></div>
@@ -614,8 +637,8 @@ canvas{display:block;position:fixed;inset:0;width:100%!important;height:100%!imp
 
 <div class="pn" id="abP"><div class="pb"><h2>О ИГРЕ</h2>
 <div style="font-size:10.5px;line-height:1.6;color:#bfe">
-<b style="color:#5f9">ШКОЛА №43 — V24.2 «MENU REDESIGN»</b><br><br>
-Компактное меню, новый курсор, раздел «Список изменений».
+<b style="color:#5f9">ШКОЛА №43 — V24.3 «ENTRANCE»</b><br><br>
+Новая заставка: вход в школу. Новое меню: превью сцены + панель кнопок. Всё остальное — как в V24.2.
 </div>
 <button id="abB" class="p">ЗАКРЫТЬ</button></div></div>
 
@@ -631,92 +654,58 @@ import * as THREE from 'three';
 
 // ═══════ CHANGELOG ═══════
 const CHANGELOG=[
-  {v:'V24.2',date:'2026-10-01',recent:true,items:[
-    {tag:'new',text:'Компактное меню — уменьшено на 30%'},
-    {tag:'new',text:'Новый красивый X-курсор как в Windows'},
-    {tag:'new',text:'Раздел «Список изменений» в меню'},
-    {tag:'new',text:'Улучшенный дизайн кнопок (градиенты)'},
-    {tag:'new',text:'Сетка 2×2 для мелких кнопок в меню'},
-    {tag:'fix',text:'Курсор снова появляется и открывает игру'},
-    {tag:'fix',text:'Исправлены все баги V24'},
-    {tag:'upd',text:'Бейдж устройства иконка в заставке'}
+  {v:'V24.3',date:'2026-10-01',recent:true,items:[
+    {tag:'new',text:'Заставка «Вход в школу» — коридор, двери, вспышка'},
+    {tag:'new',text:'Меню переделано: превью-сцена + панель'},
+    {tag:'new',text:'Живой 3D-коридор в меню с камерой'},
+    {tag:'new',text:'Шапка меню с часами и бейджем устройства'},
+    {tag:'fix',text:'Убран старый фейковый рабочий стол'},
+    {tag:'upd',text:'Плавные переходы между экранами меню'}
   ]},
-  {v:'V24.1',date:'2026-10-01',items:[
-    {tag:'fix',text:'Починен баг с курсором (uNPCArg)'},
-    {tag:'fix',text:'applyVisualMods крашила без M.wall'},
-    {tag:'fix',text:'SND.init падала в клике'},
-    {tag:'fix',text:'RD объявлен глобально'},
-    {tag:'upd',text:'Все 100 модов работают стабильно'}
+  {v:'V24.2',date:'2026-10-01',items:[
+    {tag:'new',text:'Компактное меню'},
+    {tag:'new',text:'X-курсор'},
+    {tag:'new',text:'Список изменений'},
+    {tag:'fix',text:'Курсор появляется и открывает игру'},
+    {tag:'upd',text:'Все 100 модов стабильно'}
   ]},
   {v:'V24',date:'2026-10-01',items:[
     {tag:'new',text:'100 модов в 9 категориях'},
-    {tag:'new',text:'Поиск модов по названию'},
-    {tag:'new',text:'8 пресетов модов'},
-    {tag:'new',text:'Счётчик активных модов'},
-    {tag:'mod',text:'Визуал: рентген, ночной, сепия, снег, дождь'},
-    {tag:'mod',text:'Звук: тишина, эхо, бас, чиптюн'},
-    {tag:'mod',text:'Юмор: пуки, утка, кот, Snoop'},
-    {tag:'mod',text:'Мир: огонь, лёд, лава, мрамор, шахматы'},
-    {tag:'mod',text:'Физика: низкая гравитация, скользко, тряска'},
-    {tag:'mod',text:'Утилиты: миникарта, компас, таймер, FPS'},
-    {tag:'mod',text:'Спец: танец, диско, rickroll, matrix, cyberpunk'}
+    {tag:'new',text:'Поиск модов, 8 пресетов, счётчик'},
+    {tag:'mod',text:'Визуал, звук, геймплей, читы, юмор, мир, физика, утилиты, спец'}
   ]},
   {v:'V23.1',date:'2026-09-30',items:[
-    {tag:'new',text:'Настройки чита в меню модов'},
-    {tag:'new',text:'Настройки BAG с пресетами'},
-    {tag:'upd',text:'Оптимизация BAG-эффектов'},
-    {tag:'upd',text:'Сохранение конфигов чита и бага'}
+    {tag:'new',text:'Настройки чита и BAG с пресетами'},
+    {tag:'upd',text:'Оптимизация BAG-эффектов'}
   ]},
   {v:'V23',date:'2026-09-30',items:[
-    {tag:'new',text:'Мод-меню с переключением'},
-    {tag:'new',text:'Режим BAG — игра специально ломается'},
-    {tag:'new',text:'Раздел «Титры» с создателями'},
-    {tag:'new',text:'Новая заставка: рабочий стол с иконками'},
-    {tag:'mod',text:'Первые 9 модов: чит, скорость, полёт, двойник'}
+    {tag:'new',text:'Мод-меню'},
+    {tag:'new',text:'Режим BAG'},
+    {tag:'new',text:'Титры'},
+    {tag:'mod',text:'Первые 9 модов'}
   ]},
   {v:'V22',date:'2026-09-29',items:[
-    {tag:'new',text:'Онлайн через WebRTC (без сервера)'},
-    {tag:'new',text:'Режим спидрана с таймером'},
-    {tag:'new',text:'Коробка с лутом — всё берётся сразу'},
-    {tag:'new',text:'Режим «Редки» — Герман ×5'},
-    {tag:'new',text:'Титры с информацией о создателях'},
-    {tag:'fix',text:'Баги с сохранениями позиции'}
+    {tag:'new',text:'Онлайн через WebRTC'},
+    {tag:'new',text:'Спидран с таймером'},
+    {tag:'new',text:'Коробка с лутом'},
+    {tag:'new',text:'Режим «Редки»'}
   ]},
   {v:'V21.1',date:'2026-09-28',items:[
-    {tag:'fix',text:'Тотем теперь срабатывает при смерти'},
-    {tag:'new',text:'Неуязвимость 30 секунд + бег ×2'},
-    {tag:'new',text:'Голосовой мем про сову на скакалке'}
-  ]},
-  {v:'V20.1',date:'2026-09-27',items:[
-    {tag:'fix',text:'Починен баг с чёрными полосами после камер'},
-    {tag:'upd',text:'Сброс viewport после выхода из камер'}
+    {tag:'fix',text:'Тотем срабатывает при смерти'},
+    {tag:'new',text:'Неуязвимость 30с + бег ×2'}
   ]},
   {v:'V20',date:'2026-09-27',items:[
-    {tag:'new',text:'Полная переработка дней'},
-    {tag:'new',text:'Сплеш «ДЕНЬ N» при старте смены'},
-    {tag:'new',text:'Восстановление между днями'},
-    {tag:'fix',text:'Дни больше не застревают'}
+    {tag:'new',text:'Переработка дней, сплеш «ДЕНЬ N»'}
   ]},
   {v:'V15',date:'2026-09-25',items:[
-    {tag:'new',text:'Выбор устройства — ПК / Телефон'},
-    {tag:'new',text:'Мобильное управление: джойстик + кнопки'},
-    {tag:'new',text:'Автопресеты настроек для устройства'}
+    {tag:'new',text:'Выбор устройства ПК/Телефон'},
+    {tag:'new',text:'Мобильное управление'}
   ]},
   {v:'V14',date:'2026-09-24',items:[
-    {tag:'new',text:'4-камерный пост охраны'},
-    {tag:'new',text:'Диалоговые окна с выбором'},
-    {tag:'new',text:'PWA — установка как приложение'},
-    {tag:'new',text:'Процедурная генерация карт'},
-    {tag:'new',text:'WebRTC онлайн'}
+    {tag:'new',text:'Камеры, диалоги, PWA, генерация карт'}
   ]},
   {v:'V12.1.1',date:'2026-09-20',items:[
-    {tag:'new',text:'Первая играбельная версия'},
-    {tag:'new',text:'Роли: Охранник, Школьник 7А'},
-    {tag:'new',text:'Герман, Физрук, Антон, Дневной сторож'},
-    {tag:'new',text:'Рация с кодами 0-5'},
-    {tag:'new',text:'Маркер, бумеранг, нож, еда'},
-    {tag:'new',text:'5 дней по 5 минут'},
-    {tag:'new',text:'10 карт школы'}
+    {tag:'new',text:'Первая играбельная версия'}
   ]}
 ];
 
@@ -895,7 +884,8 @@ const SND={c:null,m:null,
   net(){this.tone(880,.15,.2);setTimeout(()=>this.tone(1320,.2,.15),150)},
   bag(){this.tone(80+Math.random()*2000,.1,.15,'sawtooth')},
   cat(){this.tone(800,.15,.15,'square');setTimeout(()=>this.tone(1000,.2,.15),150)},
-  duck(){this.tone(500,.15,.2,'sawtooth')}};
+  duck(){this.tone(500,.15,.2,'sawtooth')},
+  door(){this.tone(90,.6,.35,'sawtooth');this.tone(140,.5,.2);setTimeout(()=>this.tone(60,.8,.25,'sawtooth'),200)}};
 
 const keys={};
 let uNPCArg=0;
@@ -943,46 +933,282 @@ function netSend(msg){if(RTC.connected&&RTC.dc&&RTC.dc.readyState==='open'){try{
 function spawnRemoteGhost(){if(!W)return;const g=new THREE.Group();const body=new THREE.Mesh(new THREE.CapsuleGeometry(.28,1,.5,12),new THREE.MeshLambertMaterial({color:0x60c0ff,emissive:0x104060}));body.position.y=1;g.add(body);const head=new THREE.Mesh(new THREE.SphereGeometry(.22,12,10),new THREE.MeshLambertMaterial({color:0xe8d0b0}));head.position.y=1.75;g.add(head);const sp=nSp('ИГРОК','#60c0ff');sp.position.y=2.1;g.add(sp);W.add(g);RTC.remoteGhost={group:g};$('remotePlayer').classList.add('on')}
 $('coopHostBtn').onclick=createOffer;$('coopJoinBtn').onclick=()=>{$('coopMain').classList.add('h');$('coopJoinPanel').classList.remove('h')};$('coopClose').onclick=()=>{closeCoop()};$('copyOffer').onclick=()=>{$('offerCode').select();document.execCommand('copy');toast('📋')};$('copyAnswer').onclick=()=>{$('answerOut').select();document.execCommand('copy');toast('📋')};$('acceptAnswer').onclick=acceptAnswer;$('makeAnswer').onclick=makeAnswer;
 
-function buildStars(){const box=$('bootStars');if(!box)return;for(let i=0;i<60;i++){const s=document.createElement('div');s.className='bootStar';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=(Math.random()*3)+'s';s.style.animationDuration=(2+Math.random()*3)+'s';box.appendChild(s)}}
-function updateClock(){const t=new Date();const el=$('bootTime');if(el)el.textContent=String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0')}
-function runBoot(){buildStars();updateClock();setInterval(updateClock,10000);const cur=$('bootCursor'),boot=$('boot');
-  setTimeout(()=>{cur.classList.remove('start');cur.classList.add('c1')},500);
-  setTimeout(()=>{cur.classList.add('click');$('iconGames').style.background='rgba(95,255,155,.3)'},1900);
-  setTimeout(()=>{cur.classList.remove('click');$('iconGames').style.background=''},2100);
-  setTimeout(()=>{cur.classList.add('start')},2300);
-  setTimeout(()=>{boot.classList.add('off');setTimeout(()=>{boot.style.display='none';$('menu').style.display='flex';applyDev();updDevBadge();renderMods();scr('mm')},900)},2600);
-  const skip=()=>{boot.classList.add('off');setTimeout(()=>{boot.style.display='none';$('menu').style.display='flex';applyDev();updDevBadge();renderMods();scr('mm')},400)};
-  boot.addEventListener('click',skip);boot.addEventListener('touchstart',skip,{passive:true});
+// ═══════════════════════════════════════════
+// ═══════ ENTRANCE INTRO (новая заставка) ═══
+// ═══════════════════════════════════════════
+function runIntro(){
+  const cv=$('introCanvas');
+  const W=innerWidth,H=innerHeight;
+  const renderer=new THREE.WebGLRenderer({canvas:cv,antialias:DEVICE==='pc'});
+  renderer.setPixelRatio(Math.min(devicePixelRatio, DEVICE==='pc'?1.5:1));
+  renderer.setSize(W,H);
+  renderer.outputColorSpace=THREE.SRGBColorSpace;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x02040a);
+  scene.fog=new THREE.Fog(0x02040a,2,22);
+  const cam=new THREE.PerspectiveCamera(72,W/H,.1,80);
+  cam.rotation.order='YXZ';
+
+  scene.add(new THREE.AmbientLight(0x405060,.5));
+  const hl=new THREE.HemisphereLight(0x203040,0x000000,.4);scene.add(hl);
+  const lampL=new THREE.PointLight(0xfff0c0,.9,8,1.5);lampL.position.set(0,2.7,2);scene.add(lampL);
+  const doorL=new THREE.PointLight(0x5fff88,0,10,1.5);doorL.position.set(0,1.3,-9);scene.add(doorL);
+
+  const mFloor=new THREE.MeshLambertMaterial({color:0x2a2a2a});
+  const mWall=new THREE.MeshLambertMaterial({color:0x3a4450});
+  const mCeil=new THREE.MeshLambertMaterial({color:0x101820});
+  const mDoorL=new THREE.MeshLambertMaterial({color:0x503020});
+  const mDoorR=new THREE.MeshLambertMaterial({color:0x503020});
+  const mLamp=new THREE.MeshBasicMaterial({color:0xfff8e0});
+  const BW=4.5,BH=4.5,BL=30;
+
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mFloor);
+  floor.rotation.x=-Math.PI/2;floor.position.z=-BL/2+2;scene.add(floor);
+  const ceil=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mCeil);
+  ceil.rotation.x=Math.PI/2;ceil.position.set(0,BH,-BL/2+2);scene.add(ceil);
+  const wallL=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
+  wallL.rotation.y=Math.PI/2;wallL.position.set(-BW/2,BH/2,-BL/2+2);scene.add(wallL);
+  const wallR=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
+  wallR.rotation.y=-Math.PI/2;wallR.position.set(BW/2,BH/2,-BL/2+2);scene.add(wallR);
+  // Двери (две створки, открываются наружу к нам)
+  const doorPivotL=new THREE.Group();doorPivotL.position.set(-1.05,0,-8.5);scene.add(doorPivotL);
+  const doorMeshL=new THREE.Mesh(new THREE.BoxGeometry(1,2.6,.12),mDoorL);
+  doorMeshL.position.x=.5;doorMeshL.position.y=1.3;doorPivotL.add(doorMeshL);
+  const doorPivotR=new THREE.Group();doorPivotR.position.set(1.05,0,-8.5);scene.add(doorPivotR);
+  const doorMeshR=new THREE.Mesh(new THREE.BoxGeometry(1,2.6,.12),mDoorR);
+  doorMeshR.position.x=-.5;doorMeshR.position.y=1.3;doorPivotR.add(doorMeshR);
+  // Простенок над дверями
+  const header=new THREE.Mesh(new THREE.BoxGeometry(BW,BH-2.6,.3),mWall);
+  header.position.set(0,2.6+(BH-2.6)/2,-8.5);scene.add(header);
+
+  // Несколько ламп на потолке
+  const lampPositions=[-3,-6,-12,-18];
+  lampPositions.forEach(z=>{
+    const lamp=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.4),mLamp);
+    lamp.position.set(0,BH-.15,z);scene.add(lamp);
+    const pl=new THREE.PointLight(0xfff0c0,.55,7,1.6);
+    pl.position.set(0,BH-.4,z);scene.add(pl);
+  });
+
+  // Немного "мусора" — несколько коробок по бокам, стол
+  const mBox=new THREE.MeshLambertMaterial({color:0x604828});
+  for(let i=0;i<4;i++){
+    const b=new THREE.Mesh(new THREE.BoxGeometry(.6,.6,.6),mBox);
+    b.position.set(-BW/2+.5, .3, -4-i*3);
+    scene.add(b);
+  }
+  const mTable=new THREE.MeshLambertMaterial({color:0x3a2a1a});
+  const tbl=new THREE.Mesh(new THREE.BoxGeometry(1.2,.1,.7),mTable);
+  tbl.position.set(BW/2-.8,.85,-5);scene.add(tbl);
+  const tblLeg=new THREE.Mesh(new THREE.BoxGeometry(.08,.85,.08),mTable);
+  tblLeg.position.set(BW/2-.8,.42,-5);scene.add(tblLeg);
+
+  // Дверные таблички (простые светящиеся спрайты)
+  const mPl=new THREE.MeshBasicMaterial({color:0x2a5a2a});
+  const pl=new THREE.Mesh(new THREE.PlaneGeometry(.6,.2),mPl);
+  pl.position.set(0,2.85,-8.4);scene.add(pl);
+
+  // Состояния анимации
+  const STATES={WALK:0,DOORS:1,ENTER:2,FLASH:3,DONE:4};
+  let state=STATES.WALK;
+  let stateT=0;
+  let camZ=6;
+  let doorAngle=0;
+  let targetDoorAngle=0;
+  let flashT=0;
+  let skipped=false;
+  let titleShown=false;
+
+  const showTitle=(on)=>{$('introTitle').classList.toggle('on',on)};
+  const showSub=(txt)=>{const s=$('introSub');if(txt){s.textContent=txt;s.classList.add('on')}else s.classList.remove('on')};
+
+  function finish(){
+    if(skipped)return;skipped=true;
+    $('intro').classList.add('off');
+    setTimeout(()=>{
+      $('intro').style.display='none';
+      renderer.dispose();
+      $('menu').classList.add('on');
+      window.setMenuRun(true);
+    },1000);
+  }
+  $('introSkip').onclick=e=>{e.stopPropagation();finish()};
+  $('intro').addEventListener('click',finish);
+
+  let last=performance.now();
+  function loopIntro(now){
+    if(skipped)return;
+    requestAnimationFrame(loopIntro);
+    const dt=Math.min(.05,(now-last)/1000);last=now;
+    stateT+=dt;
+
+    // Движение камеры — медленный проход вперёд
+    if(state===STATES.WALK){
+      camZ-=dt*1.4;
+      cam.position.set(0,1.55,camZ);
+      cam.rotation.y=0;cam.rotation.x=0;
+      // лёгкое покачивание
+      cam.position.y=1.55+Math.sin(now*.004)*.03;
+      cam.rotation.z=Math.sin(now*.0025)*.01;
+      if(stateT>1.2&&!titleShown){titleShown=true;showTitle(true);showSub('ночная смена начинается...')}
+      if(camZ<=-1.5){
+        state=STATES.DOORS;stateT=0;
+        targetDoorAngle=Math.PI/2*0.95;
+        showSub('двери открываются...');
+        try{SND.init();SND.door()}catch(e){}
+      }
+    }
+    else if(state===STATES.DOORS){
+      doorAngle+=(targetDoorAngle-doorAngle)*Math.min(1,dt*1.8);
+      doorPivotL.rotation.y=doorAngle;
+      doorPivotR.rotation.y=-doorAngle;
+      // камера замедляется
+      camZ-=dt*.6;
+      cam.position.set(0,1.55,camZ);
+      cam.rotation.z=Math.sin(now*.0025)*.01;
+      if(stateT>1.3&&camZ<=-3.5){
+        state=STATES.ENTER;stateT=0;
+        showSub('входим внутрь...');
+      }
+    }
+    else if(state===STATES.ENTER){
+      // Проходим сквозь двери
+      camZ-=dt*2.2;
+      cam.position.set(0,1.55,camZ);
+      // лёгкое ускорение
+      if(camZ<=-9.5){
+        state=STATES.FLASH;stateT=0;
+        flashT=0;
+      }
+    }
+    else if(state===STATES.FLASH){
+      flashT+=dt;
+      if(flashT<.35){
+        // Белая вспышка через фон
+        const a=Math.min(1,flashT/.35);
+        scene.background.setRGB(a,a,a);
+        scene.fog.color.setRGB(a,a,a);
+      } else {
+        finish();return;
+      }
+    }
+
+    // Лампа чуть мерцает
+    if(lampL)lampL.intensity=.85+Math.sin(now*.008)*.05+Math.random()*.03;
+    // Свечение из-за дверей
+    if(state>=STATES.DOORS){
+      doorL.intensity=Math.min(2.5,(stateT+.2)*1.4);
+    }
+
+    renderer.render(scene,cam);
+  }
+  requestAnimationFrame(loopIntro);
 }
 
-function scr(id){['mdev','mm','mr','md','mmodes','mmaps','mmods'].forEach(s=>$(s).classList.toggle('h',s!==id))}
-$('mdev').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.dev)DEVICE=b.dataset.dev;else if(b.dataset.a==='auto')DEVICE=isTouch?'mobile':'pc';applyDev();try{localStorage.setItem('sh43device',DEVICE)}catch(e){}saveAll();updDevBadge();scr('mm')};
-$('mm').onclick=e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset.a;try{SND.init();SND.resume()}catch(e){}
-  if(a==='ng'){try{localStorage.removeItem('sh43save')}catch(e){}G._rulesShown=false;mode='story';chosenMap=-1;role='guard';diff='normal';G.savedPos=null;G.speedrun=false;scr('mr')}
-  else if(a==='coop')openCoop();
-  else if(a==='speed'){mode='speedrun';G.speedrun=true;chosenMap=-1;role='guard';diff='normal';scr('mr')}
-  else if(a==='mods'){delete $('modsList').dataset.openSet;renderMods();scr('mmods')}
-  else if(a==='cont'){if(loadAll())startGame();else toast('Нет сохранения')}
-  else if(a==='mode')scr('mmodes');
-  else if(a==='st')openSettings();
-  else if(a==='ac')openAch();
-  else if(a==='jo')openJournal();
-  else if(a==='cr')openCredits();
-  else if(a==='chg')openChangelog();
-  else if(a==='ab')$('abP').classList.add('on');
-  else if(a==='dev')scr('mdev')};
+// ═══════════════════════════════════════════
+// ═══════ MENU PREVIEW SCENE ════════════════
+// ═══════════════════════════════════════════
+let mR,mS,mC,mEyes=[],mFlick,mGlow,mRun=false,mClock=0,mX=0,mY=0,cY=0,cP=0,mT=0,mDoorAnim=0;
+function initMenu(){
+  const cv=$('menuCanvas');
+  mR=new THREE.WebGLRenderer({canvas:cv,antialias:DEVICE==='pc'});
+  mR.setPixelRatio(Math.min(devicePixelRatio, DEVICE==='pc'?1.5:1));
+  mR.setSize(cv.clientWidth,cv.clientHeight);
+  mR.outputColorSpace=THREE.SRGBColorSpace;
+  mS=new THREE.Scene();
+  mS.background=new THREE.Color(0x02060c);
+  mS.fog=new THREE.Fog(0x02060c,3,16);
+  mC=new THREE.PerspectiveCamera(62,cv.clientWidth/cv.clientHeight,.1,40);
+  mC.position.set(0,1.55,4.5);
+  mS.add(new THREE.AmbientLight(0x304050,.7));
+  mFlick=new THREE.PointLight(0xffd090,.9,9,2);mFlick.position.set(0,2.7,.6);mS.add(mFlick);
+  mGlow=new THREE.PointLight(0x30ff80,.8,5,2);mGlow.position.set(-1.4,1.35,-.6);mS.add(mGlow);
 
-$('mmods').onclick=e=>{
-  const gear=e.target.closest('.gear');
-  if(gear){e.stopPropagation();renderSettingPanel(gear.dataset.set);return}
-  const preset=e.target.closest('.presetBtn');
-  if(preset){const key=preset.dataset.preset;const p=MOD_PRESETS[key];if(p){Object.keys(MODS).forEach(k=>delete MODS[k]);Object.keys(p.mods).forEach(k=>{if(p.mods[k])MODS[k]=true});saveMods();renderMods();toast('📦 '+p.name,'mod');try{SND.tone(880,.2,.2)}catch(e){}unlAch('preset')}return}
-  const row=e.target.closest('.modRow');
-  if(row){const k=row.dataset.mod;MODS[k]=!MODS[k];saveMods();renderMods();checkModAch();try{SND.tone(MODS[k]?880:440,.15,.15)}catch(e){}return}
-  const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.a==='modsBack'){delete $('modsList').dataset.openSet;scr('mm')}
-};
-$('modSearch').addEventListener('input',()=>renderMods());
+  const fM=new THREE.MeshLambertMaterial({color:0x2a2e30});
+  const wM=new THREE.MeshLambertMaterial({color:0x3a4450});
+  const dM=new THREE.MeshLambertMaterial({color:0x7a5a3a});
+  const kM=new THREE.MeshLambertMaterial({color:0x1a1d20});
+  const mM=new THREE.MeshLambertMaterial({color:0x505860});
+  const fl=new THREE.Mesh(new THREE.BoxGeometry(14,.2,14),fM);fl.position.y=-.1;mS.add(fl);
+  const ce=new THREE.Mesh(new THREE.BoxGeometry(14,.2,14),wM);ce.position.y=3.2;mS.add(ce);
+  const bk=new THREE.Mesh(new THREE.BoxGeometry(14,3.4,.2),wM);bk.position.set(0,1.6,-3.5);mS.add(bk);
+  const leftWall=new THREE.Mesh(new THREE.BoxGeometry(.2,3.4,14),wM);leftWall.position.set(-3.2,1.6,0);mS.add(leftWall);
+  const rightWall=new THREE.Mesh(new THREE.BoxGeometry(.2,3.4,14),wM);rightWall.position.set(3.2,1.6,0);mS.add(rightWall);
+  // Дверь в глубине
+  mDoorAnim=new THREE.Mesh(new THREE.BoxGeometry(1.6,2.6,.1),dM);mDoorAnim.position.set(0,1.3,-3.4);mS.add(mDoorAnim);
+  // Доска
+  const dk=new THREE.Mesh(new THREE.BoxGeometry(2.4,.08,1.4),dM);dk.position.set(-1.6,.75,-1);mS.add(dk);
+  const mb=new THREE.Mesh(new THREE.BoxGeometry(.9,.75,.85),kM);mb.position.set(-1.9,1.15,-1.1);mS.add(mb);
+  const ec=document.createElement('canvas');ec.width=256;ec.height=192;const eg=ec.getContext('2d');eg.fillStyle='#041a08';eg.fillRect(0,0,256,192);eg.fillStyle='#5fff88';eg.font='bold 16px monospace';eg.fillText('SHKOLA 43',20,40);eg.fillText('NIGHT SHIFT',20,66);eg.fillText('> V24.3',20,100);eg.fillText('> 100 MODS',20,126);
+  const ecT=new THREE.CanvasTexture(ec);ecT.colorSpace=THREE.SRGBColorSpace;
+  const mScr=new THREE.Mesh(new THREE.PlaneGeometry(.7,.55),new THREE.MeshBasicMaterial({map:ecT}));mScr.position.set(-1.9,1.15,-.66);mS.add(mScr);
+  // Пара стульев
+  const cM=new THREE.MeshLambertMaterial({color:0x6a4a2a});
+  for(let i=0;i<2;i++){
+    const ch=new THREE.Mesh(new THREE.BoxGeometry(.5,.08,.5),cM);
+    ch.position.set(1.5,1.05,-1-i*.9);mS.add(ch);
+    const cl=new THREE.Mesh(new THREE.BoxGeometry(.5,.5,.08),cM);
+    cl.position.set(1.5,1.35,-1.25-i*.9);mS.add(cl);
+    const leg=new THREE.Mesh(new THREE.BoxGeometry(.06,1.05,.06),cM);
+    leg.position.set(1.5,.52,-1-i*.9);mS.add(leg);
+  }
+  // Стенд с плакатом
+  const plM=new THREE.MeshLambertMaterial({color:0xa03030,emissive:0x300505});
+  const plak=new THREE.Mesh(new THREE.PlaneGeometry(1.2,1.6),plM);
+  plak.position.set(2.85,1.7,-2);plak.rotation.y=-Math.PI/2;mS.add(plak);
+
+  addEventListener('mousemove',e=>{if(DEVICE!=='pc')return;const cv2=$('menuCanvas');const rect=cv2.getBoundingClientRect();if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom)return;mX=((e.clientX-rect.left)/rect.width)*2-1;mY=((e.clientY-rect.top)/rect.height)*2-1});
+}
+function menuLoop(){
+  if(!mRun)return;requestAnimationFrame(menuLoop);
+  const dt=Math.min(.05,(performance.now()-mClock)/1000)||.016;mClock=performance.now();mT+=dt;
+  cY+=(mX*.4-cY)*.05;cP+=(-mY*.18-cP)*.05;
+  mC.rotation.y=cY;mC.rotation.x=cP;
+  if(mFlick){const f=Math.random()<.02?.35:1;mFlick.intensity=(.75+Math.sin(mClock*.002)*.1)*f+.15}
+  if(mGlow)mGlow.intensity=.6+Math.sin(mClock*.003)*.15;
+  if(mDoorAnim){mDoorAnim.rotation.y=Math.sin(mClock*.0015)*.08}
+  mR.render(mS,mC)}
+window.setMenuRun=v=>{mRun=v;if(v){mClock=performance.now();menuLoop()}};
+function updateMenuClock(){const t=new Date();const el=$('mClock');if(el)el.textContent=String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0')}
+
+function showScreen(id){['mdev','mm','mr','md','mmodes','mmaps','mmods'].forEach(s=>{const el=$(s);if(el)el.classList.toggle('on',s===id)})}
+function updDevBadge(){const el=$('devBadge');if(!el)return;el.textContent=DEVICE==='pc'?'PC':'MOBILE';el.className='badge'}
+
+function bindMenu(){
+  $('mdev').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.dev)DEVICE=b.dataset.dev;else if(b.dataset.a==='auto')DEVICE=isTouch?'mobile':'pc';applyDev();try{localStorage.setItem('sh43device',DEVICE)}catch(e){}saveAll();updDevBadge();showScreen('mm')};
+  $('mm').onclick=e=>{const b=e.target.closest('button');if(!b)return;const a=b.dataset.a;try{SND.init();SND.resume()}catch(e){}
+    if(a==='ng'){try{localStorage.removeItem('sh43save')}catch(e){}G._rulesShown=false;mode='story';chosenMap=-1;role='guard';diff='normal';G.savedPos=null;G.speedrun=false;showScreen('mr')}
+    else if(a==='coop')openCoop();
+    else if(a==='speed'){mode='speedrun';G.speedrun=true;chosenMap=-1;role='guard';diff='normal';showScreen('mr')}
+    else if(a==='mods'){delete $('modsList').dataset.openSet;renderMods();showScreen('mmods')}
+    else if(a==='cont'){if(loadAll())startGame();else toast('Нет сохранения')}
+    else if(a==='mode')showScreen('mmodes');
+    else if(a==='st')openSettings();
+    else if(a==='ac')openAch();
+    else if(a==='jo')openJournal();
+    else if(a==='cr')openCredits();
+    else if(a==='chg')openChangelog();
+    else if(a==='ab')$('abP').classList.add('on');
+    else if(a==='dev')showScreen('mdev')};
+  $('mmods').onclick=e=>{
+    const gear=e.target.closest('.gear');
+    if(gear){e.stopPropagation();renderSettingPanel(gear.dataset.set);return}
+    const preset=e.target.closest('.presetBtn');
+    if(preset){const key=preset.dataset.preset;const p=MOD_PRESETS[key];if(p){Object.keys(MODS).forEach(k=>delete MODS[k]);Object.keys(p.mods).forEach(k=>{if(p.mods[k])MODS[k]=true});saveMods();renderMods();toast('📦 '+p.name,'mod');try{SND.tone(880,.2,.2)}catch(e){}unlAch('preset')}return}
+    const row=e.target.closest('.modRow');
+    if(row){const k=row.dataset.mod;MODS[k]=!MODS[k];saveMods();renderMods();checkModAch();try{SND.tone(MODS[k]?880:440,.15,.15)}catch(e){}return}
+    const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.a==='modsBack'){delete $('modsList').dataset.openSet;showScreen('mm')}
+  };
+  $('modSearch').addEventListener('input',()=>renderMods());
+  $('mr').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.a==='rg'){role='guard';showScreen('md')}else if(b.dataset.a==='rs'){role='student';showScreen('md')}else if(b.dataset.a==='rc'){role='cleaner';showScreen('md')}else if(b.dataset.a==='bm')showScreen('mm')};
+  $('md').onclick=e=>{const b=e.target.closest('button');if(!b)return;
+    if(b.dataset.d){diff=b.dataset.d;if(diff==='bag'){mode='story'}else if(mode!=='speedrun')mode='story';startGame()}
+    else if(b.dataset.a==='bagcfg'){showScreen('mmods');$('modsList').dataset.openSet='bag';renderSettingPanel('bag')}
+    else if(b.dataset.a==='br')showScreen('mr')};
+  $('mmodes').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.mode){mode=b.dataset.mode;G.speedrun=(mode==='speedrun');showScreen('mr')}else if(b.dataset.a==='maps')showScreen('mmaps');else if(b.dataset.a==='bm2')showScreen('mm')};
+  $('mmaps').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.map!==undefined){if(b.dataset.map==='r')chosenMap=-1;else chosenMap=parseInt(b.dataset.map);showScreen('mmodes')}else if(b.dataset.a==='bm4')showScreen('mmodes')};
+}
 
 function renderMods(){
   const l=$('modsList');if(!l)return;
@@ -1097,14 +1323,6 @@ function addSlider(parent,label,key,value,min,max,step,onChange){
   parent.appendChild(row);
 }
 
-$('mr').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.a==='rg'){role='guard';scr('md')}else if(b.dataset.a==='rs'){role='student';scr('md')}else if(b.dataset.a==='rc'){role='cleaner';scr('md')}else if(b.dataset.a==='bm')scr('mm')};
-$('md').onclick=e=>{const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.d){diff=b.dataset.d;if(diff==='bag'){mode='story'}else if(mode!=='speedrun')mode='story';startGame()}
-  else if(b.dataset.a==='bagcfg'){scr('mmods');document.getElementById('modsList').dataset.openSet='bag';renderSettingPanel('bag')}
-  else if(b.dataset.a==='br')scr('mr')};
-$('mmodes').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.mode){mode=b.dataset.mode;G.speedrun=(mode==='speedrun');scr('mr')}else if(b.dataset.a==='maps')scr('mmaps');else if(b.dataset.a==='bm2')scr('mm')};
-$('mmaps').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.map!==undefined){if(b.dataset.map==='r')chosenMap=-1;else chosenMap=parseInt(b.dataset.map);scr('mmodes')}else if(b.dataset.a==='bm4')scr('mmodes')};
-function updDevBadge(){const el=$('devBadge');if(!el)return;el.textContent=DEVICE==='pc'?'PC':'MOBILE';el.className='devBadge '+(DEVICE==='pc'?'pc':'mob')}
 $('spB').onclick=()=>$('sp').classList.remove('on');
 $('acB').onclick=()=>$('acP').classList.remove('on');
 $('joB').onclick=()=>$('joP').classList.remove('on');
@@ -1112,10 +1330,10 @@ $('crB').onclick=()=>$('crP').classList.remove('on');
 $('chgB').onclick=()=>$('chgP').classList.remove('on');
 $('abB').onclick=()=>$('abP').classList.remove('on');
 $('rlOk').onclick=()=>{$('rlP').classList.remove('on');if(G._showRulesBeforeStart){G._showRulesBeforeStart=false;actuallyStartGame()}};
-$('eR').onclick=()=>{$('eP').classList.remove('on');$('menu').style.display='flex';$('mc').style.display='block';$('hud').style.display='none';$('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';window.setMenuRun(true);running=false;dead=true;if(typeof RD!=='undefined'&&RD&&RD.domElement&&RD.domElement.parentNode)RD.domElement.parentNode.removeChild(RD.domElement);RD=null;if(RTC.remoteGhost&&typeof W!=='undefined'&&W){W.remove(RTC.remoteGhost.group);RTC.remoteGhost=null}$('remotePlayer').classList.remove('on');scr('mm')};
+$('eR').onclick=()=>{$('eP').classList.remove('on');$('menu').classList.add('on');$('mc').style.display='block';$('hud').style.display='none';$('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';window.setMenuRun(true);running=false;dead=true;if(typeof RD!=='undefined'&&RD&&RD.domElement&&RD.domElement.parentNode)RD.domElement.parentNode.removeChild(RD.domElement);RD=null;if(RTC.remoteGhost&&typeof W!=='undefined'&&W){W.remove(RTC.remoteGhost.group);RTC.remoteGhost=null}$('remotePlayer').classList.remove('on');showScreen('mm')};
 $('pauseResume').onclick=()=>{paused=false;G.paused=false;$('pauseP').classList.remove('on');if(DEVICE==='pc'&&cv&&cv.requestPointerLock)cv.requestPointerLock()};
 $('pauseRules').onclick=()=>showRules();
-$('pauseMenu').onclick=()=>{$('pauseP').classList.remove('on');paused=false;G.paused=false;$('menu').style.display='flex';$('mc').style.display='block';$('hud').style.display='none';$('tui').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';window.setMenuRun(true);running=false;dead=true;if(typeof RD!=='undefined'&&RD&&RD.domElement&&RD.domElement.parentNode)RD.domElement.parentNode.removeChild(RD.domElement);RD=null;scr('mm')};
+$('pauseMenu').onclick=()=>{$('pauseP').classList.remove('on');paused=false;G.paused=false;$('menu').classList.add('on');$('mc').style.display='block';$('hud').style.display='none';$('tui').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';window.setMenuRun(true);running=false;dead=true;if(typeof RD!=='undefined'&&RD&&RD.domElement&&RD.domElement.parentNode)RD.domElement.parentNode.removeChild(RD.domElement);RD=null;showScreen('mm')};
 
 function openSettings(){$('sp').classList.add('on');$('s1').value=cfg.sens;$('v1').textContent=cfg.sens.toFixed(2);$('s2').value=cfg.bob;$('v2').textContent=cfg.bob?'ВКЛ':'ВЫКЛ';$('s3').value=cfg.vol;$('v3').textContent=cfg.vol.toFixed(2);$('s4').value=cfg.qual;$('v4').textContent=cfg.qual;$('s5').value=cfg.fog;$('v5').textContent=cfg.fog+'м'}
 ['s1','s2','s3','s4','s5'].forEach(id=>{$(id).addEventListener('input',e=>{const v=parseFloat(e.target.value);if(id==='s1'){cfg.sens=v;$('v1').textContent=v.toFixed(2)}if(id==='s2'){cfg.bob=v;$('v2').textContent=v?'ВКЛ':'ВЫКЛ'}if(id==='s3'){cfg.vol=v;$('v3').textContent=v.toFixed(2);if(SND.m&&!isMod('mute'))SND.m.gain.value=v}if(id==='s4'){cfg.qual=v;$('v4').textContent=v;if(typeof RD!=='undefined'&&RD)RD.setPixelRatio(DEVICE==='mobile'?0.75:PR[cfg.qual])}if(id==='s5'){cfg.fog=v;$('v5').textContent=v+'м';if(typeof SC!=='undefined'&&SC&&SC.fog)SC.fog.far=v}saveAll()})});
@@ -1147,10 +1365,10 @@ function openCredits(){
   const totalMods=countMods();
   $('crContent').innerHTML=`
     <div class="crTitle">🏫 ШКОЛА №43</div>
-    <div class="crSub">V24.2 «MENU REDESIGN»</div>
+    <div class="crSub">V24.3 «ENTRANCE»</div>
     <div class="crBlock" style="border-color:#f0a"><b>🧪 100+ МОДОВ</b><br><br>Всего: <b style="color:#5f9">${Object.keys(MOD_DEFS).length}</b><br>Активно: <b style="color:#ffd76a">${totalMods}</b><br><br>${modsOn}${totalMods>20?'<br>...':''}</div>
     <div class="crBlock" style="border-color:#ffd76a"><b>🎬 ОБ ИГРЕ</b><br><br>Хоррор-выживание. 5 ночей. 7 правил.</div>
-    <div class="crBlock"><b>👨‍💻 СОЗДАТЕЛИ</b><br><br><span class="role">ИДЕЯ И РАЗРАБОТКА</span><br><span class="name">Команда ШКОЛА №43</span><br><br><span class="role">ПРОГРАММИРОВАНИЕ</span><br><span class="name">Основной разработчик</span><br><br><span class="role">МОД-ПАК</span><br><span class="name">100 модов в 9 категориях</span></div>
+    <div class="crBlock"><b>👨‍💻 СОЗДАТЕЛИ</b><br><br><span class="role">ИДЕЯ И РАЗРАБОТКА</span><br><span class="name">Команда ШКОЛА №43</span></div>
     <div class="crBlock"><b>🛠 ТЕХНОЛОГИИ</b><br><br>• HTML5 / CSS3 / JS ES2022<br>• Three.js r160<br>• WebRTC онлайн<br>• Web Audio API</div>
     <div class="crBlock" style="border-color:#a0e8ff"><b>⏱ СПИДРАН</b><br><br>Рекорд: <b style="color:#5f9">${srBest}</b></div>
     <div style="text-align:center;margin-top:12px;font-size:10px;color:#5f9;letter-spacing:2px">● Спасибо за игру! ●</div>
@@ -1180,30 +1398,6 @@ function openDlg(id){const d=DLG[id];if(!d){toast('...');return}const r=typeof d
 function renderDlg(){if(!curDlg)return;const d=DLG[curDlg.id],n=curDlg.node;$('dlgAv').textContent=d.avatar||'👤';$('dlgName').textContent=bagRandomText(d.name);$('dlgRole').textContent=d.role||'';$('dlgTxt').textContent=bagRandomText(n.text||'...');const ch=$('dlgChoices');ch.innerHTML='';(n.choices||[]).forEach(c=>{const b=document.createElement('button');b.className='dlgC';b.textContent=c.label;b.onclick=()=>{if(c.action)c.action();if(c.next){const nx=typeof d[c.next]==='function'?d[c.next]():d[c.next];if(nx){curDlg.node=nx;renderDlg()}else closeDlg()}else closeDlg()};ch.appendChild(b)});if(!n.choices||!n.choices.length){const b=document.createElement('button');b.className='dlgC';b.textContent='...';b.onclick=closeDlg;ch.appendChild(b)}}
 function closeDlg(){curDlg=null;$('dlg').classList.remove('on');G.busys=false}
 $('dlg').addEventListener('click',e=>{if(e.target.id==='dlg')closeDlg()});
-
-let mR,mS,mC,mEyes=[],mFlick,mGlow,mRun=true,mClock=0,mX=0,mY=0,cY=0,cP=0,mBlink=0,mCab,mScr,mCrtLight,mT=0;
-function initMenu(){const cv=$('mc');mR=new THREE.WebGLRenderer({canvas:cv,antialias:DEVICE==='pc'});mR.setPixelRatio(DEVICE==='mobile'?1:Math.min(devicePixelRatio,1.5));mR.setSize(innerWidth,innerHeight);mR.outputColorSpace=THREE.SRGBColorSpace;
-  mS=new THREE.Scene();mS.background=new THREE.Color(0x04080e);mS.fog=new THREE.Fog(0x04080e,3,14);
-  mC=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,40);mC.position.set(0,1.55,3.4);
-  mS.add(new THREE.AmbientLight(0x304050,.8));
-  mFlick=new THREE.PointLight(0xffd090,.9,9,2);mFlick.position.set(0,2.7,.4);mS.add(mFlick);
-  mGlow=new THREE.PointLight(0x30ff80,.7,4,2);mGlow.position.set(-1.4,1.35,-.6);mS.add(mGlow);
-  const fM=new THREE.MeshLambertMaterial({color:0x2a2e30}),wM=new THREE.MeshLambertMaterial({color:0x3a4450}),dM=new THREE.MeshLambertMaterial({color:0x7a5a3a}),kM=new THREE.MeshLambertMaterial({color:0x1a1d20}),mM=new THREE.MeshLambertMaterial({color:0x505860});
-  const fl=new THREE.Mesh(new THREE.BoxGeometry(12,.2,12),fM);fl.position.y=-.1;mS.add(fl);
-  const ce=new THREE.Mesh(new THREE.BoxGeometry(12,.2,12),wM);ce.position.y=3;mS.add(ce);
-  const bk=new THREE.Mesh(new THREE.BoxGeometry(12,3.2,.2),wM);bk.position.set(0,1.5,-3);mS.add(bk);
-  const dk=new THREE.Mesh(new THREE.BoxGeometry(2.4,.08,1.4),dM);dk.position.set(-1.4,.75,-1);mS.add(dk);
-  const mb=new THREE.Mesh(new THREE.BoxGeometry(.9,.75,.85),kM);mb.position.set(-1.7,1.15,-1.1);mS.add(mb);
-  const ec=document.createElement('canvas');ec.width=256;ec.height=192;const eg=ec.getContext('2d');eg.fillStyle='#041a08';eg.fillRect(0,0,256,192);eg.fillStyle='#5fff88';eg.font='bold 16px monospace';eg.fillText('SHKOLA 43',20,40);eg.fillText('SYSTEM v24.2',20,66);eg.fillText('> 100 MODS',20,100);eg.fillText('> DAY: 1/5',20,126);
-  const ecT=new THREE.CanvasTexture(ec);ecT.colorSpace=THREE.SRGBColorSpace;
-  mScr=new THREE.Mesh(new THREE.PlaneGeometry(.7,.55),new THREE.MeshBasicMaterial({map:ecT}));mScr.position.set(-1.7,1.15,-.66);mS.add(mScr);
-  addEventListener('mousemove',e=>{if(!mRun||DEVICE!=='pc')return;mX=(e.clientX/innerWidth)*2-1;mY=(e.clientY/innerHeight)*2-1});
-}
-function menuLoop(){if(!mRun)return;requestAnimationFrame(menuLoop);const dt=Math.min(.05,(performance.now()-mClock)/1000)||.016;mClock=performance.now();mT+=dt;cY+=(mX*.35-cY)*.06;cP+=(-mY*.18-cP)*.06;mC.position.set(0,1.55,3.4);mC.rotation.y=cY;mC.rotation.x=cP;mC.lookAt(0,1.5,-1);
-  if(mFlick){const f=Math.random()<.02?.3:1;mFlick.intensity=(.7+Math.sin(mClock*.002)*.1)*f+.2}
-  if(mGlow)mGlow.intensity=.55+Math.sin(mClock*.003)*.15;
-  mR.render(mS,mC)}
-window.setMenuRun=v=>{mRun=v;if(v)menuLoop()};
 
 let RD=null,SC=null,CM=null,TOR=null,W=null,cv=null,running=false,dead=false,paused=false;
 const BG=new THREE.BoxGeometry(1,1,1);
@@ -1458,7 +1652,7 @@ function endG(k,t,x){
   let extra='';
   if(G.speedrun){if(!G.ach.speedrun)unlAch('speedrun');const isRec=(G.srBest===0||G.srTime<G.srBest);if(isRec){G.srBest=G.srTime;try{localStorage.setItem('sh43srbest',G.srBest.toString())}catch(e){}unlAch('speedrunFast');extra='<br><b style="color:#5f9">🏆 РЕКОРД: '+G.srTime.toFixed(2)+' сек!</b>'}else{extra='<br>Время: <b>'+G.srTime.toFixed(2)+' сек</b>'}}
   if(IS_BAG())extra+='<br><b style="color:#f0a">🎒 BAG ПРОЙДЕН!</b>';
-  $('eS').innerHTML='V24.2 • '+DEVICE+' • '+(role==='guard'?'Охранник':(role==='student'?'7А':'Уборщица'))+'<br>День: '+G.day+'/5 • Смертей: '+G.deaths+'<br>Активных модов: <b>'+countMods()+'</b>'+extra;
+  $('eS').innerHTML='V24.3 • '+DEVICE+' • '+(role==='guard'?'Охранник':(role==='student'?'7А':'Уборщица'))+'<br>День: '+G.day+'/5 • Смертей: '+G.deaths+'<br>Активных модов: <b>'+countMods()+'</b>'+extra;
   $('eP').classList.add('on');$('hud').style.display='none';
   $('tui').classList.remove('on');$('rP').style.display='none';$('pcP').style.display='none';$('ln').classList.remove('on');$('cd').classList.remove('on');$('camUI').classList.remove('on');
   $('invuln_bar').classList.remove('on');$('invuln_label').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');
@@ -1712,7 +1906,7 @@ function actuallyStartGame(){
 
   $('cd').classList.remove('on');$('cdn').textContent='5';$('daySplash').classList.remove('on');$('journal').classList.remove('on');
   $('invuln_bar').classList.remove('on');$('invuln_label').classList.remove('on');
-  $('menu').style.display='none';$('mc').style.display='none';window.setMenuRun(false);
+  $('menu').classList.remove('on');$('mc').style.display='none';window.setMenuRun(false);
   if(!RD){initMats();initGame3D()}
   $('hud').style.display='block';$('eP').classList.remove('on');$('rP').style.display='none';$('dP').style.display='none';$('qP').style.display='none';$('dlg').classList.remove('on');$('sk').classList.remove('on');$('ln').classList.remove('on');
   $('tui').classList.toggle('on',DEVICE==='mobile');
@@ -1738,7 +1932,7 @@ function actuallyStartGame(){
   if(G.savedPos&&!IS_BAG()){P.x=G.savedPos.x;P.z=G.savedPos.z;P.yaw=G.savedPos.yaw||0;P.pitch=G.savedPos.pitch||0;G.savedPos=null}
   else{const p=RMS.s0;if(p){P.x=p.cx;P.z=p.cz+3}else{P.x=0;P.z=0}P.yaw=0;P.pitch=0}
   spawnAll();uInv();addJ('Начата смена — День 1');
-  obj('V24.2 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'))+' • '+countMods()+' модов');
+  obj('V24.3 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'))+' • '+countMods()+' модов');
   toast('🎮 Карта: '+['СТАНДАРТ','ВОСТОЧНАЯ','МУЗЫКАЛЬНАЯ','НАУЧНАЯ','СПОРТИВНАЯ','БИБЛИОТЕЧНАЯ','КОМПЬЮТЕРНАЯ','ХУДОЖЕСТВЕННАЯ','ИСТОРИЧЕСКАЯ','СЛОЖНАЯ'][G.map]);
   const ds=$('daySplash');$('dsBig').textContent='ДЕНЬ 1';$('dsSub').textContent=G.speedrun?'⏱ СПИДРАН':(IS_BAG()?'🎒 BAG':'НОЧНАЯ СМЕНА');ds.classList.remove('on');void ds.offsetWidth;ds.classList.add('on');setTimeout(()=>ds.classList.remove('on'),2500);
   if(countMods()>0)toast('🧪 Активно модов: '+countMods(),'mod');
@@ -1750,21 +1944,19 @@ window.SH=window.SH||{};window.SH.game=startGame;
 addEventListener('resize',()=>{
   if(CM){CM.aspect=innerWidth/innerHeight;CM.updateProjectionMatrix()}
   if(RD){RD.setSize(innerWidth,innerHeight,false);RD.setPixelRatio(DEVICE==='mobile'?0.75:PR[cfg.qual]);if(!G.camOn){const W=RD.domElement.width,H=RD.domElement.height;RD.setScissorTest(false);RD.setViewport(0,0,W,H);RD.setScissor(0,0,W,H)}}
-  if(mR){mR.setSize(innerWidth,innerHeight);mC.aspect=innerWidth/innerHeight;mC.updateProjectionMatrix()}
+  if(mR){const cv=$('menuCanvas');if(cv){mR.setSize(cv.clientWidth,cv.clientHeight,false);mC.aspect=cv.clientWidth/cv.clientHeight;mC.updateProjectionMatrix()}}
 });
 
-setupTouch();updDevBadge();initMenu();menuLoop();loop(0);
+setupTouch();updDevBadge();initMenu();updateMenuClock();setInterval(updateMenuClock,10000);
 if(hasSave())$('bCont').style.opacity='1';else $('bCont').style.opacity='0.5';
+if(G.srBest>0){const el=$('srBestTxt');if(el)el.textContent=G.srBest.toFixed(2)+' сек';}
 setInterval(()=>{if(running)saveAll()},30000);
 $('mc').addEventListener('contextmenu',e=>e.preventDefault());
-
-$('iconGames').onclick=()=>{const b=$('boot');if(b)b.click()};
-$('iconMods').onclick=()=>{const b=$('boot');if(b)b.click()};
-$('iconTit').onclick=()=>{const b=$('boot');if(b)b.click()};
-$('iconChg').onclick=()=>{const b=$('boot');if(b)b.click()};
-
-runBoot();
-console.log('ШКОЛА №43 — V24.2 «MENU REDESIGN» загружена');
+bindMenu();
+$('mm').classList.add('on'); // показать главный экран по умолчанию
+loop(0);
+runIntro();
+console.log('ШКОЛА №43 — V24.3 «ENTRANCE» загружена');
 </script>
 </body>
-                                                          </html>
+  </html>
