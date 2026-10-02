@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#000">
-<title>ШКОЛА №43 — V30.1</title>
+<title>ШКОЛА №43 — V30.2</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-tap-highlight-color:transparent;font-family:Consolas,monospace}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;position:fixed;touch-action:none}
 .h{display:none!important}
 #mc{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 
-/* ═══ INTRO ═══ */
+/* INTRO */
 #intro{position:fixed;inset:0;z-index:200;background:#000;transition:opacity 1.1s;overflow:hidden}
 #intro.off{opacity:0;pointer-events:none}
 #introCanvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
@@ -24,11 +24,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .introSkip{position:absolute;bottom:24px;right:24px;color:#5f9;font-size:11px;letter-spacing:2px;opacity:.6;padding:10px 16px;border:1px solid rgba(80,255,140,.5);border-radius:8px;background:rgba(0,30,15,.7);cursor:pointer;z-index:6;animation:hintBlink 1.6s infinite;font-weight:bold}
 @keyframes hintBlink{50%{opacity:.3}}
 
-/* ═══ MENU — НОВЫЙ СТИЛЬ ═══ */
+/* MENU */
 #menu{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;background:#000;overflow:hidden}
 #menu.on{display:flex}
-
-/* Анимированный фон меню */
 #menuBg{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 #menuBg::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
   background:
@@ -89,7 +87,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .msH.on{display:block;animation:screenIn .35s cubic-bezier(.2,.8,.4,1)}
 @keyframes screenIn{from{opacity:0;transform:translateX(-12px) scale(.98)}to{opacity:1;transform:translateX(0) scale(1)}}
 
-/* Кнопки — новый стиль */
 .b{background:linear-gradient(100deg,rgba(13,42,28,.9),rgba(6,20,13,.75));border:1px solid rgba(40,140,70,.75);color:#c8ffe0;font-family:inherit;font-size:13px;text-align:left;padding:14px 18px 14px 46px;cursor:pointer;letter-spacing:1.2px;border-radius:11px;transition:all .18s cubic-bezier(.2,.8,.4,1);width:100%;position:relative;overflow:hidden;margin-bottom:9px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(120,255,180,.1)}
 .b::before{content:'▸';position:absolute;left:16px;top:50%;transform:translateY(-50%);opacity:.8;color:#5f9;font-size:16px;transition:.2s;font-weight:bold}
 .b::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,transparent,#5f9,transparent);opacity:0;transition:.25s}
@@ -181,11 +178,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .gfxBtn .nm{display:block;font-weight:bold;letter-spacing:1.5px}
 .gfxBtn .ds{display:block;font-size:9.5px;color:#88b8a0;margin-top:6px;line-height:1.5}
 .gfxBtn.on .ds{color:#c8ffe0}
-
-/* Badge на сложности */
 .b .badgeHC{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:8px;background:#a01010;color:#fff;padding:2px 6px;border-radius:4px;letter-spacing:1px;font-weight:bold;box-shadow:0 0 8px rgba(255,40,40,.6)}
 
-/* ═══ HUD ═══ */
+/* HUD */
 #hud{position:fixed;inset:0;pointer-events:none;z-index:30;display:none}
 #cr{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;opacity:.6}
 #cr::before,#cr::after{content:'';position:absolute;background:#fff}
@@ -283,15 +278,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .serverInput:focus{outline:none;border-color:#5f9;box-shadow:0 0 18px rgba(80,255,140,.4)}
 .serverInput::placeholder{color:#4a6a55;letter-spacing:2px;font-size:12px}
 
-/* ═══ МОБИЛЬНОЕ УПРАВЛЕНИЕ ═══ */
+/* MOBILE */
 #tui{position:fixed;inset:0;z-index:28;display:none;pointer-events:none}
 #tui.on{display:block}
-
 #jb{position:absolute;left:20px;bottom:120px;width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(0,60,30,.3),rgba(0,0,0,.45));border:3px solid rgba(120,255,180,.4);pointer-events:auto;touch-action:none;box-shadow:0 4px 20px rgba(0,0,0,.5),inset 0 0 20px rgba(80,255,140,.12)}
 #jb.active{border-color:rgba(120,255,180,.85);background:radial-gradient(circle,rgba(0,80,40,.45),rgba(0,0,0,.55))}
 #jk{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(120,255,180,.95),rgba(40,120,80,.85));pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.55),inset 0 0 14px rgba(255,255,255,.3)}
 #lz{position:absolute;right:0;top:0;width:62%;height:100%;pointer-events:auto;touch-action:none}
-
 #hotbar{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);display:flex;gap:4px;padding:6px;background:linear-gradient(180deg,rgba(20,20,30,.92),rgba(10,10,15,.95));border:2px solid rgba(80,80,100,.7);border-radius:10px;pointer-events:auto;z-index:32;box-shadow:0 6px 22px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.08);touch-action:none;max-width:calc(100vw - 24px)}
 .hbSlot{width:62px;height:62px;border-radius:7px;background:linear-gradient(160deg,rgba(40,45,55,.95),rgba(20,22,28,.98));border:2px solid rgba(90,95,110,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;position:relative;cursor:pointer;transition:all .12s;touch-action:none;box-shadow:inset 0 2px 4px rgba(0,0,0,.4);flex-shrink:0}
 .hbSlot:active{transform:scale(.94)}
@@ -302,7 +295,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .hbSlot .hbNum{position:absolute;top:2px;left:4px;font-size:9px;color:rgba(180,190,210,.65);font-weight:bold;text-shadow:0 1px 2px #000}
 .hbSlot.active .hbNum{color:#ffd76a}
 .hbSlot .hbCount{position:absolute;bottom:2px;right:4px;font-size:9px;color:#7fffaf;font-weight:bold;text-shadow:0 1px 2px #000}
-
 #hotbarHint{position:absolute;left:50%;bottom:86px;transform:translateX(-50%);font-size:9.5px;color:#5f9;background:rgba(0,0,0,.7);padding:4px 10px;border-radius:12px;letter-spacing:1px;pointer-events:none;opacity:0;transition:.25s;white-space:nowrap;border:1px solid rgba(80,255,140,.3)}
 #hotbarHint.on{opacity:1}
 #runIndicator{position:absolute;left:50%;top:60px;transform:translateX(-50%);font-size:11px;color:#ffd76a;padding:5px 14px;background:rgba(0,0,0,.8);border:2px solid rgba(255,215,106,.7);border-radius:20px;letter-spacing:2px;opacity:0;transition:.2s;pointer-events:none;font-weight:bold;z-index:33}
@@ -379,13 +371,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 #exitVignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.85) 100%);z-index:2}
 #exitFade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:3;transition:opacity 1.5s}
 
+/* COOP ENDING */
 #coopEnding{position:fixed;inset:0;z-index:185;background:#000;display:none;overflow:hidden;pointer-events:none}
 #coopEnding.on{display:block}
 #coopCanvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
-#coopVignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.9) 100%);z-index:2}
-#coopText{position:absolute;left:50%;bottom:12%;transform:translateX(-50%);text-align:center;color:#fff;font-size:clamp(14px,2.2vmin,20px);letter-spacing:3px;text-shadow:0 0 20px #000,0 0 40px #000;z-index:5;opacity:0;transition:opacity 2s;padding:0 20px;line-height:1.6;font-family:Consolas,monospace}
+#coopVignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.9) 100%);z-index:2;pointer-events:none}
+#coopText{position:absolute;left:50%;bottom:14%;transform:translateX(-50%);text-align:center;color:#fff;font-size:clamp(15px,2.4vmin,22px);letter-spacing:3px;text-shadow:0 0 20px #000,0 0 40px #000,0 2px 4px #000;z-index:5;opacity:0;transition:opacity 1.5s;padding:0 20px;line-height:1.7;font-family:Consolas,monospace;max-width:90vw}
 #coopText.on{opacity:1}
-#coopText .name{color:#60c0ff;font-weight:bold;letter-spacing:4px}
+#coopText .name{color:#60c0ff;font-weight:bold;letter-spacing:4px;text-shadow:0 0 15px #60c0ff,0 0 30px #2050a0}
+#coopText .hi{color:#ffd76a;font-weight:bold}
 #coopFade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:6;transition:opacity 3s}
 
 #creditsScroll{position:fixed;inset:0;z-index:190;background:#000;display:none;overflow:hidden;color:#cfe}
@@ -458,7 +452,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <div id="intro">
   <canvas id="introCanvas"></canvas>
   <div class="introOverlay"></div>
-  <div class="introTitle"><div class="t1">ШКОЛА №43</div><div class="t2">НОЧНАЯ СМЕНА • V30.1 «ДРУГ+»</div></div>
+  <div class="introTitle"><div class="t1">ШКОЛА №43</div><div class="t2">НОЧНАЯ СМЕНА • V30.2 «ДВЕРЬ»</div></div>
   <div class="introSub">входим в школу...</div>
   <div class="introSkip" id="introSkip">ПРОПУСТИТЬ ▸</div>
 </div>
@@ -488,7 +482,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
     <div class="mHeadLogo">🦉</div>
     <div class="mHeadTitle">
       <div class="a">ШКОЛА №43</div>
-      <div class="b">НОЧНАЯ СМЕНА • V30.1 «ДРУГ+»</div>
+      <div class="b">НОЧНАЯ СМЕНА • V30.2 «ДВЕРЬ»</div>
     </div>
     <div class="mHeadRight">
       <span class="badge" id="devBadge">PC</span>
@@ -730,11 +724,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <div class="pn" id="chgP"><div class="pb" style="max-width:600px"><h2>📋 СПИСОК ИЗМЕНЕНИЙ</h2><div id="chgContent"></div><button id="chgB" class="p" style="width:100%;margin-top:10px">ЗАКРЫТЬ</button></div></div>
 <div class="pn" id="abP"><div class="pb"><h2>О ИГРЕ</h2>
 <div style="font-size:10.5px;line-height:1.6;color:#bfe">
-<b style="color:#5f9">ШКОЛА №43 — V30.1 «ДРУГ+»</b><br><br>
-🧑‍🤝‍🧑 Мод «БОТ-ДРУГ» — пройди с ботом 5 дней и получи грустную концовку<br>
-⚔️ Режим ХАРДКОР — 1 удар = смерть<br>
-🌐 Сервера с кодами<br>
-🎨 Новое стильное меню
+<b style="color:#5f9">ШКОЛА №43 — V30.2 «ДВЕРЬ»</b><br><br>
+Кинематографичная грустная концовка: ты выходишь из школы, оборачиваешься — и дверь захлопывается прямо перед лицом друга.
 </div>
 <button id="abB" class="p">ЗАКРЫТЬ</button></div></div>
 <div class="pn" id="eP"><div class="pb" style="text-align:center">
@@ -839,7 +830,6 @@ function applyDev(){
   else{cfg.sens=1.5;cfg.bob=1;}
 }
 
-// ХАРДКОР — новый режим
 const DF={
   easy:[0.5,0.25,7,0],
   normal:[1,0.55,11,0],
@@ -859,13 +849,11 @@ const IS_HARDCORE=()=>diff==='hardcore';
 
 const MOD_CATS={opt:'⚡ ОПТИМИЗАЦИЯ',visual:'🎨 ВИЗУАЛ',sound:'🎵 ЗВУК',game:'🎮 ГЕЙМПЛЕЙ',cheat:'💎 ЧИТЫ',humor:'😂 ЮМОР',world:'🌍 МИР',phys:'⚙ ФИЗИКА',util:'📱 УТИЛИТЫ',friend:'👥 ДРУЗЬЯ',fun:'🎉 СПЕЦ'};
 const MOD_DEFS={
-// ═══ МОД БОТ-ДРУГ ═══
 botfriend:{cat:'friend',name:'👥 БОТ-ДРУГ',icon:'🧑‍🤝‍🧑',desc:'Друг который бегает рядом с тобой',hasSet:true},
 botfriend_smart:{cat:'friend',name:'УМНЫЙ БОТ',icon:'🧠',desc:'Друг избегает сущностей'},
 botfriend_medic:{cat:'friend',name:'ДРУГ-МЕДИК',icon:'💊',desc:'Друг лечит тебя если HP<50'},
 botfriend_loot:{cat:'friend',name:'ДРУГ-СОБИРАТЕЛЬ',icon:'📦',desc:'Друг приносит предметы'},
 botfriend_light:{cat:'friend',name:'СВЕТ ОТ ДРУГА',icon:'💡',desc:'Вокруг друга светится'},
-// Оптимизация
 opt_noshadow:{cat:'opt',name:'БЕЗ ТЕНЕЙ',icon:'🚫',desc:'Отключить тени'},
 opt_lowres:{cat:'opt',name:'НИЗКОЕ РАЗРЕШЕНИЕ',icon:'📉',desc:'0.65x pixelRatio'},
 opt_fps30:{cat:'opt',name:'FPS-КАП 30',icon:'3️⃣',desc:'30 FPS'},
@@ -1008,6 +996,8 @@ net(){this.tone(880,.15,.2);setTimeout(()=>this.tone(1320,.2,.15),150)},
 door(){this.tone(90,.6,.35,'sawtooth');this.tone(140,.5,.2)},
 click(){this.tone(600,.04,.15,'square');setTimeout(()=>this.tone(800,.04,.12,'square'),30)},
 sad(){this.tone(220,.8,.15,'sine');setTimeout(()=>this.tone(196,.8,.13,'sine'),400);setTimeout(()=>this.tone(174,.9,.12,'sine'),800);setTimeout(()=>this.tone(146,1.2,.1,'sine'),1200)},
+doorSlam(){this.tone(60,.8,.5,'sawtooth');this.tone(90,.6,.4);this.tone(150,.4,.3);setTimeout(()=>this.tone(50,.9,.35,'sawtooth'),50)},
+knock(){this.tone(180,.08,.25,'square');setTimeout(()=>this.tone(160,.08,.22,'square'),120)},
 friend(){this.tone(700,.1,.12,'sine');setTimeout(()=>this.tone(900,.12,.1,'sine'),100)}};
 
 const keys={};
@@ -1023,7 +1013,7 @@ function bagRandomText(s){if(!IS_BAG()||!BAG_CFG.textJitter)return s;const j={'�
 
 function saveAll(){
   try{localStorage.setItem('sh43cfg',JSON.stringify(cfg))}catch(e){}
-  if(IS_HARDCORE())return; // Хардкор не сохраняется
+  if(IS_HARDCORE())return;
   try{const pos=typeof P!=='undefined'?{x:P.x,z:P.z,yaw:P.yaw,pitch:P.pitch}:null;
     localStorage.setItem('sh43save',JSON.stringify({
       day:G.day,time:G.time,hp:G.hp,st:G.st,hg:G.hg,sn:G.sn,thr:G.thr,inv:G.inv,ach:G.ach,
@@ -1049,55 +1039,25 @@ const MAPS=[
 ];
 
 const SERVERS={
-  myRooms:[],
-  activeRoom:null,
-  currentCode:null,
-  generateRoomCode:function(){
-    const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    let code='';
-    for(let i=0;i<6;i++)code+=chars[Math.floor(Math.random()*chars.length)];
-    return 'shk43-'+code;
-  },
+  myRooms:[],activeRoom:null,currentCode:null,
+  generateRoomCode:function(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let code='';for(let i=0;i<6;i++)code+=chars[Math.floor(Math.random()*chars.length)];return 'shk43-'+code;},
   saveMyRooms:function(){try{localStorage.setItem('sh43myrooms',JSON.stringify(this.myRooms))}catch(e){}},
   loadMyRooms:function(){try{const r=JSON.parse(localStorage.getItem('sh43myrooms')||'[]');if(Array.isArray(r))this.myRooms=r;}catch(e){}},
-  addRoom:function(code,name,host){
-    if(this.myRooms.find(r=>r.code===code))return;
-    this.myRooms.unshift({code:code,name:name||('Комната '+code.slice(6)),host:host||'Вы',players:1,created:Date.now()});
-    if(this.myRooms.length>20)this.myRooms=this.myRooms.slice(0,20);
-    this.saveMyRooms();
-  }
+  addRoom:function(code,name,host){if(this.myRooms.find(r=>r.code===code))return;this.myRooms.unshift({code:code,name:name||('Комната '+code.slice(6)),host:host||'Вы',players:1,created:Date.now()});if(this.myRooms.length>20)this.myRooms=this.myRooms.slice(0,20);this.saveMyRooms();}
 };
 SERVERS.loadMyRooms();
 
 const RTC={pc:null,dc:null,isHost:false,connected:false,remoteGhost:null,remotePos:null,lastSend:0,sendRate:15,roomCode:null};
-const ICE_SERVERS=[
-  {urls:'stun:stun.l.google.com:19302'},
-  {urls:'stun:stun1.l.google.com:19302'},
-  {urls:'stun:stun2.l.google.com:19302'}
-];
+const ICE_SERVERS=[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun1.l.google.com:19302'},{urls:'stun:stun2.l.google.com:19302'}];
 const BC=new BroadcastChannel('shk43_lan');
-
 function bindDC(dc){
   dc.onopen=()=>{toast('🌐 Канал открыт','net');try{SND.net()}catch(e){};$('remotePlayer').classList.add('on');};
   dc.onclose=()=>{toast('🌐 Соединение потеряно','net');RTC.connected=false;$('remotePlayer').classList.remove('on');};
-  dc.onmessage=ev=>{
-    try{
-      const m=JSON.parse(ev.data);
-      if(m.t==='pos'){
-        RTC.remotePos={x:m.x,z:m.z,yaw:m.yaw};
-        if(!RTC.remoteGhost)spawnRemoteGhost();
-        if(RTC.remoteGhost){
-          RTC.remoteGhost.group.position.x+=(m.x-RTC.remoteGhost.group.position.x)*.35;
-          RTC.remoteGhost.group.position.z+=(m.z-RTC.remoteGhost.group.position.z)*.35;
-        }
-      }
-    }catch(e){}
-  };
+  dc.onmessage=ev=>{try{const m=JSON.parse(ev.data);if(m.t==='pos'){RTC.remotePos={x:m.x,z:m.z,yaw:m.yaw};if(!RTC.remoteGhost)spawnRemoteGhost();if(RTC.remoteGhost){RTC.remoteGhost.group.position.x+=(m.x-RTC.remoteGhost.group.position.x)*.35;RTC.remoteGhost.group.position.z+=(m.z-RTC.remoteGhost.group.position.z)*.35;}}}catch(e){}};
 }
 function netSend(msg){if(RTC.connected&&RTC.dc&&RTC.dc.readyState==='open'){try{RTC.dc.send(JSON.stringify(msg))}catch(e){}}}
 function spawnRemoteGhost(){if(!W||RTC.remoteGhost)return;const g=new THREE.Group();const body=new THREE.Mesh(new THREE.CapsuleGeometry(.28,1,.5,12),new THREE.MeshLambertMaterial({color:0x60c0ff,emissive:0x2050a0}));body.position.y=1;g.add(body);const head=new THREE.Mesh(new THREE.SphereGeometry(.22,12,10),new THREE.MeshLambertMaterial({color:0xe8d0b0}));head.position.y=1.75;g.add(head);const sp=nSp('ДРУГ','#60c0ff');sp.position.y=2.1;g.add(sp);W.add(g);RTC.remoteGhost={group:g};}
 
-// ═══ БОТ-ДРУГ ═══
 function spawnBotFriend(){
   if(!W||G.botFriend)return;
   const g=mH(0x60c0ff,0x3060a0,0xe8d0b0,1);
@@ -1107,13 +1067,7 @@ function spawnBotFriend(){
   sp.position.y=2.1;g.add(sp);
   const light=new THREE.PointLight(0x60c0ff,isMod('botfriend_light')?1.2:0,isMod('botfriend_light')?6:0,2);
   light.position.y=1.5;g.add(light);
-  G.botFriend={
-    obj:g, light:light,
-    speed:FRIEND_CFG.speed||3,
-    followDist:FRIEND_CFG.followDist||2.5,
-    bob:0, target:null, mode:'follow',
-    lastMedic:0, lastLoot:0
-  };
+  G.botFriend={obj:g,light:light,speed:FRIEND_CFG.speed||3,followDist:FRIEND_CFG.followDist||2.5,bob:0,target:null,mode:'follow',lastMedic:0,lastLoot:0};
   toast('👥 ДРУГ присоединился!','mod');
   $('botFriendLabel').classList.add('on');
   $('botFriendLabel').textContent='👥 '+(FRIEND_CFG.name||'Друг');
@@ -1124,82 +1078,29 @@ function uBotFriend(dt,now){
   if(!G.botFriend)return;
   const bf=G.botFriend;
   const obj=bf.obj;
-  // Умный бот — избегает аномалий
   if(isMod('botfriend_smart')){
     let nearestAnom=null,minDist=999;
-    for(const n of NPC){
-      if(n.kind!=='anomaly')continue;
-      const d=Math.hypot(n.obj.position.x-P.x,n.obj.position.z-P.z);
-      if(d<minDist){minDist=d;nearestAnom=n;}
-    }
-    // Если аномалия рядом с игроком — друг атакует/отвлекает
-    if(nearestAnom&&minDist<8){
-      bf.mode='defend';
-      bf.target=nearestAnom;
-    } else if(nearestAnom&&minDist<15){
-      bf.mode='alert';
-    } else {
-      bf.mode='follow';
-    }
+    for(const n of NPC){if(n.kind!=='anomaly')continue;const d=Math.hypot(n.obj.position.x-P.x,n.obj.position.z-P.z);if(d<minDist){minDist=d;nearestAnom=n;}}
+    if(nearestAnom&&minDist<8){bf.mode='defend';bf.target=nearestAnom;}
+    else if(nearestAnom&&minDist<15){bf.mode='alert';}
+    else {bf.mode='follow';}
   }
   if(bf.mode==='defend'&&bf.target){
-    // Бежит к аномалии
-    const dx=bf.target.obj.position.x-obj.position.x;
-    const dz=bf.target.obj.position.z-obj.position.z;
-    const d=Math.hypot(dx,dz);
-    if(d>.8){
-      obj.position.x+=dx/d*bf.speed*1.5*dt;
-      obj.position.z+=dz/d*bf.speed*1.5*dt;
-      obj.rotation.y=Math.atan2(dx,dz);
-    } else {
-      // Отталкивает аномалию
-      const a=bf.target;
-      a.dis=Math.max(a.dis,3);
-      bf.target=null;bf.mode='follow';
-    }
+    const dx=bf.target.obj.position.x-obj.position.x,dz=bf.target.obj.position.z-obj.position.z,d=Math.hypot(dx,dz);
+    if(d>.8){obj.position.x+=dx/d*bf.speed*1.5*dt;obj.position.z+=dz/d*bf.speed*1.5*dt;obj.rotation.y=Math.atan2(dx,dz);}
+    else{bf.target.dis=Math.max(bf.target.dis,3);bf.target=null;bf.mode='follow';}
   } else {
-    // Обычное следование
-    const dx=P.x-obj.position.x;
-    const dz=P.z-obj.position.z;
-    const d=Math.hypot(dx,dz);
-    if(d>bf.followDist+0.5){
-      obj.position.x+=dx/d*bf.speed*dt;
-      obj.position.z+=dz/d*bf.speed*dt;
-      obj.rotation.y=Math.atan2(dx,dz);
-      bf.bob+=dt*10;
-      // Анимация ног
-      const L=obj.userData.limbs;
-      if(L){L[2].rotation.x=Math.sin(bf.bob)*.5;L[3].rotation.x=-Math.sin(bf.bob)*.5;}
-    }
+    const dx=P.x-obj.position.x,dz=P.z-obj.position.z,d=Math.hypot(dx,dz);
+    if(d>bf.followDist+0.5){obj.position.x+=dx/d*bf.speed*dt;obj.position.z+=dz/d*bf.speed*dt;obj.rotation.y=Math.atan2(dx,dz);bf.bob+=dt*10;const L=obj.userData.limbs;if(L){L[2].rotation.x=Math.sin(bf.bob)*.5;L[3].rotation.x=-Math.sin(bf.bob)*.5;}}
   }
-  // Медик — лечит игрока
-  if(isMod('botfriend_medic')){
-    bf.lastMedic-=dt;
-    if(bf.lastMedic<=0&&G.hp<50&&d<4){
-      bf.lastMedic=8;
-      G.hp=Math.min(100,G.hp+25);
-      toast('💊 '+FRIEND_CFG.name+' лечит тебя! +25 HP','mod');
-      flash('af',.3);
-      SND.dr();
-    }
-  }
-  // Собиратель — приносит предметы
-  if(isMod('botfriend_loot')){
-    bf.lastLoot-=dt;
-    if(bf.lastLoot<=0){
-      bf.lastLoot=15;
-      if(Math.random()<0.6){
-        G.inv.food+=1;G.inv.alm+=1;
-        toast('📦 '+FRIEND_CFG.name+' принёс: 🍞+1 💧+1','mod');
-        uInv();
-      }
-    }
-  }
-  // Легкое покачивание
+  if(isMod('botfriend_medic')){bf.lastMedic-=dt;if(bf.lastMedic<=0&&G.hp<50&&d<4){bf.lastMedic=8;G.hp=Math.min(100,G.hp+25);toast('💊 '+FRIEND_CFG.name+' лечит тебя! +25 HP','mod');flash('af',.3);SND.dr();}}
+  if(isMod('botfriend_loot')){bf.lastLoot-=dt;if(bf.lastLoot<=0){bf.lastLoot=15;if(Math.random()<0.6){G.inv.food+=1;G.inv.alm+=1;toast('📦 '+FRIEND_CFG.name+' принёс: 🍞+1 💧+1','mod');uInv();}}}
   obj.position.y=Math.abs(Math.sin(now*.005))*.05;
 }
 
-// ═══ ГРУСТНАЯ КОНЦОВКА (для бота и кооп) ═══
+// ═══════════════════════════════════════════
+// ГРУСТНАЯ КОНЦОВКА — ИГРОК ВЫШЕЛ ИЗ ШКОЛЫ НОЧЬЮ
+// ═══════════════════════════════════════════
 let coopEndingRenderer=null;
 function coopSadEnding(){
   running=false;paused=true;dead=true;
@@ -1217,6 +1118,7 @@ function coopSadEnding(){
   RD=null;
   setTimeout(()=>{runCoopEndingScene();},300);
 }
+
 function runCoopEndingScene(){
   const el=$('coopEnding');
   const cv=$('coopCanvas');
@@ -1225,6 +1127,7 @@ function runCoopEndingScene(){
   $('coopFade').style.opacity='0';
   $('coopText').innerHTML='';
   $('coopText').classList.remove('on');
+
   let renderer;
   try{
     const p=GFX_PRESETS[gfxLevel()]||GFX_PRESETS.medium;
@@ -1234,109 +1137,368 @@ function runCoopEndingScene(){
     renderer.outputColorSpace=THREE.SRGBColorSpace;
   }catch(e){showCredits(()=>{showSadFinalScreen();});return;}
   coopEndingRenderer=renderer;
+
   const scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x050810);
-  scene.fog=new THREE.Fog(0x050810,2,35);
-  const cam=new THREE.PerspectiveCamera(72,window.innerWidth/window.innerHeight,.1,80);
+  scene.background=new THREE.Color(0x04060e);
+  scene.fog=new THREE.Fog(0x04060e,4,50);
+  const cam=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,.1,100);
   cam.rotation.order='YXZ';
-  scene.add(new THREE.AmbientLight(0x405060,.55));
-  const hl=new THREE.HemisphereLight(0x304050,0x000000,.5);scene.add(hl);
-  const mFloor=new THREE.MeshLambertMaterial({color:0x2a2a2a});
-  const mWall=new THREE.MeshLambertMaterial({color:0x3a4450});
-  const mCeil=new THREE.MeshLambertMaterial({color:0x101820});
+
+  // Ночное освещение снаружи
+  scene.add(new THREE.AmbientLight(0x2a3a55,.5));
+  const hl=new THREE.HemisphereLight(0x1a2840,0x000000,.45);
+  scene.add(hl);
+  // Луна
+  const moonLight=new THREE.DirectionalLight(0x8090c0,.35);
+  moonLight.position.set(30,50,-20);
+  scene.add(moonLight);
+
+  // МАТЕРИАЛЫ
+  const mAsphalt=new THREE.MeshLambertMaterial({color:0x1a1a22});
+  const mFloorIn=new THREE.MeshLambertMaterial({color:0x2a2a2a});
+  const mWallIn=new THREE.MeshLambertMaterial({color:0x3a4450});
+  const mWallOutside=new THREE.MeshLambertMaterial({color:0x303848});
+  const mCeil=new THREE.MeshLambertMaterial({color:0x0a1018});
   const mDoor=new THREE.MeshLambertMaterial({color:0x503020});
-  const mFriend=new THREE.MeshLambertMaterial({color:0x60c0ff,emissive:0x2050a0});
+  const mDoorFrame=new THREE.MeshLambertMaterial({color:0x302010});
   const mLamp=new THREE.MeshBasicMaterial({color:0xfff8e0});
-  const BW=4.5,BH=4.5,BL=40;
-  const floor=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mFloor);
-  floor.rotation.x=-Math.PI/2;floor.position.z=-BL/2+5;scene.add(floor);
-  const ceil=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mCeil);
-  ceil.rotation.x=Math.PI/2;ceil.position.set(0,BH,-BL/2+5);scene.add(ceil);
-  const wallL=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
-  wallL.rotation.y=Math.PI/2;wallL.position.set(-BW/2,BH/2,-BL/2+5);scene.add(wallL);
-  const wallR=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
-  wallR.rotation.y=-Math.PI/2;wallR.position.set(BW/2,BH/2,-BL/2+5);scene.add(wallR);
-  const doorPivotL=new THREE.Group();doorPivotL.position.set(-1.05,0,-15);scene.add(doorPivotL);
-  const dML=new THREE.Mesh(new THREE.BoxGeometry(1,2.6,.12),mDoor);
-  dML.position.x=.5;dML.position.y=1.3;doorPivotL.add(dML);
-  const doorPivotR=new THREE.Group();doorPivotR.position.set(1.05,0,-15);scene.add(doorPivotR);
-  const dMR=new THREE.Mesh(new THREE.BoxGeometry(1,2.6,.12),mDoor);
-  dMR.position.x=-.5;dMR.position.y=1.3;doorPivotR.add(dMR);
+  const mFriend=new THREE.MeshLambertMaterial({color:0x60c0ff,emissive:0x2050a0});
+  const mPlayer=new THREE.MeshLambertMaterial({color:0x80ff80,emissive:0x204020});
+
+  // РАЗМЕРЫ
+  const BW=5.0,BH=4.5;
+  const IN_LEN=35;
+  const OUT_LEN=25;
+  const DOOR_Z=0;
+  const DOOR_W=2.4;
+  const DOOR_H=2.8;
+
+  // ═══ ВНУТРИ ═══
+  // Пол внутри (z от 0 до -IN_LEN)
+  const floorIn=new THREE.Mesh(new THREE.PlaneGeometry(BW,IN_LEN),mFloorIn);
+  floorIn.rotation.x=-Math.PI/2;
+  floorIn.position.set(0,0,-IN_LEN/2);
+  scene.add(floorIn);
+  // Потолок внутри
+  const ceilIn=new THREE.Mesh(new THREE.PlaneGeometry(BW,IN_LEN),mCeil);
+  ceilIn.rotation.x=Math.PI/2;
+  ceilIn.position.set(0,BH,-IN_LEN/2);
+  scene.add(ceilIn);
+  // Боковые стены внутри
+  const wallInL=new THREE.Mesh(new THREE.PlaneGeometry(IN_LEN,BH),mWallIn);
+  wallInL.rotation.y=Math.PI/2;
+  wallInL.position.set(-BW/2,BH/2,-IN_LEN/2);
+  scene.add(wallInL);
+  const wallInR=new THREE.Mesh(new THREE.PlaneGeometry(IN_LEN,BH),mWallIn);
+  wallInR.rotation.y=-Math.PI/2;
+  wallInR.position.set(BW/2,BH/2,-IN_LEN/2);
+  scene.add(wallInR);
+
+  // ═══ СТЕНА С ДВЕРЬЮ (z=0) ═══
+  const wallFrontL=new THREE.Mesh(new THREE.BoxGeometry((BW-DOOR_W)/2,BH,.3),mWallIn);
+  wallFrontL.position.set(-(DOOR_W/2+(BW-DOOR_W)/4),BH/2,DOOR_Z);
+  scene.add(wallFrontL);
+  const wallFrontR=new THREE.Mesh(new THREE.BoxGeometry((BW-DOOR_W)/2,BH,.3),mWallIn);
+  wallFrontR.position.set((DOOR_W/2+(BW-DOOR_W)/4),BH/2,DOOR_Z);
+  scene.add(wallFrontR);
+  const wallFrontTop=new THREE.Mesh(new THREE.BoxGeometry(DOOR_W,BH-DOOR_H,.3),mWallIn);
+  wallFrontTop.position.set(0,DOOR_H+(BH-DOOR_H)/2,DOOR_Z);
+  scene.add(wallFrontTop);
+
+  // ═══ СНАРУЖИ ═══
+  // Асфальт
+  const floorOut=new THREE.Mesh(new THREE.PlaneGeometry(BW+10,OUT_LEN),mAsphalt);
+  floorOut.rotation.x=-Math.PI/2;
+  floorOut.position.set(0,-.02,OUT_LEN/2);
+  scene.add(floorOut);
+
+  // Внешняя стена школы
+  const wallOutL=new THREE.Mesh(new THREE.BoxGeometry((BW-DOOR_W)/2,BH,.15),mWallOutside);
+  wallOutL.position.set(-(DOOR_W/2+(BW-DOOR_W)/4),BH/2,DOOR_Z+.15);
+  scene.add(wallOutL);
+  const wallOutR=new THREE.Mesh(new THREE.BoxGeometry((BW-DOOR_W)/2,BH,.15),mWallOutside);
+  wallOutR.position.set((DOOR_W/2+(BW-DOOR_W)/4),BH/2,DOOR_Z+.15);
+  scene.add(wallOutR);
+  const wallOutTop=new THREE.Mesh(new THREE.BoxGeometry(DOOR_W,BH-DOOR_H,.15),mWallOutside);
+  wallOutTop.position.set(0,DOOR_H+(BH-DOOR_H)/2,DOOR_Z+.15);
+  scene.add(wallOutTop);
+
+  // Дверная рамка
+  const frameTop=new THREE.Mesh(new THREE.BoxGeometry(DOOR_W+.24,.16,.45),mDoorFrame);
+  frameTop.position.set(0,DOOR_H+.06,DOOR_Z+.15);
+  scene.add(frameTop);
+  const frameL=new THREE.Mesh(new THREE.BoxGeometry(.16,DOOR_H+.12,.45),mDoorFrame);
+  frameL.position.set(-DOOR_W/2,DOOR_H/2,DOOR_Z+.15);
+  scene.add(frameL);
+  const frameR=new THREE.Mesh(new THREE.BoxGeometry(.16,DOOR_H+.12,.45),mDoorFrame);
+  frameR.position.set(DOOR_W/2,DOOR_H/2,DOOR_Z+.15);
+  scene.add(frameR);
+
+  // ═══ ДВЕРИ (две створки) ═══
+  const doorPivotL=new THREE.Group();
+  doorPivotL.position.set(-DOOR_W/2,0,DOOR_Z);
+  scene.add(doorPivotL);
+  const dML=new THREE.Mesh(new THREE.BoxGeometry(DOOR_W/2,DOOR_H,.14),mDoor);
+  dML.position.x=DOOR_W/4;dML.position.y=DOOR_H/2;
+  doorPivotL.add(dML);
+
+  const doorPivotR=new THREE.Group();
+  doorPivotR.position.set(DOOR_W/2,0,DOOR_Z);
+  scene.add(doorPivotR);
+  const dMR=new THREE.Mesh(new THREE.BoxGeometry(DOOR_W/2,DOOR_H,.14),mDoor);
+  dMR.position.x=-DOOR_W/4;dMR.position.y=DOOR_H/2;
+  doorPivotR.add(dMR);
+
+  // Двери стартуют ОТКРЫТЫМИ (игрок только что вышел)
+  const doorOpenL=-Math.PI/2*0.95;
+  const doorOpenR=Math.PI/2*0.95;
+  doorPivotL.rotation.y=doorOpenL;
+  doorPivotR.rotation.y=doorOpenR;
+
+  // ═══ ЛАМПЫ ВНУТРИ ═══
+  const lampLights=[];
+  [-3,-8,-13,-18,-23,-28].forEach(z=>{
+    const lamp=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.4),mLamp);
+    lamp.position.set(0,BH-.15,z);scene.add(lamp);
+    const pl=new THREE.PointLight(0xfff0c0,.7,8,1.6);
+    pl.position.set(0,BH-.4,z);
+    scene.add(pl);
+    lampLights.push(pl);
+  });
+
+  // ═══ УЛИЧНЫЙ ФОНАРЬ ═══
+  const poleM=new THREE.MeshLambertMaterial({color:0x2a2a30});
+  const pole=new THREE.Mesh(new THREE.BoxGeometry(.15,4.5,.15),poleM);
+  pole.position.set(-4.5,2.25,7);
+  scene.add(pole);
+  const lampHead=new THREE.Mesh(new THREE.BoxGeometry(.7,.22,.45),mLamp);
+  lampHead.position.set(-4.15,4.4,7);
+  scene.add(lampHead);
+  const streetLight=new THREE.PointLight(0xffe8a0,1.6,18,1.5);
+  streetLight.position.set(-4.15,4.3,7);
+  scene.add(streetLight);
+  // Столб фонаря — перекладина
+  const poleArm=new THREE.Mesh(new THREE.BoxGeometry(.15,.15,.6),poleM);
+  poleArm.position.set(-4.3,4.4,7);
+  scene.add(poleArm);
+
+  // ═══ ИГРОК (снаружи, изначально спиной к школе) ═══
+  const player=new THREE.Group();
+  const pBody=new THREE.Mesh(new THREE.CapsuleGeometry(.28,1,.5,12),mPlayer);
+  pBody.position.y=1;player.add(pBody);
+  const pHead=new THREE.Mesh(new THREE.SphereGeometry(.22,12,10),new THREE.MeshLambertMaterial({color:0xe8d0b0}));
+  pHead.position.y=1.75;player.add(pHead);
+  const pSp=nSp('ВЫ','#80ff80');
+  pSp.position.y=2.15;player.add(pSp);
+  // Игрок снаружи на z=2.5
+  player.position.set(1.0,0,2.5);
+  player.rotation.y=Math.PI; // смотрит наружу (+z)
+  scene.add(player);
+
+  // Небольшой свет вокруг игрока (подсветка главного персонажа)
+  const playerLight=new THREE.PointLight(0x80ff80,.6,4,2);
+  playerLight.position.y=1.5;
+  player.add(playerLight);
+
+  // ═══ ДРУГ (внутри, только что подбежал к двери) ═══
   const friend=new THREE.Group();
   const fBody=new THREE.Mesh(new THREE.CapsuleGeometry(.28,1,.5,12),mFriend);
   fBody.position.y=1;friend.add(fBody);
   const fHead=new THREE.Mesh(new THREE.SphereGeometry(.22,12,10),new THREE.MeshLambertMaterial({color:0xe8d0b0}));
   fHead.position.y=1.75;friend.add(fHead);
-  friend.position.set(0,0,-12);scene.add(friend);
-  [-3,-8,-13,-18,-23].forEach(z=>{
-    const lamp=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.4),mLamp);
-    lamp.position.set(0,BH-.15,z);scene.add(lamp);
-    const pl=new THREE.PointLight(0xfff0c0,.5,6,1.6);
-    pl.position.set(0,BH-.4,z);scene.add(pl);
-  });
-  cam.position.set(0,1.6,-5);cam.rotation.y=Math.PI;
-  const STATES={FRIEND_RUNS:0,DOOR_CLOSES:1,FRIEND_HITS:2,PLAYER_TURNS:3,FADE:4};
-  let state=STATES.FRIEND_RUNS,stateT=0,friendZ=-12;
-  let doorAngleL=0,doorAngleR=0,camYaw=Math.PI,finished=false;
+  const fSp=nSp((FRIEND_CFG.name||'ДРУГ').toUpperCase(),'#60c0ff');
+  fSp.position.y=2.15;friend.add(fSp);
+  // Друг внутри, z=-1.5
+  friend.position.set(-.4,0,-1.5);
+  friend.rotation.y=0; // смотрит наружу
+  scene.add(friend);
+
+  // Свет вокруг друга (он светится)
+  const friendGlow=new THREE.PointLight(0x60c0ff,.9,5,2);
+  friendGlow.position.y=1.5;
+  friend.add(friendGlow);
+
+  // ═══ КАМЕРА — третье лицо, сбоку, видно и игрока, и дверь, и друга ═══
+  // Камера снаружи, слева от игрока, смотрит на дверь
+  const camBasePos={x:-3.2,y:2.0,z:5.5};
+  const camBaseLook={x:0,y:1.4,z:0};
+  cam.position.set(camBasePos.x,camBasePos.y,camBasePos.z);
+  cam.lookAt(camBaseLook.x,camBaseLook.y,camBaseLook.z);
+
+  // ═══ СЦЕНАРИЙ ═══
+  const STATES={
+    PLAYER_OUTSIDE:0,     // игрок на улице, смотрит по сторонам
+    TURNS_TO_DOOR:1,      // оборачивается к двери
+    SEES_FRIEND:2,        // видит друга, тот машет
+    DOOR_CLOSES:3,        // дверь закрывается
+    FRIEND_STUCK:4,       // друг стучит изнутри
+    PLAYER_BACKS:5,       // игрок отходит, отворачивается
+    FADE:6                // затемнение
+  };
+  let state=STATES.PLAYER_OUTSIDE;
+  let stateT=0;
+  let doorAngleL=doorOpenL;
+  let doorAngleR=doorOpenR;
+  let playerYaw=Math.PI;
+  let friendWave=0;
+  let finished=false;
+  let knockTimer=0;
+  let doorSlamPlayed=false;
+
+  // Плавная интерполяция камеры
+  let camTargetPos={x:camBasePos.x,y:camBasePos.y,z:camBasePos.z};
+  let camTargetLook={x:camBaseLook.x,y:camBaseLook.y,z:camBaseLook.z};
+  let camCurPos={x:camBasePos.x,y:camBasePos.y,z:camBasePos.z};
+  let camCurLook={x:camBaseLook.x,y:camBaseLook.y,z:camBaseLook.z};
+
   function finish(){
     if(finished)return;finished=true;
     try{if(coopEndingRenderer)coopEndingRenderer.dispose();}catch(e){}
     $('coopEnding').classList.remove('on');
     showCredits(()=>{showSadFinalScreen();});
   }
+
+  function setCamTarget(px,py,pz,lx,ly,lz){
+    camTargetPos.x=px;camTargetPos.y=py;camTargetPos.z=pz;
+    camTargetLook.x=lx;camTargetLook.y=ly;camTargetLook.z=lz;
+  }
+
   let last=performance.now();
   function loop(now){
     if(finished)return;
     requestAnimationFrame(loop);
     const dt=Math.min(.05,(now-last)/1000);last=now;
     stateT+=dt;
-    if(state===STATES.FRIEND_RUNS){
-      friendZ+=dt*3.5;friend.position.z=friendZ;
-      friend.position.y=Math.abs(Math.sin(stateT*10))*.05;
-      cam.lookAt(0,1.3,friendZ);
-      if(stateT>0.3&&!$('coopText').classList.contains('on')){
-        $('coopText').innerHTML='<span class="name">'+(FRIEND_CFG.name||'ДРУГ').toUpperCase()+'</span> бежит к выходу...';
+
+    // Плавная камера
+    const lerpSpd=Math.min(1,dt*1.8);
+    camCurPos.x+=(camTargetPos.x-camCurPos.x)*lerpSpd;
+    camCurPos.y+=(camTargetPos.y-camCurPos.y)*lerpSpd;
+    camCurPos.z+=(camTargetPos.z-camCurPos.z)*lerpSpd;
+    camCurLook.x+=(camTargetLook.x-camCurLook.x)*lerpSpd;
+    camCurLook.y+=(camTargetLook.y-camCurLook.y)*lerpSpd;
+    camCurLook.z+=(camTargetLook.z-camCurLook.z)*lerpSpd;
+    cam.position.set(camCurPos.x,camCurPos.y,camCurPos.z);
+    cam.lookAt(camCurLook.x,camCurLook.y,camCurLook.z);
+
+    // ═══ СЦЕНАРИЙ ═══
+    if(state===STATES.PLAYER_OUTSIDE){
+      // Игрок стоит снаружи, чуть покачивается
+      player.position.x=1.0+Math.sin(stateT*.6)*.06;
+      player.rotation.y=Math.PI; // спиной к школе
+      // Камера от третьего лица сбоку — видит игрока и школу за ним
+      setCamTarget(-3.2,2.0,5.5,0.4,1.4,1.2);
+      if(stateT>0.4&&!$('coopText').classList.contains('on')){
+        $('coopText').innerHTML='<span class="hi">Ты вышел из школы.</span><br>Ночь. Тишина. Холодный воздух.';
         $('coopText').classList.add('on');
       }
-      if(friendZ>=-9.5){state=STATES.DOOR_CLOSES;stateT=0;try{SND.door()}catch(e){}}
-    } else if(state===STATES.DOOR_CLOSES){
-      const t=Math.min(1,stateT*2.5);
-      doorAngleL=-t*Math.PI/2*0.98;doorAngleR=t*Math.PI/2*0.98;
-      doorPivotL.rotation.y=doorAngleL;doorPivotR.rotation.y=doorAngleR;
-      friendZ+=dt*1.5;friend.position.z=friendZ;cam.lookAt(0,1.3,friendZ);
-      if(stateT>0.5&&$('coopText').innerHTML.indexOf('закрывается')<0){
-        $('coopText').innerHTML='Дверь закрывается...<br><span class="name">'+(FRIEND_CFG.name||'ДРУГ').toUpperCase()+'</span> не успевает.';
-      }
-      if(stateT>1.2){state=STATES.FRIEND_HITS;stateT=0;}
-    } else if(state===STATES.FRIEND_HITS){
-      friendZ=Math.min(friendZ+dt*3,-14.4);friend.position.z=friendZ;
-      friend.position.x=Math.sin(stateT*40)*.05;
-      cam.lookAt(0,1.3,friendZ);
-      $('coopText').innerHTML='<span class="name">'+(FRIEND_CFG.name||'ДРУГ').toUpperCase()+'</span> у двери.<br>Он не оборачивается.';
-      if(stateT>1.5){state=STATES.PLAYER_TURNS;stateT=0;try{SND.sad()}catch(e){};$('coopText').classList.remove('on');}
-    } else if(state===STATES.PLAYER_TURNS){
-      camYaw=Math.PI-stateT*0.5;cam.rotation.y=camYaw;cam.rotation.x=0;
-      cam.position.set(0,1.6,-5);
-      friend.position.z=-14.4;
-      cam.lookAt(0,1.5,friend.position.z-Math.sin(stateT*.5)*2);
-      if(stateT>1.0&&!$('coopText').classList.contains('on')){
-        $('coopText').innerHTML='Ты больше не смотришь на дверь.<br><span class="name">'+(FRIEND_CFG.name||'ДРУГ').toUpperCase()+'</span> остался там.';
-        $('coopText').classList.add('on');
-      }
-      if(stateT>2.5){state=STATES.FADE;stateT=0;}
-    } else if(state===STATES.FADE){
-      $('coopFade').style.opacity=Math.min(1,stateT/2);
-      if(stateT>2.3){finish();return;}
+      if(stateT>2.8){state=STATES.TURNS_TO_DOOR;stateT=0;$('coopText').classList.remove('on');}
     }
-    scene.children.forEach(c=>{if(c.isPointLight)c.intensity=.4+Math.sin(now*.008)*.08+Math.random()*.03;});
+    else if(state===STATES.TURNS_TO_DOOR){
+      // Игрок оборачивается к школе
+      const t=Math.min(1,stateT/1.4);
+      playerYaw=Math.PI-(Math.PI)*t*0.98;
+      player.rotation.y=playerYaw;
+      // Камера сбоку видит поворот игрока
+      setCamTarget(-3.2,2.0,5.5,0.4,1.4,1.2);
+      if(stateT>0.5&&!$('coopText').classList.contains('on')){
+        $('coopText').innerHTML='Ты слышишь шаги за спиной...<br>И оборачиваешься.';
+        $('coopText').classList.add('on');
+      }
+      if(stateT>1.6){state=STATES.SEES_FRIEND;stateT=0;$('coopText').classList.remove('on');}
+    }
+    else if(state===STATES.SEES_FRIEND){
+      // Игрок повёрнут к школе, видит друга в проёме двери
+      playerYaw=0;
+      player.rotation.y=0;
+      // Друг машет — покачивается и раскачивается вбок
+      friendWave+=dt*7;
+      friend.position.x=-.4+Math.sin(friendWave)*.09;
+      friend.position.y=Math.abs(Math.sin(friendWave*.6))*.05;
+      friend.rotation.y=0;
+      // Камера сбоку — видно и игрока лицом к школе, и друга в проёме
+      setCamTarget(-3.4,2.0,4.8,0.0,1.5,-0.6);
+      if(stateT>0.4&&!$('coopText').classList.contains('on')){
+        $('coopText').innerHTML='В дверях — <span class="name">'+(FRIEND_CFG.name||'ДРУГ').toUpperCase()+'</span>.<br>Он машет тебе: <span class="hi">«Я выхожу!»</span>';
+        $('coopText').classList.add('on');
+      }
+      if(stateT>3.0){state=STATES.DOOR_CLOSES;stateT=0;$('coopText').classList.remove('on');}
+    }
+    else if(state===STATES.DOOR_CLOSES){
+      // Дверь РЕЗКО закрывается прямо перед другом
+      const t=Math.min(1,stateT*2.8);
+      doorAngleL=doorOpenL*(1-t);
+      doorAngleR=doorOpenR*(1-t);
+      doorPivotL.rotation.y=doorAngleL;
+      doorPivotR.rotation.y=doorAngleR;
+      // Друг пытается проскочить, но не успевает — делает полшага к двери
+      friend.position.z=-1.5+t*0.35;
+      // Звук удара створок
+      if(!doorSlamPlayed&&t>0.85){
+        doorSlamPlayed=true;
+        try{SND.doorSlam()}catch(e){}
+        // Тряска камеры
+        cam.position.x=camCurPos.x+Math.sin(stateT*80)*.06;
+        cam.position.y=camCurPos.y+Math.cos(stateT*70)*.05;
+      }
+      setCamTarget(-3.4,2.0,4.8,0.0,1.5,-0.6);
+      if(stateT>0.3&&!$('coopText').classList.contains('on')){
+        $('coopText').innerHTML='<span class="hi">Дверь захлопывается.</span>';
+        $('coopText').classList.add('on');
+      }
+      if(stateT>1.4){state=STATES.FRIEND_STUCK;stateT=0;$('coopText').classList.remove('on');}
+    }
+    else if(state===STATES.FRIEND_STUCK){
+      // Друг за стеклом — прижимается и стучит
+      knockTimer-=dt;
+      if(knockTimer<=0){
+        knockTimer=1.1;
+        try{SND.knock()}catch(e){}
+      }
+      // Друг прижат к двери, слегка трясётся
+      friend.position.z=-1.15;
+      friend.position.x=-.4+Math.sin(stateT*8)*.02;
+      // Камера чуть приближается к двери
+      setCamTarget(-2.6,1.8,3.5,-0.2,1.5,-.8);
+      if(stateT>0.4&&!$('coopText').classList.contains('on')){
+        $('coopText').innerHTML='<span class="name">'+(FRIEND_CFG.name||'ДРУГ').toUpperCase()+'</span> остался внутри.<br>Он стучит в стекло.';
+        $('coopText').classList.add('on');
+      }
+      if(stateT>3.0){state=STATES.PLAYER_BACKS;stateT=0;$('coopText').classList.remove('on');}
+    }
+    else if(state===STATES.PLAYER_BACKS){
+      // Игрок отходит назад, отворачивается
+      const t=Math.min(1,stateT/2.5);
+      player.position.z=2.5+t*3.5;
+      player.position.x=1.0+t*.8;
+      playerYaw=0+t*Math.PI*0.9; // плавно отворачивается
+      player.rotation.y=playerYaw;
+      // Камера отъезжает — видно удаляющуюся школу
+      setCamTarget(-4.5,2.4,6.5,-0.5,1.5,-.5);
+      if(stateT>0.6&&!$('coopText').classList.contains('on')){
+        $('coopText').innerHTML='Ты больше не смотришь на дверь.<br><span class="name">'+(FRIEND_CFG.name||'ДРУГ').toUpperCase()+'</span> — смотрит на тебя.';
+        $('coopText').classList.add('on');
+      }
+      if(stateT>3.5){state=STATES.FADE;stateT=0;}
+    }
+    else if(state===STATES.FADE){
+      $('coopFade').style.opacity=Math.min(1,stateT/2.2);
+      if(stateT>2.5){finish();return;}
+    }
+
+    // Мерцание ламп внутри и уличного фонаря
+    lampLights.forEach(l=>{l.intensity=.6+Math.sin(now*.008)*.1+Math.random()*.05;});
+    if(streetLight)streetLight.intensity=1.4+Math.sin(now*.003)*.15;
+
     try{renderer.render(scene,cam);}catch(e){finish();}
   }
   requestAnimationFrame(loop);
 }
+
 function showSadFinalScreen(){
   $('eT').textContent='😢 ГРУСТНЫЙ ФИНАЛ';
-  $('eX').innerHTML='Вы выжили. <b style="color:#60c0ff">'+(FRIEND_CFG.name||'Друг')+' — нет.</b>';
-  $('eS').innerHTML='V30.1 • '+DEVICE+'<br>Дней: '+G.day+'/5 • Смертей: '+G.deaths+'<br><br><i style="color:#7ab;font-size:9px">«Иногда вместе — не значит до конца.»</i>';
+  $('eX').innerHTML='Вы вышли. <b style="color:#60c0ff">'+(FRIEND_CFG.name||'Друг')+' — остался внутри.</b>';
+  $('eS').innerHTML='V30.2 • '+DEVICE+'<br>Дней: '+G.day+'/5 • Смертей: '+G.deaths+'<br><br><i style="color:#7ab;font-size:9px">«Иногда вместе — не значит до конца.»</i>';
   $('eP').classList.add('on');
 }
 
@@ -1405,7 +1567,7 @@ function updateSkyWeather(dt){
   }
 }
 
-// ═══ INTRO — ПОЧИНЕНО ═══
+// INTRO
 let introRenderer=null;
 function runIntro(){
   const cv=$('introCanvas');
@@ -1438,34 +1600,24 @@ function runIntro(){
   const mLamp=new THREE.MeshBasicMaterial({color:0xfff8e0});
 
   const BW=4.5,BH=4.5,BL=50;
-
-  // ═══ ПОЛ И ПОТОЛОК ═══
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mFloor);
   floor.rotation.x=-Math.PI/2;floor.position.z=5-BL/2;scene.add(floor);
   const ceil=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mCeil);
   ceil.rotation.x=Math.PI/2;ceil.position.set(0,BH,5-BL/2);scene.add(ceil);
-
-  // ═══ БОКОВЫЕ СТЕНЫ (ПОЧИНЕНО!) — теперь есть закрытые стены ═══
   const wallL=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
   wallL.rotation.y=Math.PI/2;wallL.position.set(-BW/2,BH/2,5-BL/2);scene.add(wallL);
   const wallR=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
   wallR.rotation.y=-Math.PI/2;wallR.position.set(BW/2,BH/2,5-BL/2);scene.add(wallR);
 
-  // ═══ СТЕНА С ДВЕРЬЮ (ПОЧИНЕНО) ═══
-  // Стена вокруг двери — верхняя часть (над дверью) и боковые части
   const doorX=0,doorZ=-9;
   const doorW=2.4,doorH=2.8;
-  // Стенка над дверью
   const headerAbove=new THREE.Mesh(new THREE.BoxGeometry(BW,BH-doorH,.3),mWallSide);
   headerAbove.position.set(0,doorH+(BH-doorH)/2,doorZ);scene.add(headerAbove);
-  // Стенка между дверью и левым краем
   const leftOfDoor=new THREE.Mesh(new THREE.BoxGeometry((BW-doorW)/2,BH,.3),mWallSide);
   leftOfDoor.position.set(-(doorW/2+(BW-doorW)/4),BH/2,doorZ);scene.add(leftOfDoor);
-  // Стенка между дверью и правым краем
   const rightOfDoor=new THREE.Mesh(new THREE.BoxGeometry((BW-doorW)/2,BH,.3),mWallSide);
   rightOfDoor.position.set((doorW/2+(BW-doorW)/4),BH/2,doorZ);scene.add(rightOfDoor);
 
-  // ═══ ДВЕРИ ═══
   const doorPivotL=new THREE.Group();doorPivotL.position.set(-1.1,0,doorZ);scene.add(doorPivotL);
   const dML=new THREE.Mesh(new THREE.BoxGeometry(1.1,2.6,.15),mDoor);
   dML.position.x=.55;dML.position.y=1.3;doorPivotL.add(dML);
@@ -1473,7 +1625,6 @@ function runIntro(){
   const dMR=new THREE.Mesh(new THREE.BoxGeometry(1.1,2.6,.15),mDoor);
   dMR.position.x=-.55;dMR.position.y=1.3;doorPivotR.add(dMR);
 
-  // Дверная рамка
   const doorFrameTop=new THREE.Mesh(new THREE.BoxGeometry(doorW+.2,.15,.35),mDoorFrame);
   doorFrameTop.position.set(0,2.7,doorZ);scene.add(doorFrameTop);
   const doorFrameL=new THREE.Mesh(new THREE.BoxGeometry(.15,2.8,.35),mDoorFrame);
@@ -1481,7 +1632,6 @@ function runIntro(){
   const doorFrameR=new THREE.Mesh(new THREE.BoxGeometry(.15,2.8,.35),mDoorFrame);
   doorFrameR.position.set(doorW/2,1.4,doorZ);scene.add(doorFrameR);
 
-  // ═══ ЛАМПЫ ═══
   [-3,-6,-12,-18,-24,-30].forEach(z=>{
     const lamp=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.4),mLamp);
     lamp.position.set(0,BH-.15,z);scene.add(lamp);
@@ -1489,14 +1639,12 @@ function runIntro(){
     pl.position.set(0,BH-.4,z);scene.add(pl);
   });
 
-  // ═══ КОРОБКИ У СТЕНЫ ═══
   const mBox=new THREE.MeshLambertMaterial({color:0x604828});
   for(let i=0;i<5;i++){
     const b=new THREE.Mesh(new THREE.BoxGeometry(.6,.6,.6),mBox);
     b.position.set(-BW/2+.6,.3,-4-i*3);scene.add(b);
   }
 
-  // ═══ СТОЛ ═══
   const mTable=new THREE.MeshLambertMaterial({color:0x3a2a1a});
   const tbl=new THREE.Mesh(new THREE.BoxGeometry(1.2,.1,.7),mTable);
   tbl.position.set(BW/2-.8,.85,-5);scene.add(tbl);
@@ -1544,7 +1692,7 @@ function runIntro(){
   requestAnimationFrame(loopIntro);
 }
 
-// EXIT
+// EXIT (обычная победа)
 let exitRenderer=null;
 function runExitAnimation(callback){
   const cv=$('exitCanvas');
@@ -1624,7 +1772,7 @@ function buildCreditsHTML(){
   });
   return `
 <h1>ШКОЛА №43</h1>
-<p class="muted">НОЧНАЯ СМЕНА • V30.1 «ДРУГ+»</p>
+<p class="muted">НОЧНАЯ СМЕНА • V30.2 «ДВЕРЬ»</p>
 <div class="divider"></div>
 <p>Пять ночей.</p>
 <p>Пять дней в проклятой школе.</p>
@@ -1672,7 +1820,7 @@ ${helpersHTML}
 <p class="muted" style="font-size:.9em;margin-top:8px">— Команда ШКОЛА №43</p>
 <p style="color:#f0a;font-family:monospace;letter-spacing:3px;margin-top:50px;font-size:1.1em">КОД: ${TEAM.code}</p>
 <p class="muted" style="margin-top:40px;font-size:.85em">© 2026 ШКОЛА №43</p>
-<p class="muted" style="font-size:.85em">V30.1 «ДРУГ+»</p>`;
+<p class="muted" style="font-size:.85em">V30.2 «ДВЕРЬ»</p>`;
 }
 function showCredits(onEnd){
   const el=$('creditsScroll');const inner=$('creditsInner');
@@ -1991,9 +2139,7 @@ document.querySelectorAll('.gfxBtn').forEach(b=>{
 });
 $('s5').addEventListener('input',e=>{cfg.fog=parseFloat(e.target.value);$('v5').textContent=cfg.fog+'м';if(SC&&SC.fog)SC.fog.far=cfg.fog;saveAll();});
 $('s6').addEventListener('input',e=>{cfg.dist=parseFloat(e.target.value);$('v6').textContent=cfg.dist;saveAll();});
-
 function showRules(){const r=[['1. СТОРОЖ','КОД 1 через рацию (R).'],['2. ДИРЕКТОР 2:43','Помаши (E).'],['3. ФИЗРУК','Спортзал до 00:30.'],['4. УЧИТЕЛЬ 4Б','Покажи дату (E).'],['5. ЛАРИОНОВ','КОД 3.'],['6. АНТОН','Булочку или нож.'],['7. АМИРА','Через кабинет директора.'],['🚨 ВАЖНО','Герман — только маркер.'],['🦉 ТОТЕМ','30с неуязвимость']];$('rlT').innerHTML=r.map(x=>'<p><b>'+x[0]+'</b><br>'+x[1]+'</p>').join('');$('rlP').classList.add('on');}
-
 $('eR').onclick=()=>{
   $('eP').classList.remove('on');$('menu').classList.add('on');$('hud').style.display='none';
   $('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');$('hcOverlay').classList.remove('on');
@@ -2043,26 +2189,26 @@ function openAch(){const l=$('acList');l.innerHTML='';Object.keys(ACH).forEach(k
 function openJournal(){const l=$('joList');l.innerHTML='';if(!G.journal||G.journal.length===0){l.innerHTML='<div style="padding:16px;text-align:center;color:#555;font-size:11px">Журнал пуст.</div>';}else{G.journal.slice().reverse().forEach(e=>{l.innerHTML+='<div style="padding:5px 8px;margin:3px 0;border-left:2px solid #5f9;font-size:10px"><b style="color:#5f9">Д'+e.day+' • '+e.time+'</b><br><span style="color:#bfe">'+e.text+'</span></div>';});}$('joP').classList.add('on');}
 
 const CHANGELOG=[
-{v:'V30.1',date:'2026-10-02',recent:true,items:[
-{tag:'new',text:'👥 Мод «БОТ-ДРУГ» — друг для прохождения 5 дней'},
-{tag:'new',text:'🧠 Умный бот — избегает сущностей и отвлекает их'},
-{tag:'new',text:'💊 Друг-медик — лечит при HP < 50'},
-{tag:'new',text:'📦 Друг-собиратель — приносит предметы'},
-{tag:'new',text:'💡 Свет от друга в темноте'},
-{tag:'new',text:'😢 Грустная концовка теперь доступна и с ботом'},
-{tag:'new',text:'⚔️ Режим ХАРДКОР — 1 удар = смерть, нет тотема, нет сохранений'},
-{tag:'fix',text:'Починена заставка — добавлены стены вокруг дверей'},
-{tag:'new',text:'🎨 Меню полностью переделано — стиль, градиенты, эффекты'},
-{tag:'new',text:'Анимированный фон меню с радиальными свечениями'},
-{tag:'new',text:'Уголки-рамки на превью сцене меню'}
+{v:'V30.2',date:'2026-10-02',recent:true,items:[
+{tag:'new',text:'🎬 Кинематографичная грустная концовка: ты вышел, дверь захлопнулась перед другом'},
+{tag:'new',text:'📷 Камера от третьего лица снаружи школы'},
+{tag:'new',text:'🌙 Ночь, уличный фонарь, асфальт'},
+{tag:'new',text:'👥 Друг в дверном проёме машет тебе'},
+{tag:'new',text:'🚪 Дверь резко закрывается с тряской камеры'},
+{tag:'new',text:'🔨 Друг стучит в стекло изнутри'},
+{tag:'upd',text:'Все предыдущие версии включены'}
+]},
+{v:'V30.1',date:'2026-10-02',items:[
+{tag:'new',text:'Мод «БОТ-ДРУГ»'},
+{tag:'new',text:'Режим ХАРДКОР'},
+{tag:'new',text:'Меню переделано'}
 ]},
 {v:'V30',date:'2026-10-02',items:[
-{tag:'new',text:'🌐 Сервера как в Minecraft — комнаты с кодами'},
-{tag:'new',text:'Грустная концовка кооп'},
-{tag:'new',text:'Полная команда: DEEPSEEK, Саня, Леха, Илья, Амир, Максим, Герман'}
+{tag:'new',text:'Сервера как в Minecraft'},
+{tag:'new',text:'Команда в титрах'}
 ]},
 {v:'V24.8',date:'2026-10-02',items:[{tag:'new',text:'Хотбар в стиле Minecraft'}]},
-{v:'V24.7',date:'2026-10-02',items:[{tag:'new',text:'Моды оптимизации и управления'}]}
+{v:'V24.7',date:'2026-10-02',items:[{tag:'new',text:'Моды оптимизации'}]}
 ];
 function openChangelog(){
   const l=$('chgContent');l.innerHTML='';
@@ -2077,13 +2223,12 @@ function openChangelog(){
 }
 function openCredits(){
   const srBest=G.srBest>0?G.srBest.toFixed(2)+' сек':'нет рекорда';
-  $('crContent').innerHTML='<div class="crTitle">🏫 ШКОЛА №43</div><div class="crSub">V30.1 «ДРУГ+»</div>'+
+  $('crContent').innerHTML='<div class="crTitle">🏫 ШКОЛА №43</div><div class="crSub">V30.2 «ДВЕРЬ»</div>'+
     '<div class="crBlock" style="border-color:#f0a"><b>🧪 МОДОВ</b><br><br>Всего: <b style="color:#5f9">'+Object.keys(MOD_DEFS).length+'</b><br>Активно: <b style="color:#ffd76a">'+countMods()+'</b></div>'+
     '<div class="crBlock" style="border-color:#a0e8ff"><b>⏱ СПИДРАН</b><br><br>Рекорд: <b style="color:#5f9">'+srBest+'</b></div>';
   $('crP').classList.add('on');
 }
 
-// DLG
 const DLG={
   sanya:{name:'САНЯ (ITZRealSaneghka)',role:'создатель игры',avatar:'🧙',start(){return{text:'Йо! Я Саня, создал эту игру.',choices:[{label:'«Спасибо!»',next:'thx'},{label:'«Дай маркер и бумеранг»',action:function(){G.inv.mk+=2;G.inv.bo+=1;uInv();toast('✒+2 🪃+1');},next:'gift'},{label:'«Пойду»',close:true}]};},thx(){return{text:'Играй на здоровье!',choices:[{label:'ОК',close:true}]};},gift(){return{text:'Держи.',choices:[{label:'Спасибо!',close:true}]};}},
   leha:{name:'ЛЕХА',role:'помощник',avatar:'🧑',start(){return{text:'Я Леха, помогаю Сане.',choices:[{label:'«ОК»',close:true}]};}},
@@ -2399,7 +2544,6 @@ function spawnAnom(dt){
     }});
     toast('Антон');addJ('Антон');
   }
-  // ХАРДКОР — Герман всегда
   if((IH()||isRare||isMod('manyger')||IS_HARDCORE())&&!G.ger&&Math.random()<dt*(IS_HARDCORE()?.02:.005)*M2*gerMult&&!isMod('pacifist')){
     const gh=mH(0xffffff,0xf0f0ff,0xffffff,1.05);
     gh.position.set(XMx-10,0,10);W.add(gh);
@@ -2588,7 +2732,6 @@ function kill(r,k){
   if(dead)return;
   if(isMod('godHP')||isMod('godMode')||isMod('infinity')||(isMod('cheat')&&CHEAT_CFG.godMode)){G.hp=100;G.st=100;toast('🛡 Неуязвим!');return;}
   if(G.invuln>0)return;
-  // ХАРДКОР — мгновенная смерть
   if(IS_HARDCORE()){
     dead=true;G.deaths++;unlAch('hardcoreDeath');flash('dm',.8);addJ('💀 ХАРДКОР-СМЕРТЬ: '+r);
     setTimeout(function(){endG(k||'death','💀 ХАРДКОР-СМЕРТЬ',r);},500);
@@ -2620,7 +2763,6 @@ function winGame(title,sub){
   G.ended=true;
   if(RD&&RD.domElement&&RD.domElement.parentNode)RD.domElement.parentNode.removeChild(RD.domElement);
   RD=null;
-  // Если кооп ИЛИ бот-друг — грустная концовка
   if(RTC.connected||G.botFriend){coopSadEnding();return;}
   runExitAnimation(()=>{showCredits(()=>{endGFinal(title,sub);});});
 }
@@ -2628,7 +2770,7 @@ function endGFinal(t,x){
   $('eT').textContent=t||'🏆 5 ДНЕЙ';$('eX').textContent=x||'Вы выжили!';
   let extra='';
   if(G.speedrun){const isRec=(G.srBest===0||G.srTime<G.srBest);if(isRec){G.srBest=G.srTime;try{localStorage.setItem('sh43srbest',G.srBest.toString())}catch(err){}extra='<br><b style="color:#5f9">🏆 РЕКОРД: '+G.srTime.toFixed(2)+' сек!</b>';}}
-  $('eS').innerHTML='V30.1 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods()+extra;
+  $('eS').innerHTML='V30.2 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods()+extra;
   $('eP').classList.add('on');
 }
 function endG(k,t,x){
@@ -2637,7 +2779,7 @@ function endG(k,t,x){
   if(document.pointerLockElement)document.exitPointerLock();
   const e=ENDS[k]||[t,x];
   $('eT').textContent=e[0];$('eX').textContent=e[1]||x;
-  $('eS').innerHTML='V30.1 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods();
+  $('eS').innerHTML='V30.2 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods();
   $('eP').classList.add('on');$('hud').style.display='none';
   $('tui').classList.remove('on');$('camUI').classList.remove('on');
   $('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');$('hcOverlay').classList.remove('on');
@@ -2709,7 +2851,6 @@ document.addEventListener('keyup',function(e){
 });
 function openJInline(){const l=$('jContent');if(!l)return;if(!G.journal||G.journal.length===0){l.innerHTML='<div style="padding:16px;text-align:center;color:#555;font-size:10.5px">Пусто</div>';return;}l.innerHTML='';G.journal.slice().reverse().slice(0,50).forEach(function(e){l.innerHTML+='<div class="entry"><div class="day">Д'+e.day+' • '+e.time+'</div><div class="text">'+e.text+'</div></div>';});}
 
-// HOTBAR
 const HOTBAR_SLOTS=[
   {id:'interact', icon:'✋', label:'ДЕЙСТВ', action:function(){tryI();}},
   {id:'radio',    icon:'📻', label:'РАЦИЯ',  action:function(){opRad();}},
@@ -2928,7 +3069,7 @@ function loop(now){
     if(isMod('slower'))timeMult*=0.5;
     if(isMod('short'))timeMult*=2.5;
     if(isMod('long'))timeMult*=0.5;
-    if(IS_HARDCORE())timeMult*=1.5; // хардкор быстрее
+    if(IS_HARDCORE())timeMult*=1.5;
     G.dayRealTime+=dt*timeMult;
     const gm=MINS_PER_DAY/SEC_PER_DAY;
     G.time+=dt*gm*timeMult;
@@ -3033,7 +3174,7 @@ function actuallyStartGame(){
   applyVisualMods();
   const p=RMS.s0;if(p){P.x=p.cx;P.z=p.cz+3;}else{P.x=0;P.z=0;}P.yaw=0;P.pitch=0;
   spawnAll();uInv();updateHotbar();addJ('Начата смена — День 1');
-  let startMsg='V30.1 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'));
+  let startMsg='V30.2 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'));
   if(IS_HARDCORE())startMsg+=' • ⚔️ ХАРДКОР';
   if(isMod('botfriend'))startMsg+=' • 👥 С ДРУГОМ';
   obj(startMsg);
@@ -3059,7 +3200,7 @@ $('mc').addEventListener('contextmenu',function(e){e.preventDefault();});
 if(OPT_CFG.showFps)$('fpsCounter').classList.add('on');
 try{runIntro();}catch(e){console.error(e);showMenuFinal();}
 loop(0);
-console.log('ШКОЛА №43 — V30.1 «ДРУГ+» загружена');
+console.log('ШКОЛА №43 — V30.2 «ДВЕРЬ» загружена');
 </script>
 </body>
-              </html>
+  </html>
