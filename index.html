@@ -4,19 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#000">
-<title>ШКОЛА №43 — V24.3</title>
+<title>ШКОЛА №43 — V24.4</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-tap-highlight-color:transparent;font-family:Consolas,monospace}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;position:fixed;touch-action:none}
 .h{display:none!important}
 #mc{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 
+/* INTRO */
 #intro{position:fixed;inset:0;z-index:200;background:#000;transition:opacity 1.1s;overflow:hidden}
 #intro.off{opacity:0;pointer-events:none}
 #introCanvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
 .introOverlay{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 30%,rgba(0,0,0,.75) 100%);z-index:2}
-.introFlicker{position:absolute;inset:0;pointer-events:none;background:rgba(80,255,140,.015);animation:crtFlicker .18s infinite;z-index:3}
-@keyframes crtFlicker{0%,100%{opacity:.5}50%{opacity:.9}}
 .introTitle{position:absolute;top:12%;left:50%;transform:translateX(-50%);text-align:center;z-index:5;opacity:0;animation:introIn 1.4s ease-out .6s forwards;pointer-events:none;width:100%;padding:0 16px}
 @keyframes introIn{to{opacity:1}}
 .introTitle .t1{font-size:clamp(20px,4.5vmin,40px);color:#5f9;letter-spacing:clamp(4px,1.5vw,14px);text-shadow:0 0 20px #5f9,0 0 40px #0f0;font-weight:bold}
@@ -25,6 +24,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .introSkip{position:absolute;bottom:24px;right:24px;color:#5f9;font-size:11px;letter-spacing:2px;opacity:.5;animation:hintBlink 1.6s infinite;z-index:6;padding:8px 14px;border:1px solid rgba(80,255,140,.4);border-radius:6px;background:rgba(0,20,10,.4);cursor:pointer}
 @keyframes hintBlink{50%{opacity:.2}}
 
+/* MENU */
 #menu{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;background:linear-gradient(180deg,#020a06 0%,#010502 100%)}
 #menu.on{display:flex}
 .mHead{position:relative;display:flex;align-items:center;gap:14px;padding:14px 22px;border-bottom:1px solid rgba(80,255,140,.25);background:linear-gradient(180deg,rgba(10,25,15,.85),rgba(5,12,8,.6));flex-shrink:0}
@@ -39,7 +39,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .mPreview{flex:1.1;position:relative;overflow:hidden;background:#000;min-width:0}
 #menuCanvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
 .pvOverlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.7) 100%);pointer-events:none}
-.pvScan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,0) 0px,rgba(0,0,0,0) 2px,rgba(0,0,0,.18) 3px,rgba(0,0,0,.18) 4px);pointer-events:none;mix-blend-mode:multiply}
 .pvInfo{position:absolute;top:16px;left:18px;color:#5f9;font-size:10px;letter-spacing:2.5px;text-shadow:0 0 8px #5f9;background:rgba(0,0,0,.5);padding:4px 10px;border-left:2px solid #5f9}
 .pvInfo b{color:#ffd76a}
 .pvBottom{position:absolute;left:18px;bottom:18px;right:18px;color:#9fecbf;font-size:10px;letter-spacing:1.5px;text-shadow:0 0 8px #000;background:rgba(0,0,0,.55);padding:8px 12px;border-radius:6px;border:1px solid rgba(80,255,140,.3)}
@@ -128,6 +127,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .chgBlock li .tag{display:inline-block;font-size:8.5px;padding:1px 5px;border-radius:3px;margin-right:4px}
 .tag.new{background:#1d5;color:#000}.tag.fix{background:#a02;color:#fff}.tag.upd{background:#5060a0;color:#fff}.tag.mod{background:#a0a;color:#fff}
 
+/* GRAPHICS PRESETS */
+.gfxRow{display:flex;gap:6px;margin:6px 0 10px}
+.gfxBtn{flex:1;padding:12px 8px;border-radius:8px;border:2px solid rgba(80,255,140,.35);background:rgba(10,30,20,.55);color:#9fecbf;font-family:inherit;font-size:11px;letter-spacing:1.5px;cursor:pointer;text-align:center;transition:.15s;position:relative}
+.gfxBtn:hover{background:rgba(20,60,40,.75);border-color:#4dff9b;transform:translateY(-2px)}
+.gfxBtn.on{background:linear-gradient(160deg,rgba(29,85,50,.95),rgba(20,60,40,.7));border-color:#5f9;color:#dfffee;box-shadow:0 0 18px rgba(80,255,140,.3)}
+.gfxBtn .em{display:block;font-size:20px;margin-bottom:4px}
+.gfxBtn .nm{display:block;font-weight:bold}
+.gfxBtn .ds{display:block;font-size:8.5px;color:#7ab;margin-top:2px;opacity:.8}
+.gfxBtn.on .ds{color:#9fecbf}
+
+/* HUD */
 #hud{position:fixed;inset:0;pointer-events:none;z-index:30;display:none}
 #cr{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;opacity:.6}
 #cr::before,#cr::after{content:'';position:absolute;background:#fff}
@@ -300,6 +310,42 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 .crBlock .name{color:#a0e8ff}
 #errBox{position:fixed;inset:0;background:#0a0202;color:#f66;padding:20px;font-family:monospace;font-size:12px;z-index:99999;overflow:auto;display:none;white-space:pre-wrap}
 #errBox h2{color:#f00;margin-bottom:14px;letter-spacing:2px}
+
+/* ═══ EXIT ANIMATION + MINECRAFT-STYLE CREDITS ═══ */
+#exitAnim{position:fixed;inset:0;z-index:180;background:#000;display:none;overflow:hidden}
+#exitAnim.on{display:block}
+#exitCanvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+#exitVignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.85) 100%);z-index:2}
+#exitFade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:3;transition:opacity 1.5s}
+
+#creditsScroll{position:fixed;inset:0;z-index:190;background:#000;display:none;overflow:hidden;color:#cfe;font-family:Consolas,monospace}
+#creditsScroll.on{display:block}
+.creditsStar{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.creditsStar::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:
+  radial-gradient(1px 1px at 20% 30%,#fff,transparent),
+  radial-gradient(1px 1px at 60% 70%,#fff,transparent),
+  radial-gradient(2px 2px at 30% 80%,#9cf,transparent),
+  radial-gradient(1px 1px at 80% 20%,#fff,transparent),
+  radial-gradient(1px 1px at 45% 55%,#fff,transparent),
+  radial-gradient(1px 1px at 90% 90%,#9cf,transparent),
+  radial-gradient(1px 1px at 10% 60%,#fff,transparent),
+  radial-gradient(2px 2px at 70% 40%,#fff,transparent),
+  radial-gradient(1px 1px at 55% 15%,#9cf,transparent),
+  radial-gradient(1px 1px at 15% 85%,#fff,transparent);
+  animation:starDrift 60s linear infinite}
+@keyframes starDrift{from{transform:translate(0,0)}to{transform:translate(-5%,-5%)}}
+.creditsInner{position:absolute;left:0;right:0;top:100%;padding:0 8vw;font-size:clamp(13px,1.7vmin,17px);line-height:2;text-align:center;color:#dfffe9;animation:credRoll linear forwards}
+@keyframes credRoll{from{top:100%}to{top:-300%}}
+.creditsInner h1{font-size:clamp(28px,6vmin,52px);color:#5f9;letter-spacing:clamp(6px,2vw,16px);text-shadow:0 0 30px #5f9,0 0 60px #0f0;margin:0 0 20px;font-weight:bold}
+.creditsInner h2{font-size:clamp(15px,2.5vmin,22px);color:#ffd76a;letter-spacing:clamp(3px,1vw,8px);margin:60px 0 20px;text-shadow:0 0 16px rgba(255,215,106,.5)}
+.creditsInner p{margin:0 0 14px;color:#cfe}
+.creditsInner .muted{color:#7ab;font-size:.9em}
+.creditsInner .accent{color:#a0e8ff}
+.creditsInner .quote{font-style:italic;color:#9fecbf;max-width:60ch;margin:30px auto;padding:20px;border-left:3px solid #5f9;background:rgba(80,255,140,.05);text-align:left;line-height:1.9}
+.creditsInner .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(80,255,140,.6),transparent);margin:50px auto;max-width:600px}
+.creditsSkip{position:absolute;bottom:20px;right:24px;color:#5f9;font-size:11px;letter-spacing:2px;opacity:.55;padding:8px 14px;border:1px solid rgba(80,255,140,.4);border-radius:6px;background:rgba(0,20,10,.4);cursor:pointer;z-index:5;font-family:Consolas,monospace}
+.creditsSkip:hover{opacity:1;background:rgba(0,40,20,.7)}
+
 @media (max-width:820px){
   .mBody{flex-direction:column}
   .mPreview{flex:0 0 32%;min-height:180px}
@@ -309,6 +355,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
   .mHeadTitle .b{font-size:8.5px;letter-spacing:2px}
   .mHeadRight{font-size:9px;gap:8px}
   .mHeadRight .clk{font-size:10px}
+  .gfxBtn{padding:10px 6px;font-size:10px}
+  .gfxBtn .em{font-size:16px}
 }
 @media (max-width:600px){
   .b{font-size:10.5px;padding:9px 12px}
@@ -338,10 +386,21 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <div id="intro">
   <canvas id="introCanvas"></canvas>
   <div class="introOverlay"></div>
-  <div class="introFlicker"></div>
-  <div class="introTitle"><div class="t1">ШКОЛА №43</div><div class="t2">НОЧНАЯ СМЕНА • V24.3</div></div>
+  <div class="introTitle"><div class="t1">ШКОЛА №43</div><div class="t2">НОЧНАЯ СМЕНА • V24.4</div></div>
   <div class="introSub">входим в школу...</div>
   <div class="introSkip" id="introSkip">ПРОПУСТИТЬ ▸</div>
+</div>
+
+<div id="exitAnim">
+  <canvas id="exitCanvas"></canvas>
+  <div id="exitVignette"></div>
+  <div id="exitFade"></div>
+</div>
+
+<div id="creditsScroll">
+  <div class="creditsStar"></div>
+  <div class="creditsInner" id="creditsInner"></div>
+  <div class="creditsSkip" id="creditsSkip">ПРОПУСТИТЬ ▸</div>
 </div>
 
 <div id="menu">
@@ -349,7 +408,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
     <div class="mHeadLogo">🦉</div>
     <div class="mHeadTitle">
       <div class="a">ШКОЛА №43</div>
-      <div class="b">НОЧНАЯ СМЕНА • V24.3 «ENTRANCE»</div>
+      <div class="b">НОЧНАЯ СМЕНА • V24.4 «EXIT»</div>
     </div>
     <div class="mHeadRight">
       <span class="badge" id="devBadge">PC</span>
@@ -359,7 +418,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
   <div class="mBody">
     <div class="mPreview">
       <canvas id="menuCanvas"></canvas>
-      <div class="pvScan"></div>
       <div class="pvOverlay"></div>
       <div class="pvInfo">● LIVE • <b>CAM-43</b> • 20:00</div>
       <div class="pvBottom" id="pvBottom">Ночная смена начинается. <b>7 правил</b> • <b>5 дней</b> • <b>выжить</b>.</div>
@@ -384,11 +442,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
           <div class="mGrid">
             <button class="b s" data-a="mode">🎮 РЕЖИМЫ</button>
             <button class="b s" data-a="st">⚙ НАСТРОЙКИ</button>
+            <button class="b s" data-a="gfx">🖼 ГРАФИКА</button>
             <button class="b s" data-a="ac">🏆 АЧИВКИ</button>
             <button class="b s" data-a="jo">📔 ЖУРНАЛ</button>
             <button class="b s" data-a="cr">🎬 ТИТРЫ</button>
             <button class="b s" data-a="chg">📋 ЛОГ</button>
-            <button class="b s" data-a="ab">ℹ ИНФО</button>
             <button class="b s" data-a="dev">🔄 УСТРОЙСТВО</button>
           </div>
           <div class="mFoot">WASD • E • R рация • B маркер • N бумеранг<br>M карта • J журнал • C камеры • Esc пауза</div>
@@ -553,9 +611,19 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <div class="sr"><span>Чувствительность</span><input id="s1" type="range" min="0.3" max="3" step="0.05"><span class="sv" id="v1"></span></div>
 <div class="sr"><span>Покачивание</span><input id="s2" type="range" min="0" max="1" step="1"><span class="sv" id="v2"></span></div>
 <div class="sr"><span>Громкость</span><input id="s3" type="range" min="0" max="1" step="0.05"><span class="sv" id="v3"></span></div>
-<div class="sr"><span>Качество</span><input id="s4" type="range" min="0" max="3" step="1"><span class="sv" id="v4"></span></div>
-<div class="sr"><span>Туман</span><input id="s5" type="range" min="15" max="120" step="1"><span class="sv" id="v5"></span></div>
 <div style="margin-top:10px"><button id="spB" class="p">НАЗАД</button><button id="spR">СБРОС</button></div>
+</div></div>
+<div class="pn" id="gfxP"><div class="pb"><h2>🖼 ГРАФИКА</h2>
+<div class="mSub" style="text-align:center;margin-bottom:8px">Выбери пресет — применится сразу.</div>
+<div class="gfxRow">
+  <div class="gfxBtn" data-gfx="low"><span class="em">▁</span><span class="nm">СЛАБО</span><span class="ds">для слабых ПК<br>и телефонов</span></div>
+  <div class="gfxBtn" data-gfx="medium"><span class="em">▄</span><span class="nm">СРЕДНЕ</span><span class="ds">баланс<br>качество/фпс</span></div>
+  <div class="gfxBtn" data-gfx="high"><span class="em">█</span><span class="nm">СИЛЬНО</span><span class="ds">максимум<br>качества</span></div>
+</div>
+<div class="setInfo" id="gfxInfo" style="font-size:9.5px;color:#7ab;line-height:1.6;padding:8px;background:rgba(0,0,0,.3);border-left:2px solid #3fd18a;border-radius:3px"></div>
+<div class="sr" style="margin-top:14px"><span>Туман</span><input id="s5" type="range" min="15" max="120" step="1"><span class="sv" id="v5"></span></div>
+<div class="sr"><span>Дальность</span><input id="s6" type="range" min="30" max="150" step="5"><span class="sv" id="v6"></span></div>
+<div style="margin-top:10px"><button id="gfxB" class="p" style="width:100%">ЗАКРЫТЬ</button></div>
 </div></div>
 <div class="pn" id="acP"><div class="pb"><h2>🏆 ДОСТИЖЕНИЯ</h2><div id="acList"></div><button id="acB" class="p">ЗАКРЫТЬ</button></div></div>
 <div class="pn" id="joP"><div class="pb"><h2>📔 ЖУРНАЛ</h2><div id="joList"></div><button id="joB" class="p">ЗАКРЫТЬ</button></div></div>
@@ -592,8 +660,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 </div></div>
 <div class="pn" id="abP"><div class="pb"><h2>О ИГРЕ</h2>
 <div style="font-size:10.5px;line-height:1.6;color:#bfe">
-<b style="color:#5f9">ШКОЛА №43 — V24.3 «ENTRANCE»</b><br><br>
-Заставка: вход в школу. Меню: превью + панель кнопок.
+<b style="color:#5f9">ШКОЛА №43 — V24.4 «EXIT»</b><br><br>
+Графика без пикселей. Окна с природой. Финальная анимация выхода и титры в стиле Minecraft.
 </div>
 <button id="abB" class="p">ЗАКРЫТЬ</button></div></div>
 <div class="pn" id="eP"><div class="pb" style="text-align:center">
@@ -603,7 +671,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <button id="eR" class="p" style="width:100%">В МЕНЮ</button></div></div>
 
 <script>
-// Глобальный перехватчик ошибок — покажет сообщение вместо чёрного экрана
 window.addEventListener('error', function(e){
   var box=document.getElementById('errBox');
   var msg=document.getElementById('errMsg');
@@ -628,12 +695,55 @@ const isTouch=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)||navi
 let DEVICE='pc';
 try{const s=localStorage.getItem('sh43device');if(s==='pc'||s==='mobile')DEVICE=s;else DEVICE=isTouch?'mobile':'pc';}catch(e){DEVICE=isTouch?'mobile':'pc';}
 
-const DEF={sens:1.5,bob:1,vol:0.6,qual:1,fog:60,dist:60};
+// ═══ GRAPHICS PRESETS ═══
+const GFX_PRESETS={
+  low:   {qual:0, pixelRatio:0.7,  shadows:false, antialias:false, fogFar:40,  dist:40,  pixelBudget:0.6, dust:false, viewDistance:45 },
+  medium:{qual:2, pixelRatio:1.0,  shadows:false, antialias:true,  fogFar:70,  dist:70,  pixelBudget:1.0, dust:false, viewDistance:75 },
+  high:  {qual:3, pixelRatio:2.0,  shadows:true,  antialias:true,  fogFar:110, dist:110, pixelBudget:2.0, dust:true,  viewDistance:120}
+};
+function gfxLevel(){ return localStorage.getItem('sh43gfx') || 'medium'; }
+function setGfxLevel(l){
+  localStorage.setItem('sh43gfx', l);
+  const p=GFX_PRESETS[l]||GFX_PRESETS.medium;
+  cfg.qual=p.qual;
+  cfg.fog=p.fogFar;
+  cfg.dist=p.dist;
+  cfg.pixelRatio=p.pixelRatio;
+  cfg.shadows=p.shadows;
+  cfg.antialias=p.antialias;
+  cfg.dust=p.dust;
+  applyGfxToRenderers();
+  saveAll();
+}
+function applyGfxToRenderers(){
+  const l=gfxLevel();
+  const p=GFX_PRESETS[l]||GFX_PRESETS.medium;
+  if(RD){
+    const dpr=Math.min(window.devicePixelRatio||1, p.pixelRatio);
+    RD.setPixelRatio(dpr);
+    RD.setSize(window.innerWidth,window.innerHeight,false);
+    if(SC&&SC.fog)SC.fog.far=p.fogFar;
+  }
+  if(mR){
+    const dpr=Math.min(window.devicePixelRatio||1, p.pixelRatio);
+    mR.setPixelRatio(dpr);
+    resizeMenuCanvas();
+  }
+}
+
+const DEF={sens:1.5,bob:1,vol:0.6,qual:2,fog:70,dist:70,pixelRatio:1,shadows:false,antialias:true,dust:false};
 let cfg=Object.assign({},DEF);
 try{Object.assign(cfg,JSON.parse(localStorage.getItem('sh43cfg')||'{}'))}catch(e){}
-function applyDev(){if(DEVICE==='mobile'){cfg.sens=1.8;cfg.qual=0;cfg.fog=40;cfg.dist=40;cfg.bob=0}else{cfg.sens=1.5;cfg.qual=1;cfg.fog=60;cfg.dist=60;cfg.bob=1}}
+function applyDev(){
+  if(DEVICE==='mobile'){
+    cfg.sens=1.8;cfg.bob=0;
+    setGfxLevel('low');
+  }else{
+    cfg.sens=1.5;cfg.bob=1;
+    if(!localStorage.getItem('sh43gfx'))setGfxLevel('medium');
+  }
+}
 
-const PR=[0.5,0.75,1,1.5];
 const DF={easy:[0.5,0.25,7,0],normal:[1,0.55,11,0],hard:[1.6,0.85,15,0],horror:[2.2,1,18,1.4],extreme:[3,1.3,22,2],nightmare:[4.5,1.8,26,3],rare:[3.5,1.0,20,2,5],bag:[2,0.6,12,1.2]};
 const SEC_PER_DAY=300,MINS_PER_DAY=1440,START_MIN=20*60;
 let diff='normal',role='guard',mode='story',chosenMap=-1;
@@ -641,38 +751,37 @@ const IH=()=>['horror','extreme','nightmare','rare'].includes(diff);
 const IS_BAG=()=>diff==='bag';
 
 const MOD_CATS={visual:'🎨 ВИЗУАЛ',sound:'🎵 ЗВУК',game:'🎮 ГЕЙМПЛЕЙ',cheat:'💎 ЧИТЫ',humor:'😂 ЮМОР',world:'🌍 МИР',phys:'⚙ ФИЗИКА',util:'📱 УТИЛИТЫ',fun:'🎉 СПЕЦ'};
-
 const MOD_DEFS={
 cheat:{cat:'cheat',name:'ЧИТ-МОД',icon:'💎',desc:'Настройки в ⚙',hasSet:true},
 speed:{cat:'game',name:'СУПЕР-СКОРОСТЬ',icon:'⚡',desc:'Бег ×3'},
 fly:{cat:'game',name:'ПОЛЁТ',icon:'🕊',desc:'Парение'},
 manyger:{cat:'game',name:'МНОГО ГЕРМАНОВ',icon:'👻',desc:'Спавн ×3'},
-moo:{cat:'sound',name:'ВЕСЁЛЫЕ ЗВУКИ',icon:'🔊',desc:'Бипы на шагах'},
+moo:{cat:'sound',name:'ВЕСЁЛЫЕ ЗВУКИ',icon:'🔊',desc:'Бипы'},
 twin:{cat:'game',name:'ДВОЙНИК',icon:'👥',desc:'Бот за тобой'},
-nocost:{cat:'util',name:'БЕЗ РАСХОДА',icon:'♾',desc:'Фонарь не тратится'},
+nocost:{cat:'util',name:'БЕЗ РАСХОДА',icon:'♾',desc:'Фонарь'},
 glasses:{cat:'visual',name:'РЕНТГЕН',icon:'👓',desc:'Сквозь стены'},
-big:{cat:'visual',name:'БОЛЬШОЙ FOV',icon:'📷',desc:'Обзор шире'},
-small:{cat:'visual',name:'УЗКИЙ FOV',icon:'🔍',desc:'Обзор уже'},
-night:{cat:'visual',name:'НОЧНОЙ РЕЖИМ',icon:'🌙',desc:'Зелёный фильтр'},
+big:{cat:'visual',name:'БОЛЬШОЙ FOV',icon:'📷',desc:'Шире'},
+small:{cat:'visual',name:'УЗКИЙ FOV',icon:'🔍',desc:'Уже'},
+night:{cat:'visual',name:'НОЧНОЙ РЕЖИМ',icon:'🌙',desc:'Зелёный'},
 sepia:{cat:'visual',name:'СЕПИЯ',icon:'📜',desc:'Коричневый'},
-invert:{cat:'visual',name:'ИНВЕРТ',icon:'🔄',desc:'Обратные цвета'},
+invert:{cat:'visual',name:'ИНВЕРТ',icon:'🔄',desc:'Обратные'},
 blur:{cat:'visual',name:'РАЗМЫТИЕ',icon:'💨',desc:'Плывёт'},
 rain:{cat:'visual',name:'ДОЖДЬ',icon:'🌧',desc:'Дождь'},
 snow:{cat:'visual',name:'СНЕГ',icon:'❄️',desc:'Снег'},
-sunset:{cat:'visual',name:'ЗАКАТ',icon:'🌅',desc:'Вечный закат'},
-fog:{cat:'visual',name:'ГУСТОЙ ТУМАН',icon:'🌫',desc:'Туман ×2'},
+sunset:{cat:'visual',name:'ЗАКАТ',icon:'🌅',desc:'Вечный'},
+fog:{cat:'visual',name:'ГУСТОЙ ТУМАН',icon:'🌫',desc:'×2'},
 clear:{cat:'visual',name:'ЯСНО',icon:'☀️',desc:'Без тумана'},
 neon:{cat:'visual',name:'НЕОН',icon:'💜',desc:'Неон'},
 mute:{cat:'sound',name:'ТИШИНА',icon:'🔇',desc:'Без звука'},
 music:{cat:'sound',name:'МУЗЫКА',icon:'🎵',desc:'Фон'},
 echo:{cat:'sound',name:'ЭХО',icon:'🔊',desc:'Гулко'},
 reverse:{cat:'sound',name:'РЕВЕРС',icon:'↩️',desc:'Обратно'},
-highpitch:{cat:'sound',name:'ВЫСОКИЙ',icon:'📈',desc:'Тон выше'},
-lowpitch:{cat:'sound',name:'НИЗКИЙ',icon:'📉',desc:'Тон ниже'},
+highpitch:{cat:'sound',name:'ВЫСОКИЙ',icon:'📈',desc:'Тон'},
+lowpitch:{cat:'sound',name:'НИЗКИЙ',icon:'📉',desc:'Тон'},
 bass:{cat:'sound',name:'БАС',icon:'🥁',desc:'Гулко'},
 chips:{cat:'sound',name:'CHIPTUNE',icon:'🎮',desc:'Ретро'},
-infinity:{cat:'game',name:'∞ HP',icon:'❤️',desc:'HP не падает'},
-regen:{cat:'game',name:'РЕГЕНЕРАЦИЯ',icon:'💚',desc:'HP восст.'},
+infinity:{cat:'game',name:'∞ HP',icon:'❤️',desc:'Не падает'},
+regen:{cat:'game',name:'РЕГЕНЕРАЦИЯ',icon:'💚',desc:'Восст.'},
 faster:{cat:'game',name:'БЫСТРОЕ ВРЕМЯ',icon:'⏩',desc:'Короче'},
 slower:{cat:'game',name:'МЕДЛЕННОЕ',icon:'⏪',desc:'Длиннее'},
 onehit:{cat:'game',name:'ХАРДКОР',icon:'☠',desc:'1 удар'},
@@ -684,15 +793,15 @@ noFiz:{cat:'game',name:'БЕЗ ФИЗРУКА',icon:'🏋',desc:'Не прихо
 noBell:{cat:'game',name:'БЕЗ ЗВОНКА',icon:'🔕',desc:'Отключён'},
 dropItems:{cat:'game',name:'БОЛЬШЕ ЛУТА',icon:'📦',desc:'×2'},
 freecam:{cat:'game',name:'FREECAM',icon:'🎥',desc:'Летающая'},
-ghostMode:{cat:'game',name:'ПРИЗРАК',icon:'👻',desc:'Сквозь стены'},
-walkThrough:{cat:'game',name:'ТЕЛЕПОРТ',icon:'🌐',desc:'E телепорт'},
+ghostMode:{cat:'game',name:'ПРИЗРАК',icon:'👻',desc:'Сквозь'},
+walkThrough:{cat:'game',name:'ТЕЛЕПОРТ',icon:'🌐',desc:'E'},
 godHP:{cat:'cheat',name:'БЕССМЕРТИЕ',icon:'🛡',desc:'Не умираешь'},
-instaKill:{cat:'cheat',name:'ВАНШОТ',icon:'💀',desc:'Убить любого'},
-allItems:{cat:'cheat',name:'ВСЁ ОРУЖИЕ',icon:'⚔️',desc:'Всё сразу'},
+instaKill:{cat:'cheat',name:'ВАНШОТ',icon:'💀',desc:'Убить'},
+allItems:{cat:'cheat',name:'ВСЁ ОРУЖИЕ',icon:'⚔️',desc:'Всё'},
 noclip:{cat:'cheat',name:'NOCLIP',icon:'🚀',desc:'Сквозь'},
 flyCheat:{cat:'cheat',name:'ПОЛЁТ ЧИТ',icon:'✈️',desc:'Полёт'},
 teleport:{cat:'cheat',name:'ТЕЛЕПОРТ',icon:'📡',desc:'ПКМ'},
-speed5x:{cat:'cheat',name:'СКОРОСТЬ ×5',icon:'🏃',desc:'Бег ×5'},
+speed5x:{cat:'cheat',name:'СКОРОСТЬ ×5',icon:'🏃',desc:'Бег'},
 jumpHigh:{cat:'cheat',name:'ПРЫЖОК',icon:'⬆️',desc:'5м'},
 seeHostile:{cat:'cheat',name:'ВИДЮ ВРАГОВ',icon:'👁',desc:'Подсветка'},
 instantWin:{cat:'cheat',name:'ФИНАЛ',icon:'🏆',desc:'5 дней'},
@@ -701,11 +810,11 @@ boing:{cat:'humor',name:'БОИНГ',icon:'🏀',desc:'Отскок'},
 banana:{cat:'humor',name:'БАНАН',icon:'🍌',desc:'Жёлтое'},
 cat:{cat:'humor',name:'МЯУ',icon:'🐱',desc:'Кот'},
 duck:{cat:'humor',name:'УТКА',icon:'🦆',desc:'Кряк'},
-burp:{cat:'humor',name:'ИК',icon:'🤢',desc:'Звук еды'},
+burp:{cat:'humor',name:'ИК',icon:'🤢',desc:'Звук'},
 snoop:{cat:'humor',name:'SNOOP',icon:'🎤',desc:'Режим'},
-slowmo:{cat:'humor',name:'СЛОУМО',icon:'🐢',desc:'Замедление'},
+slowmo:{cat:'humor',name:'СЛОУМО',icon:'🐢',desc:'Медленно'},
 bigHead:{cat:'humor',name:'БОЛЬШАЯ ГОЛОВА',icon:'🤯',desc:'Голова'},
-tiny:{cat:'humor',name:'МИНИ',icon:'🐜',desc:'Маленькое'},
+tiny:{cat:'humor',name:'МИНИ',icon:'🐜',desc:'Мало'},
 moreRooms:{cat:'world',name:'МНОГО КОМНАТ',icon:'🏠',desc:'Больше'},
 office:{cat:'world',name:'ОФИС',icon:'💼',desc:'Офис'},
 space:{cat:'world',name:'КОСМОС',icon:'🚀',desc:'Звёзды'},
@@ -806,7 +915,6 @@ let uNPCArg=0;
 function obj(t,ms){if(ms===undefined)ms=4000;const o=$('ob');o.textContent=t;clearTimeout(obj._t);obj._t=setTimeout(function(){if(o.textContent===t)o.textContent=''},ms)}
 function toast(t,cls){const ts=$('ts');const d=document.createElement('div');d.className='t'+(cls?' '+cls:'');d.textContent=t;ts.appendChild(d);setTimeout(()=>d.remove(),3800)}
 function flash(id,d){if(d===undefined)d=0.2;const e=$(id);e.style.transition='opacity .04s';e.style.opacity='1';setTimeout(()=>{e.style.transition='opacity .3s';e.style.opacity='0'},d*1000)}
-function tut(t){const e=$('tut');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),4500)}
 function unlAch(k){if(G.ach[k])return;G.ach[k]=1;saveAll();const d=document.createElement('div');d.className='ach-pop';d.textContent='🏆 '+(ACH[k]||k);$('ach').appendChild(d);setTimeout(()=>d.remove(),4000);try{SND.tone(880,.15,.15)}catch(e){}}
 function countMods(){return Object.keys(MODS).filter(k=>MODS[k]).length}
 function checkModAch(){const n=countMods();if(n>=10)unlAch('mods10');if(n>=25)unlAch('mods25');if(n>=50)unlAch('mods50');if(n>=100)unlAch('mods100');if(n>=1)unlAch('modsOn')}
@@ -853,39 +961,112 @@ $('copyAnswer').onclick=()=>{$('answerOut').select();document.execCommand('copy'
 $('acceptAnswer').onclick=acceptAnswer;
 $('makeAnswer').onclick=makeAnswer;
 
+// ═══ ПРИРОДА ЗА ОКНОМ — текстура неба/леса ═══
+let _skyTexCache=null;
+function getSkyTexture(){
+  if(_skyTexCache)return _skyTexCache;
+  const cv=document.createElement('canvas');cv.width=512;cv.height=256;
+  const g=cv.getContext('2d');
+  const h=gH?gH():20;
+  const isDayT=(h>=7&&h<17);
+  const isSunset=(h>=17&&h<20);
+  const isNightT=(h<7||h>=20);
+  let topC,botC,groundC,treeC,hillC;
+  if(isMod('snow')||isMod('ice')){topC='#1a2a40';botC='#e8f0ff';groundC='#e0e8f0';treeC='#204030';hillC='#d0d8e0';}
+  else if(isMod('sunset')||isSunset){topC='#5a3a6a';botC='#ffb060';groundC='#3a2a20';treeC='#101808';hillC='#1a1a20';}
+  else if(isMod('space')||isNightT){topC='#000010';botC='#0a1a30';groundC='#0a0a18';treeC='#000000';hillC='#0a0a18';}
+  else if(isDayT){topC='#6aa8e0';botC='#c8e8ff';groundC='#4a7a3a';treeC='#1a4a20';hillC='#3a5a2a';}
+  else{topC='#8a7aa0';botC='#d0c0b0';groundC='#3a4a3a';treeC='#1a2a20';hillC='#2a3a2a';}
+  const lg=g.createLinearGradient(0,0,0,cv.height);
+  lg.addColorStop(0,topC);lg.addColorStop(.6,botC);lg.addColorStop(1,botC);
+  g.fillStyle=lg;g.fillRect(0,0,512,256);
+  // Дальние холмы
+  g.fillStyle=hillC;
+  g.beginPath();g.moveTo(0,180);
+  for(let x=0;x<=512;x+=32)g.lineTo(x,160+Math.sin(x*.02)*20+Math.sin(x*.05)*10);
+  g.lineTo(512,256);g.lineTo(0,256);g.closePath();g.fill();
+  // Земля
+  g.fillStyle=groundC;g.fillRect(0,200,512,56);
+  // Деревья
+  const treeNums=(isMod('snow')||isMod('ice')||isNightT||isMod('space'))?15:25;
+  for(let i=0;i<treeNums;i++){
+    const x=Math.random()*512;
+    const baseY=195+Math.random()*8;
+    const height=(isMod('tree')||isMod('minecraft'))?40+Math.random()*20:35+Math.random()*25;
+    g.fillStyle=(isMod('snow')||isMod('ice'))?'#e0e8f0':treeC;
+    // Ствол
+    g.fillRect(x-2,baseY-height*.5,4,height*.5);
+    // Крона (треугольник)
+    g.beginPath();
+    g.moveTo(x,baseY-height);
+    g.lineTo(x-14,baseY-height*.4);
+    g.lineTo(x+14,baseY-height*.4);
+    g.closePath();g.fill();
+    g.beginPath();
+    g.moveTo(x,baseY-height*.75);
+    g.lineTo(x-16,baseY-height*.2);
+    g.lineTo(x+16,baseY-height*.2);
+    g.closePath();g.fill();
+  }
+  // Солнце/луна
+  if(isDayT&&!isMod('space')&&!isMod('snow')&&!isMod('ice')){
+    g.fillStyle='#fff4c0';g.beginPath();g.arc(400,50,22,0,6.28);g.fill();
+    g.fillStyle='rgba(255,255,200,.3)';g.beginPath();g.arc(400,50,32,0,6.28);g.fill();
+  }
+  else if(isNightT||isMod('space')){
+    g.fillStyle='#e8e8ff';g.beginPath();g.arc(400,50,18,0,6.28);g.fill();
+    // Звёзды
+    g.fillStyle='#fff';for(let i=0;i<40;i++){const x=Math.random()*512,y=Math.random()*150;g.fillRect(x,y,1.5,1.5);}
+  }
+  else{
+    g.fillStyle='#ffc080';g.beginPath();g.arc(400,100,24,0,6.28);g.fill();
+    g.fillStyle='rgba(255,180,100,.3)';g.beginPath();g.arc(400,100,36,0,6.28);g.fill();
+  }
+  // Облака
+  if(!isNightT&&!isMod('space')){
+    g.fillStyle='rgba(255,255,255,.55)';
+    for(let i=0;i<4;i++){
+      const x=Math.random()*512,y=30+Math.random()*60;
+      g.beginPath();g.arc(x,y,18,0,6.28);g.arc(x+22,y+4,14,0,6.28);g.arc(x-18,y+6,12,0,6.28);g.arc(x+8,y-8,12,0,6.28);g.fill();
+    }
+  }
+  const tx=new THREE.CanvasTexture(cv);
+  tx.colorSpace=THREE.SRGBColorSpace;
+  _skyTexCache=tx;
+  return tx;
+}
+function invalidateSky(){_skyTexCache=null;}
+
 // ═══ ENTRANCE INTRO ═══
 let introRenderer=null;
 function runIntro(){
   const cv=$('introCanvas');
-  if(!cv){finishIntro();return;}
-  const W=window.innerWidth,H=window.innerHeight;
+  if(!cv){showMenuFinal();return;}
   let renderer;
   try{
-    renderer=new THREE.WebGLRenderer({canvas:cv,antialias:DEVICE==='pc'});
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, DEVICE==='pc'?1.5:1));
-    renderer.setSize(W,H,false);
+    renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,powerPreference:'high-performance'});
+    const l=gfxLevel();
+    const p=GFX_PRESETS[l]||GFX_PRESETS.medium;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, p.pixelRatio));
+    renderer.setSize(window.innerWidth,window.innerHeight,false);
     renderer.outputColorSpace=THREE.SRGBColorSpace;
-  }catch(e){finishIntro();return;}
+  }catch(e){showMenuFinal();return;}
   introRenderer=renderer;
   const scene=new THREE.Scene();
   scene.background=new THREE.Color(0x02040a);
   scene.fog=new THREE.Fog(0x02040a,2,26);
-  const cam=new THREE.PerspectiveCamera(72,W/H,.1,80);
+  const cam=new THREE.PerspectiveCamera(72,window.innerWidth/window.innerHeight,.1,80);
   cam.rotation.order='YXZ';
-
   scene.add(new THREE.AmbientLight(0x506070,.7));
-  const hl=new THREE.HemisphereLight(0x304050,0x000000,.5);scene.add(hl);
+  scene.add(new THREE.HemisphereLight(0x304050,0x000000,.5));
   const lampL=new THREE.PointLight(0xfff0c0,1.2,9,1.5);lampL.position.set(0,2.7,1);scene.add(lampL);
   const doorL=new THREE.PointLight(0x5fff88,0,12,1.5);doorL.position.set(0,1.3,-8.5);scene.add(doorL);
-
   const mFloor=new THREE.MeshLambertMaterial({color:0x2a2a2a});
   const mWall=new THREE.MeshLambertMaterial({color:0x3a4450});
   const mCeil=new THREE.MeshLambertMaterial({color:0x101820});
   const mDoor=new THREE.MeshLambertMaterial({color:0x503020});
   const mLamp=new THREE.MeshBasicMaterial({color:0xfff8e0});
-
   const BW=4.5,BH=4.5,BL=50;
-
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mFloor);
   floor.rotation.x=-Math.PI/2;floor.position.z=5-BL/2;scene.add(floor);
   const ceil=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mCeil);
@@ -894,7 +1075,6 @@ function runIntro(){
   wallL.rotation.y=Math.PI/2;wallL.position.set(-BW/2,BH/2,5-BL/2);scene.add(wallL);
   const wallR=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
   wallR.rotation.y=-Math.PI/2;wallR.position.set(BW/2,BH/2,5-BL/2);scene.add(wallR);
-
   const doorPivotL=new THREE.Group();doorPivotL.position.set(-1.05,0,-8.5);scene.add(doorPivotL);
   const dML=new THREE.Mesh(new THREE.BoxGeometry(1,2.6,.12),mDoor);
   dML.position.x=.5;dML.position.y=1.3;doorPivotL.add(dML);
@@ -903,14 +1083,30 @@ function runIntro(){
   dMR.position.x=-.5;dMR.position.y=1.3;doorPivotR.add(dMR);
   const header=new THREE.Mesh(new THREE.BoxGeometry(BW,BH-2.6,.3),mWall);
   header.position.set(0,2.6+(BH-2.6)/2,-8.5);scene.add(header);
-
+  // Окна с природой по бокам коридора
+  const skyTex=getSkyTexture();
+  for(let i=0;i<4;i++){
+    const wG=new THREE.PlaneGeometry(1.6,1.1);
+    const wM=new THREE.MeshBasicMaterial({map:skyTex});
+    const wL=new THREE.Mesh(wG,wM);
+    wL.position.set(-BW/2+.01,1.8,-1-i*4.5);wL.rotation.y=Math.PI/2;scene.add(wL);
+    const wR=new THREE.Mesh(wG,wM.clone());
+    wR.position.set(BW/2-.01,1.8,-1-i*4.5);wR.rotation.y=-Math.PI/2;scene.add(wR);
+    // Рама
+    const frameM=new THREE.MeshLambertMaterial({color:0x2a1a0a});
+    const fH=new THREE.Mesh(new THREE.BoxGeometry(.1,.08,1.7),frameM);
+    fH.position.set(-BW/2+.05,2.4,-1-i*4.5);scene.add(fH);
+    const fB=fH.clone();fB.position.y=1.2;scene.add(fB);
+    const fL=new THREE.Mesh(new THREE.BoxGeometry(.1,1.2,.08),frameM);
+    fL.position.set(-BW/2+.05,1.8,-1-i*4.5-.85);scene.add(fL);
+    const fR=fL.clone();fR.position.z=-1-i*4.5+.85;scene.add(fR);
+  }
   [-3,-6,-12,-18,-24,-30].forEach(z=>{
     const lamp=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.4),mLamp);
     lamp.position.set(0,BH-.15,z);scene.add(lamp);
     const pl=new THREE.PointLight(0xfff0c0,.6,7,1.6);
     pl.position.set(0,BH-.4,z);scene.add(pl);
   });
-
   const mBox=new THREE.MeshLambertMaterial({color:0x604828});
   for(let i=0;i<5;i++){
     const b=new THREE.Mesh(new THREE.BoxGeometry(.6,.6,.6),mBox);
@@ -921,20 +1117,10 @@ function runIntro(){
   tbl.position.set(BW/2-.8,.85,-5);scene.add(tbl);
   const tblLeg=new THREE.Mesh(new THREE.BoxGeometry(.08,.85,.08),mTable);
   tblLeg.position.set(BW/2-.8,.42,-5);scene.add(tblLeg);
-
-  const mPl=new THREE.MeshBasicMaterial({color:0x2a5a2a});
-  const pl=new THREE.Mesh(new THREE.PlaneGeometry(.6,.2),mPl);
-  pl.position.set(0,2.85,-8.4);scene.add(pl);
-
   const STATES={WALK:0,DOORS:1,ENTER:2,FLASH:3};
-  let state=STATES.WALK;
-  let stateT=0;
-  let camZ=4;
-  let doorAngle=0;
+  let state=STATES.WALK,stateT=0,camZ=4,doorAngle=0;
   const targetDoorAngle=Math.PI/2*0.95;
-  let flashT=0;
-  let finished=false;
-
+  let flashT=0,finished=false;
   function finish(){
     if(finished)return;finished=true;
     const introEl=$('intro');
@@ -947,14 +1133,12 @@ function runIntro(){
   }
   $('introSkip').onclick=e=>{e.stopPropagation();finish();};
   $('intro').addEventListener('click',finish);
-
   let last=performance.now();
   function loopIntro(now){
     if(finished)return;
     requestAnimationFrame(loopIntro);
     const dt=Math.min(.05,(now-last)/1000);last=now;
     stateT+=dt;
-
     if(state===STATES.WALK){
       camZ-=dt*1.6;
       cam.position.set(0,1.55+Math.sin(now*.004)*.03,camZ);
@@ -980,13 +1164,227 @@ function runIntro(){
         scene.fog.color.setRGB(a,a,a);
       } else {finish();return;}
     }
-
     lampL.intensity=1.0+Math.sin(now*.008)*.08+Math.random()*.04;
     if(state>=STATES.DOORS)doorL.intensity=Math.min(2.5,(stateT+.2)*1.4);
-
     try{renderer.render(scene,cam);}catch(e){finish();}
   }
   requestAnimationFrame(loopIntro);
+}
+
+// ═══ EXIT ANIMATION ═══
+let exitRenderer=null;
+function runExitAnimation(callback){
+  const cv=$('exitCanvas');
+  if(!cv){callback();return;}
+  $('exitAnim').classList.add('on');
+  $('exitFade').style.opacity='0';
+  let renderer;
+  try{
+    renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,powerPreference:'high-performance'});
+    const l=gfxLevel();
+    const p=GFX_PRESETS[l]||GFX_PRESETS.medium;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, p.pixelRatio));
+    renderer.setSize(window.innerWidth,window.innerHeight,false);
+    renderer.outputColorSpace=THREE.SRGBColorSpace;
+  }catch(e){callback();return;}
+  exitRenderer=renderer;
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x02040a);
+  scene.fog=new THREE.Fog(0x02040a,2,30);
+  const cam=new THREE.PerspectiveCamera(72,window.innerWidth/window.innerHeight,.1,80);
+  cam.rotation.order='YXZ';
+  scene.add(new THREE.AmbientLight(0x506070,.75));
+  scene.add(new THREE.HemisphereLight(0x304050,0x000000,.55));
+  const lampL=new THREE.PointLight(0xfff0c0,1.2,9,1.5);lampL.position.set(0,2.7,1);scene.add(lampL);
+  const doorL=new THREE.PointLight(0x5fff88,1.5,14,1.5);doorL.position.set(0,1.3,-8.5);scene.add(doorL);
+  const mFloor=new THREE.MeshLambertMaterial({color:0x2a2a2a});
+  const mWall=new THREE.MeshLambertMaterial({color:0x3a4450});
+  const mCeil=new THREE.MeshLambertMaterial({color:0x101820});
+  const mDoor=new THREE.MeshLambertMaterial({color:0x503020});
+  const mLamp=new THREE.MeshBasicMaterial({color:0xfff8e0});
+  const BW=4.5,BH=4.5,BL=50;
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mFloor);
+  floor.rotation.x=-Math.PI/2;floor.position.z=-BL/2;scene.add(floor);
+  const ceil=new THREE.Mesh(new THREE.PlaneGeometry(BW,BL),mCeil);
+  ceil.rotation.x=Math.PI/2;ceil.position.set(0,BH,-BL/2);scene.add(ceil);
+  const wallL=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
+  wallL.rotation.y=Math.PI/2;wallL.position.set(-BW/2,BH/2,-BL/2);scene.add(wallL);
+  const wallR=new THREE.Mesh(new THREE.PlaneGeometry(BL,BH),mWall);
+  wallR.rotation.y=-Math.PI/2;wallR.position.set(BW/2,BH/2,-BL/2);scene.add(wallR);
+  const doorPivotL=new THREE.Group();doorPivotL.position.set(-1.05,0,-8.5);scene.add(doorPivotL);
+  const dML=new THREE.Mesh(new THREE.BoxGeometry(1,2.6,.12),mDoor);
+  dML.position.x=.5;dML.position.y=1.3;doorPivotL.add(dML);
+  const doorPivotR=new THREE.Group();doorPivotR.position.set(1.05,0,-8.5);scene.add(doorPivotR);
+  const dMR=new THREE.Mesh(new THREE.BoxGeometry(1,2.6,.12),mDoor);
+  dMR.position.x=-.5;dMR.position.y=1.3;doorPivotR.add(dMR);
+  const header=new THREE.Mesh(new THREE.BoxGeometry(BW,BH-2.6,.3),mWall);
+  header.position.set(0,2.6+(BH-2.6)/2,-8.5);scene.add(header);
+  // Окна снаружи
+  const skyTex=getSkyTexture();
+  for(let i=0;i<4;i++){
+    const wG=new THREE.PlaneGeometry(1.6,1.1);
+    const wL=new THREE.Mesh(wG,new THREE.MeshBasicMaterial({map:skyTex}));
+    wL.position.set(-BW/2+.01,1.8,-1-i*4.5);wL.rotation.y=Math.PI/2;scene.add(wL);
+    const wR=new THREE.Mesh(wG,new THREE.MeshBasicMaterial({map:skyTex}));
+    wR.position.set(BW/2-.01,1.8,-1-i*4.5);wR.rotation.y=-Math.PI/2;scene.add(wR);
+  }
+  [-3,-6,-12,-18,-24,-30].forEach(z=>{
+    const lamp=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.4),mLamp);
+    lamp.position.set(0,BH-.15,z);scene.add(lamp);
+    const pl=new THREE.PointLight(0xfff0c0,.6,7,1.6);
+    pl.position.set(0,BH-.4,z);scene.add(pl);
+  });
+  const mBox=new THREE.MeshLambertMaterial({color:0x604828});
+  for(let i=0;i<5;i++){
+    const b=new THREE.Mesh(new THREE.BoxGeometry(.6,.6,.6),mBox);
+    b.position.set(-BW/2+.5,.3,-4-i*3);scene.add(b);
+  }
+  // Начать с дверей — открыты (мы только что вышли)
+  doorPivotL.rotation.y=Math.PI/2*0.9;
+  doorPivotR.rotation.y=-Math.PI/2*0.9;
+  const STATES={WALK_OUT:0,CLOSE:1,FADE:2};
+  let state=STATES.WALK_OUT,stateT=0,camZ=-4,doorAngle=Math.PI/2*0.9;
+  let fadeT=0,finished=false;
+  function finish(){
+    if(finished)return;finished=true;
+    try{if(exitRenderer)exitRenderer.dispose();}catch(e){}
+    $('exitAnim').classList.remove('on');
+    callback();
+  }
+  let last=performance.now();
+  function loopExit(now){
+    if(finished)return;
+    requestAnimationFrame(loopExit);
+    const dt=Math.min(.05,(now-last)/1000);last=now;
+    stateT+=dt;
+    if(state===STATES.WALK_OUT){
+      // Идём в сторону выхода (z растёт)
+      camZ+=dt*2.0;
+      cam.position.set(0,1.55,camZ);
+      cam.rotation.y=Math.PI;
+      cam.rotation.x=0;
+      cam.rotation.z=Math.sin(now*.0025)*.01;
+      if(camZ>=-2.0){state=STATES.CLOSE;stateT=0;}
+    } else if(state===STATES.CLOSE){
+      // Двери закрываются за спиной
+      doorAngle+=(0-doorAngle)*Math.min(1,dt*1.5);
+      doorPivotL.rotation.y=doorAngle;
+      doorPivotR.rotation.y=-doorAngle;
+      camZ+=dt*1.0;
+      cam.position.set(0,1.55,camZ);
+      cam.rotation.y=Math.PI;
+      if(stateT>1.2){state=STATES.FADE;stateT=0;}
+    } else if(state===STATES.FADE){
+      fadeT+=dt;
+      $('exitFade').style.opacity=Math.min(1,fadeT/1.2);
+      if(fadeT>1.4){finish();return;}
+    }
+    lampL.intensity=1.0+Math.sin(now*.008)*.08+Math.random()*.04;
+    try{renderer.render(scene,cam);}catch(e){finish();}
+  }
+  requestAnimationFrame(loopExit);
+}
+
+// ═══ MINECRAFT-STYLE CREDITS ═══
+function buildCreditsHTML(){
+  const srBest=G.srBest>0?G.srBest.toFixed(2)+' сек':'—';
+  const modsCount=countMods();
+  return `
+<h1>ШКОЛА №43</h1>
+<p class="muted">НОЧНАЯ СМЕНА • V24.4 «EXIT»</p>
+<div class="divider"></div>
+
+<p>Ты выжил.</p>
+<p>Пять ночей в школе №43 позади.</p>
+<p>Двери закрылись за твоей спиной.</p>
+<p>И школа снова стала просто школой.</p>
+<p>До следующей ночи.</p>
+
+<div class="divider"></div>
+
+<h2>КОМАНДА</h2>
+<p><span class="accent">ИДЕЯ И РАЗРАБОТКА</span></p>
+<p>Команда ШКОЛА №43</p>
+<p class="muted">Программирование, дизайн, звук</p>
+
+<p style="margin-top:30px"><span class="accent">ОСОБАЯ БЛАГОДАРНОСТЬ</span></p>
+<p>Всем ночным охранникам</p>
+<p class="muted">Которые дожили до 7:30</p>
+
+<div class="divider"></div>
+
+<h2>ТЕХНОЛОГИИ</h2>
+<p>HTML5 • CSS3 • JavaScript ES2022</p>
+<p>Three.js r160</p>
+<p>WebRTC • Web Audio API</p>
+<p>localStorage • Speech Synthesis</p>
+
+<div class="divider"></div>
+
+<h2>СТАТИСТИКА</h2>
+<p><span class="accent">Рекорд спидрана:</span> ${srBest}</p>
+<p><span class="accent">Активных модов:</span> ${modsCount}</p>
+<p><span class="accent">Дней выжито:</span> 5</p>
+<p><span class="accent">Роль:</span> ${role==='guard'?'ОХРАННИК':(role==='student'?'ШКОЛЬНИК 7А':'УБОРЩИЦА')}</p>
+
+<div class="divider"></div>
+
+<h2>СЕМЬ ПРАВИЛ</h2>
+<p>1. Дневной сторож — КОД 1</p>
+<p>2. Директор в 2:43 — помаши</p>
+<p>3. Физрук — спортзал до 00:30</p>
+<p>4. Учитель 4Б — покажи дату</p>
+<p>5. Ларионов — КОД 3 за 30 сек</p>
+<p>6. Антон — булочку или нож</p>
+<p>7. Амира и Максим — через кабинет директора</p>
+
+<div class="divider"></div>
+
+<div class="quote">
+И если ты вдруг когда-нибудь снова окажешься в тёмном коридоре школы №43,<br>
+помни: <b>Герман боится только чёрного маркера</b>.<br><br>
+А если маркера нет — беги.
+</div>
+
+<div class="divider"></div>
+
+<h1 style="font-size:clamp(22px,4.5vmin,38px)">🦉</h1>
+<p style="color:#5f9;font-size:1.1em;letter-spacing:4px">ПРИЯТНОЙ СМЕНЫ, ОХРАННИК</p>
+<p class="muted" style="margin-top:20px">Спасибо за игру.</p>
+<p class="muted" style="margin-top:40px;font-size:.85em">© 2026 ШКОЛА №43</p>
+<p class="muted" style="font-size:.85em">V24.4 «EXIT»</p>
+  `;
+}
+function showCredits(onEnd){
+  const el=$('creditsScroll');
+  const inner=$('creditsInner');
+  inner.innerHTML=buildCreditsHTML();
+  el.classList.add('on');
+  // Анимация прокрутки через JS (регулируемая скорость)
+  let pos=window.innerHeight+40;
+  const contentH=inner.scrollHeight;
+  const totalDistance=contentH+window.innerHeight+200;
+  const speed=55; // px/сек
+  const duration=totalDistance/speed;
+  inner.style.animation='none';
+  inner.style.top=window.innerHeight+40+'px';
+  let start=performance.now();
+  let finished=false;
+  function tick(now){
+    if(finished)return;
+    const t=(now-start)/1000;
+    const y=window.innerHeight+40-t*speed;
+    inner.style.top=y+'px';
+    if(y<-(contentH+100)){finished=true;end();}
+    else requestAnimationFrame(tick);
+  }
+  function end(){
+    if(finished===false)return;
+    el.classList.remove('on');
+    if(onEnd)onEnd();
+  }
+  $('creditsSkip').onclick=()=>{finished=true;el.classList.remove('on');if(onEnd)onEnd();};
+  requestAnimationFrame(tick);
 }
 
 // ═══ MENU SCENE ═══
@@ -996,12 +1394,13 @@ function initMenu(){
   const cv=$('menuCanvas');
   if(!cv)return;
   try{
-    mR=new THREE.WebGLRenderer({canvas:cv,antialias:DEVICE==='pc'});
-    mR.setPixelRatio(Math.min(window.devicePixelRatio||1, DEVICE==='pc'?1.5:1));
+    const l=gfxLevel();
+    const p=GFX_PRESETS[l]||GFX_PRESETS.medium;
+    mR=new THREE.WebGLRenderer({canvas:cv,antialias:p.antialias});
+    mR.setPixelRatio(Math.min(window.devicePixelRatio||1, p.pixelRatio));
     mR.setSize(400,300,false);
     mR.outputColorSpace=THREE.SRGBColorSpace;
   }catch(e){mR=null;return;}
-
   mS=new THREE.Scene();
   mS.background=new THREE.Color(0x02060c);
   mS.fog=new THREE.Fog(0x02060c,3,16);
@@ -1010,7 +1409,6 @@ function initMenu(){
   mS.add(new THREE.AmbientLight(0x304050,.7));
   mFlick=new THREE.PointLight(0xffd090,.9,9,2);mFlick.position.set(0,2.7,.6);mS.add(mFlick);
   mGlow=new THREE.PointLight(0x30ff80,.8,5,2);mGlow.position.set(-1.4,1.35,-.6);mS.add(mGlow);
-
   const fM=new THREE.MeshLambertMaterial({color:0x2a2e30});
   const wM=new THREE.MeshLambertMaterial({color:0x3a4450});
   const dM=new THREE.MeshLambertMaterial({color:0x7a5a3a});
@@ -1023,11 +1421,18 @@ function initMenu(){
   mDoorAnim=new THREE.Mesh(new THREE.BoxGeometry(1.6,2.6,.1),dM);mDoorAnim.position.set(0,1.3,-3.4);mS.add(mDoorAnim);
   const dk=new THREE.Mesh(new THREE.BoxGeometry(2.4,.08,1.4),dM);dk.position.set(-1.6,.75,-1);mS.add(dk);
   const mb=new THREE.Mesh(new THREE.BoxGeometry(.9,.75,.85),kM);mb.position.set(-1.9,1.15,-1.1);mS.add(mb);
+  // Окно с природой в меню
+  const skyTex=getSkyTexture();
+  const wM2=new THREE.MeshBasicMaterial({map:skyTex});
+  const win=new THREE.Mesh(new THREE.PlaneGeometry(2,1.4),wM2);
+  win.position.set(-3.18,1.8,-1.5);win.rotation.y=Math.PI/2;mS.add(win);
+  const win2=new THREE.Mesh(new THREE.PlaneGeometry(2,1.4),wM2);
+  win2.position.set(3.18,1.8,-1.5);win2.rotation.y=-Math.PI/2;mS.add(win2);
   const ec=document.createElement('canvas');ec.width=256;ec.height=192;
   const eg=ec.getContext('2d');eg.fillStyle='#041a08';eg.fillRect(0,0,256,192);
   eg.fillStyle='#5fff88';eg.font='bold 16px monospace';
   eg.fillText('SHKOLA 43',20,40);eg.fillText('NIGHT SHIFT',20,66);
-  eg.fillText('> V24.3',20,100);eg.fillText('> 100 MODS',20,126);
+  eg.fillText('> V24.4',20,100);eg.fillText('> 100 MODS',20,126);
   const ecT=new THREE.CanvasTexture(ec);ecT.colorSpace=THREE.SRGBColorSpace;
   const mScr=new THREE.Mesh(new THREE.PlaneGeometry(.7,.55),new THREE.MeshBasicMaterial({map:ecT}));
   mScr.position.set(-1.9,1.15,-.66);mS.add(mScr);
@@ -1040,7 +1445,6 @@ function initMenu(){
   const plM=new THREE.MeshLambertMaterial({color:0xa03030,emissive:0x300505});
   const plak=new THREE.Mesh(new THREE.PlaneGeometry(1.2,1.6),plM);
   plak.position.set(2.85,1.7,-2);plak.rotation.y=-Math.PI/2;mS.add(plak);
-
   resizeMenuCanvas();
 }
 function resizeMenuCanvas(){
@@ -1079,10 +1483,8 @@ document.addEventListener('mousemove',e=>{
 });
 
 function updateMenuClock(){const t=new Date();const el=$('mClock');if(el)el.textContent=String(t.getHours()).padStart(2,'0')+':'+String(t.getMinutes()).padStart(2,'0');}
-
 function showScreen(id){['mdev','mm','mr','md','mmodes','mmaps','mmods'].forEach(s=>{const el=$(s);if(el)el.classList.toggle('on',s===id);});}
 function updDevBadge(){const el=$('devBadge');if(!el)return;el.textContent=DEVICE==='pc'?'PC':'MOBILE';}
-
 function showMenuFinal(){
   $('menu').classList.add('on');
   requestAnimationFrame(()=>{
@@ -1103,6 +1505,7 @@ function bindMenu(){
     else if(a==='cont'){if(loadAll())startGame();else toast('Нет сохранения');}
     else if(a==='mode')showScreen('mmodes');
     else if(a==='st')openSettings();
+    else if(a==='gfx')openGfx();
     else if(a==='ac')openAch();
     else if(a==='jo')openJournal();
     else if(a==='cr')openCredits();
@@ -1115,7 +1518,7 @@ function bindMenu(){
     const preset=e.target.closest('.presetBtn');
     if(preset){const key=preset.dataset.preset;const p=MOD_PRESETS[key];if(p){Object.keys(MODS).forEach(k=>delete MODS[k]);Object.keys(p.mods).forEach(k=>{if(p.mods[k])MODS[k]=true;});saveMods();renderMods();toast('📦 '+p.name,'mod');try{SND.tone(880,.2,.2)}catch(e){}unlAch('preset');}return;}
     const row=e.target.closest('.modRow');
-    if(row){const k=row.dataset.mod;MODS[k]=!MODS[k];saveMods();renderMods();checkModAch();try{SND.tone(MODS[k]?880:440,.15,.15)}catch(e){}return;}
+    if(row){const k=row.dataset.mod;MODS[k]=!MODS[k];saveMods();renderMods();checkModAch();invalidateSky();try{SND.tone(MODS[k]?880:440,.15,.15)}catch(e){}return;}
     const b=e.target.closest('button');if(!b)return;
     if(b.dataset.a==='modsBack'){delete $('modsList').dataset.openSet;showScreen('mm');}
   };
@@ -1171,7 +1574,6 @@ function renderSettingPanel(which){
   back.onclick=()=>{delete l.dataset.openSet;renderMods();};
   l.appendChild(back);
   const panel=document.createElement('div');panel.className='setPanel';
-
   if(which==='cheat'){
     panel.innerHTML='<h3>💎 ЧИТ</h3>';
     addSwitch(panel,'∞ Здоровье',CHEAT_CFG.infiniteHp,v=>{CHEAT_CFG.infiniteHp=v;saveCheat();});
@@ -1182,14 +1584,6 @@ function renderSettingPanel(which){
     addSwitch(panel,'👁 Подсветка',CHEAT_CFG.seeHostile,v=>{CHEAT_CFG.seeHostile=v;saveCheat();});
     addSwitch(panel,'⏩ Время ×5',CHEAT_CFG.fastTime,v=>{CHEAT_CFG.fastTime=v;saveCheat();});
     addSlider(panel,'Скорость ×',CHEAT_CFG.speedMult,0.5,5,0.1,v=>{CHEAT_CFG.speedMult=v;saveCheat();});
-    const pr=document.createElement('div');pr.className='setBtnRow';
-    const pL=document.createElement('button');pL.textContent='😌 ЛАЙТ';
-    pL.onclick=()=>{CHEAT_CFG.infiniteHp=true;CHEAT_CFG.infiniteSt=true;CHEAT_CFG.giveAll=true;CHEAT_CFG.godMode=false;CHEAT_CFG.instaKill=false;CHEAT_CFG.seeHostile=false;CHEAT_CFG.fastTime=false;CHEAT_CFG.speedMult=1.5;saveCheat();renderSettingPanel('cheat');};
-    const pF=document.createElement('button');pF.className='p';pF.textContent='💎 ФУЛЛ';
-    pF.onclick=()=>{CHEAT_CFG.infiniteHp=true;CHEAT_CFG.infiniteSt=true;CHEAT_CFG.giveAll=true;CHEAT_CFG.godMode=true;CHEAT_CFG.instaKill=false;CHEAT_CFG.seeHostile=true;CHEAT_CFG.fastTime=false;CHEAT_CFG.speedMult=2;saveCheat();renderSettingPanel('cheat');};
-    const pG=document.createElement('button');pG.className='d';pG.textContent='⚡ БОГ';
-    pG.onclick=()=>{CHEAT_CFG.infiniteHp=true;CHEAT_CFG.infiniteSt=true;CHEAT_CFG.giveAll=true;CHEAT_CFG.godMode=true;CHEAT_CFG.instaKill=true;CHEAT_CFG.seeHostile=true;CHEAT_CFG.fastTime=true;CHEAT_CFG.speedMult=5;saveCheat();renderSettingPanel('cheat');};
-    pr.appendChild(pL);pr.appendChild(pF);pr.appendChild(pG);panel.appendChild(pr);
   } else if(which==='bag'){
     panel.innerHTML='<h3>🎒 BAG</h3>';
     addSlider(panel,'Интенсивность',BAG_CFG.intensity,0.3,2,0.1,v=>{BAG_CFG.intensity=v;saveBag();});
@@ -1203,21 +1597,12 @@ function renderSettingPanel(which){
     addSwitch(panel,'📷 Дрожь',BAG_CFG.camJitter,v=>{BAG_CFG.camJitter=v;saveBag();});
     addSwitch(panel,'🔊 Звуки',BAG_CFG.randomSound,v=>{BAG_CFG.randomSound=v;saveBag();});
     addSwitch(panel,'💬 Мемы',BAG_CFG.messages,v=>{BAG_CFG.messages=v;saveBag();});
-    const pr=document.createElement('div');pr.className='setBtnRow';
-    const pL=document.createElement('button');pL.textContent='😌 МИНИ';
-    pL.onclick=()=>{BAG_CFG.intensity=0.5;BAG_CFG.teleport=false;BAG_CFG.hpJitter=false;BAG_CFG.npcSpin=false;BAG_CFG.npcColor=false;BAG_CFG.overlay=false;BAG_CFG.hueFlash=false;BAG_CFG.camJitter=false;BAG_CFG.randomSound=false;saveBag();renderSettingPanel('bag');};
-    const pM=document.createElement('button');pM.className='p';pM.textContent='⚖ СРЕДНЕ';
-    pM.onclick=()=>{BAG_CFG.intensity=1;BAG_CFG.teleport=true;BAG_CFG.hpJitter=true;BAG_CFG.npcSpin=true;BAG_CFG.npcColor=true;BAG_CFG.overlay=true;BAG_CFG.hueFlash=true;BAG_CFG.camJitter=true;BAG_CFG.randomSound=true;saveBag();renderSettingPanel('bag');};
-    const pH=document.createElement('button');pH.className='d';pH.textContent='🔥 ХАРД';
-    pH.onclick=()=>{BAG_CFG.intensity=2;BAG_CFG.teleport=true;BAG_CFG.hpJitter=true;BAG_CFG.npcSpin=true;BAG_CFG.npcColor=true;BAG_CFG.overlay=true;BAG_CFG.hueFlash=true;BAG_CFG.camJitter=true;BAG_CFG.randomSound=true;BAG_CFG.msgCool=3;BAG_CFG.teleportCool=4;saveBag();renderSettingPanel('bag');};
-    pr.appendChild(pL);pr.appendChild(pM);pr.appendChild(pH);panel.appendChild(pr);
   } else {
     const d=MOD_DEFS[which];if(!d){back.click();return;}
     panel.innerHTML='<h3>'+d.icon+' '+d.name+'</h3><div style="color:#9ee;font-size:10.5px;margin:8px 0">'+d.desc+'</div>';
   }
   l.appendChild(panel);
 }
-
 function addSwitch(parent,label,value,onChange){
   const row=document.createElement('div');row.className='setRow';
   const sw=document.createElement('div');sw.className='setSw'+(value?' on':'');
@@ -1238,12 +1623,41 @@ function addSlider(parent,label,value,min,max,step,onChange){
 }
 
 $('spB').onclick=()=>$('sp').classList.remove('on');
+$('gfxB').onclick=()=>$('gfxP').classList.remove('on');
 $('acB').onclick=()=>$('acP').classList.remove('on');
 $('joB').onclick=()=>$('joP').classList.remove('on');
 $('crB').onclick=()=>$('crP').classList.remove('on');
 $('chgB').onclick=()=>$('chgP').classList.remove('on');
 $('abB').onclick=()=>$('abP').classList.remove('on');
 $('rlOk').onclick=()=>{$('rlP').classList.remove('on');if(G._showRulesBeforeStart){G._showRulesBeforeStart=false;actuallyStartGame();}};
+
+function openGfx(){
+  $('gfxP').classList.add('on');
+  const cur=gfxLevel();
+  document.querySelectorAll('.gfxBtn').forEach(b=>{
+    b.classList.toggle('on', b.dataset.gfx===cur);
+  });
+  $('s5').value=cfg.fog;$('v5').textContent=cfg.fog+'м';
+  $('s6').value=cfg.dist;$('v6').textContent=cfg.dist;
+  const p=GFX_PRESETS[cur]||GFX_PRESETS.medium;
+  $('gfxInfo').innerHTML='Pixel ratio: <b style="color:#5f9">'+p.pixelRatio+'x</b> • Сглаживание: <b style="color:#5f9">'+(p.antialias?'вкл':'выкл')+'</b><br>Тени: <b style="color:#5f9">'+(p.shadows?'вкл':'выкл')+'</b> • Пыль: <b style="color:#5f9">'+(p.dust?'вкл':'выкл')+'</b>';
+}
+document.querySelectorAll('.gfxBtn').forEach(b=>{
+  b.onclick=()=>{
+    setGfxLevel(b.dataset.gfx);
+    document.querySelectorAll('.gfxBtn').forEach(x=>x.classList.toggle('on', x.dataset.gfx===b.dataset.gfx));
+    const p=GFX_PRESETS[b.dataset.gfx];
+    $('gfxInfo').innerHTML='Pixel ratio: <b style="color:#5f9">'+p.pixelRatio+'x</b> • Сглаживание: <b style="color:#5f9">'+(p.antialias?'вкл':'выкл')+'</b><br>Тени: <b style="color:#5f9">'+(p.shadows?'вкл':'выкл')+'</b> • Пыль: <b style="color:#5f9">'+(p.dust?'вкл':'выкл')+'</b>';
+    toast('🖼 Графика: '+b.querySelector('.nm').textContent);
+    try{SND.tone(880,.15,.2)}catch(e){}
+  };
+});
+$('s5').addEventListener('input',e=>{cfg.fog=parseFloat(e.target.value);$('v5').textContent=cfg.fog+'м';if(SC&&SC.fog)SC.fog.far=cfg.fog;saveAll();});
+$('s6').addEventListener('input',e=>{cfg.dist=parseFloat(e.target.value);$('v6').textContent=cfg.dist;saveAll();});
+
+// Правила
+function showRules(){const r=[['1. СТОРОЖ','КОД 1 через рацию (R).'],['2. ДИРЕКТОР 2:43','Помаши (E).'],['3. ФИЗРУК','Спортзал до 00:30.'],['4. УЧИТЕЛЬ 4Б','Покажи дату (E).'],['5. ЛАРИОНОВ','КОД 3.'],['6. АНТОН','Булочку или нож.'],['7. АМИРА','Через кабинет директора.'],['🚨 ВАЖНО','Герман — только маркер.'],['🦉 ТОТЕМ','30с неуязвимость']];$('rlT').innerHTML=r.map(x=>'<p><b>'+x[0]+'</b><br>'+x[1]+'</p>').join('');$('rlP').classList.add('on');}
+
 $('eR').onclick=()=>{
   $('eP').classList.remove('on');$('menu').classList.add('on');$('hud').style.display='none';
   $('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');
@@ -1267,32 +1681,31 @@ $('pauseMenu').onclick=()=>{
   RD=null;
   showScreen('mm');showMenuFinal();
 };
-
-function openSettings(){$('sp').classList.add('on');$('s1').value=cfg.sens;$('v1').textContent=cfg.sens.toFixed(2);$('s2').value=cfg.bob;$('v2').textContent=cfg.bob?'ВКЛ':'ВЫКЛ';$('s3').value=cfg.vol;$('v3').textContent=cfg.vol.toFixed(2);$('s4').value=cfg.qual;$('v4').textContent=cfg.qual;$('s5').value=cfg.fog;$('v5').textContent=cfg.fog+'м';}
-['s1','s2','s3','s4','s5'].forEach(id=>{$(id).addEventListener('input',e=>{const v=parseFloat(e.target.value);if(id==='s1'){cfg.sens=v;$('v1').textContent=v.toFixed(2);}if(id==='s2'){cfg.bob=v;$('v2').textContent=v?'ВКЛ':'ВЫКЛ';}if(id==='s3'){cfg.vol=v;$('v3').textContent=v.toFixed(2);if(SND.m&&!isMod('mute'))SND.m.gain.value=v;}if(id==='s4'){cfg.qual=v;$('v4').textContent=v;if(RD)RD.setPixelRatio(DEVICE==='mobile'?0.75:PR[cfg.qual]);}if(id==='s5'){cfg.fog=v;$('v5').textContent=v+'м';if(SC&&SC.fog)SC.fog.far=v;}saveAll();});});
+function openSettings(){$('sp').classList.add('on');$('s1').value=cfg.sens;$('v1').textContent=cfg.sens.toFixed(2);$('s2').value=cfg.bob;$('v2').textContent=cfg.bob?'ВКЛ':'ВЫКЛ';$('s3').value=cfg.vol;$('v3').textContent=cfg.vol.toFixed(2);}
+['s1','s2','s3'].forEach(id=>{$(id).addEventListener('input',e=>{const v=parseFloat(e.target.value);if(id==='s1'){cfg.sens=v;$('v1').textContent=v.toFixed(2);}if(id==='s2'){cfg.bob=v;$('v2').textContent=v?'ВКЛ':'ВЫКЛ';}if(id==='s3'){cfg.vol=v;$('v3').textContent=v.toFixed(2);if(SND.m&&!isMod('mute'))SND.m.gain.value=v;}saveAll();});});
 $('spR').onclick=()=>{applyDev();saveAll();openSettings();};
-
 function openAch(){const l=$('acList');l.innerHTML='';Object.keys(ACH).forEach(k=>{const g=G.ach[k];l.innerHTML+='<div style="padding:4px 7px;margin:2px 0;border-left:2px solid '+(g?'#5f9':'#333')+';color:'+(g?'#9fecbf':'#555')+';font-size:10px">'+(g?'✔':'○')+' '+ACH[k]+'</div>';});$('acP').classList.add('on');}
 function openJournal(){const l=$('joList');l.innerHTML='';if(!G.journal||G.journal.length===0){l.innerHTML='<div style="padding:16px;text-align:center;color:#555;font-size:11px">Журнал пуст.</div>';}else{G.journal.slice().reverse().forEach(e=>{l.innerHTML+='<div style="padding:4px 7px;margin:2px 0;border-left:2px solid #5f9;font-size:10px"><b style="color:#5f9">Д'+e.day+' • '+e.time+'</b><br><span style="color:#bfe">'+e.text+'</span></div>';});}$('joP').classList.add('on');if(G.journal&&G.journal.length>=10)unlAch('journalist');}
 
 const CHANGELOG=[
-{v:'V24.3',date:'2026-10-01',recent:true,items:[
-{tag:'new',text:'Заставка «Вход в школу» — коридор, двери, вспышка'},
-{tag:'new',text:'Меню переделано: превью-сцена + панель'},
-{tag:'new',text:'Живой 3D-коридор в меню с камерой'},
-{tag:'new',text:'Шапка меню с часами и бейджем устройства'},
-{tag:'fix',text:'Исправлена синтаксическая ошибка в DLG'},
-{tag:'fix',text:'Меню-канвас корректно ресайзится'},
-{tag:'fix',text:'Добавлен обработчик ошибок (нет чёрного экрана)'}
+{v:'V24.4',date:'2026-10-01',recent:true,items:[
+{tag:'new',text:'Графика без пикселей — нативное разрешение'},
+{tag:'new',text:'Пресеты графики: СЛАБО / СРЕДНЕ / СИЛЬНО'},
+{tag:'new',text:'Окна с природой в каждом классе и коридоре'},
+{tag:'new',text:'Финальная анимация выхода из школы'},
+{tag:'new',text:'Титры в стиле Minecraft (End Poem) после победы'},
+{tag:'fix',text:'Убраны артефакты и мыло на текстурах'}
 ]},
-{v:'V24.2',date:'2026-10-01',items:[{tag:'new',text:'Компактное меню'},{tag:'new',text:'X-курсор'},{tag:'new',text:'Список изменений'}]},
-{v:'V24',date:'2026-10-01',items:[{tag:'new',text:'100 модов в 9 категориях'},{tag:'new',text:'Поиск, 8 пресетов, счётчик'}]},
-{v:'V22',date:'2026-09-29',items:[{tag:'new',text:'Онлайн через WebRTC'},{tag:'new',text:'Спидран'},{tag:'new',text:'Коробка с лутом'}]},
-{v:'V20',date:'2026-09-27',items:[{tag:'new',text:'Переработка дней'}]},
-{v:'V14',date:'2026-09-24',items:[{tag:'new',text:'Камеры, диалоги, PWA, генерация карт'}]},
+{v:'V24.3',date:'2026-10-01',items:[
+{tag:'new',text:'Заставка «Вход в школу»'},
+{tag:'new',text:'Меню превью + панель'},
+{tag:'fix',text:'Синтаксические ошибки DLG'}
+]},
+{v:'V24',date:'2026-10-01',items:[{tag:'new',text:'100 модов'}]},
+{v:'V22',date:'2026-09-29',items:[{tag:'new',text:'Онлайн WebRTC'},{tag:'new',text:'Спидран'}]},
+{v:'V14',date:'2026-09-24',items:[{tag:'new',text:'Камеры, диалоги, генерация'}]},
 {v:'V12.1.1',date:'2026-09-20',items:[{tag:'new',text:'Первая версия'}]}
 ];
-
 function openChangelog(){
   const l=$('chgContent');l.innerHTML='';
   CHANGELOG.forEach(entry=>{
@@ -1309,74 +1722,24 @@ function openChangelog(){
   });
   $('chgP').classList.add('on');
 }
-
 function openCredits(){
   const srBest=G.srBest>0?G.srBest.toFixed(2)+' сек':'нет рекорда';
-  const modsOn=Object.keys(MODS).filter(k=>MODS[k]).slice(0,20).map(k=>MOD_DEFS[k]?MOD_DEFS[k].icon+' '+MOD_DEFS[k].name:k).join('<br>')||'нет';
-  $('crContent').innerHTML='<div class="crTitle">🏫 ШКОЛА №43</div><div class="crSub">V24.3 «ENTRANCE»</div>'+
-    '<div class="crBlock" style="border-color:#f0a"><b>🧪 100+ МОДОВ</b><br><br>Всего: <b style="color:#5f9">'+Object.keys(MOD_DEFS).length+'</b><br>Активно: <b style="color:#ffd76a">'+countMods()+'</b><br><br>'+modsOn+'</div>'+
-    '<div class="crBlock" style="border-color:#ffd76a"><b>🎬 ОБ ИГРЕ</b><br><br>Хоррор-выживание. 5 ночей. 7 правил.</div>'+
-    '<div class="crBlock"><b>👨‍💻 СОЗДАТЕЛИ</b><br><br><span class="role">ИДЕЯ И РАЗРАБОТКА</span><br><span class="name">Команда ШКОЛА №43</span></div>'+
+  $('crContent').innerHTML='<div class="crTitle">🏫 ШКОЛА №43</div><div class="crSub">V24.4 «EXIT»</div>'+
+    '<div class="crBlock" style="border-color:#f0a"><b>🧪 МОДОВ</b><br><br>Всего: <b style="color:#5f9">'+Object.keys(MOD_DEFS).length+'</b><br>Активно: <b style="color:#ffd76a">'+countMods()+'</b></div>'+
     '<div class="crBlock"><b>🛠 ТЕХНОЛОГИИ</b><br><br>• HTML5 / CSS3 / JS ES2022<br>• Three.js r160<br>• WebRTC онлайн<br>• Web Audio API</div>'+
-    '<div class="crBlock" style="border-color:#a0e8ff"><b>⏱ СПИДРАН</b><br><br>Рекорд: <b style="color:#5f9">'+srBest+'</b></div>'+
-    '<div style="text-align:center;margin-top:12px;font-size:10px;color:#5f9;letter-spacing:2px">● Спасибо за игру! ●</div>';
+    '<div class="crBlock" style="border-color:#a0e8ff"><b>⏱ СПИДРАН</b><br><br>Рекорд: <b style="color:#5f9">'+srBest+'</b></div>';
   $('crP').classList.add('on');
 }
 
-function showRules(){const r=[['1. СТОРОЖ','КОД 1 через рацию (R).'],['2. ДИРЕКТОР 2:43','Помаши (E).'],['3. ФИЗРУК','Спортзал до 00:30.'],['4. УЧИТЕЛЬ 4Б','Покажи дату (E).'],['5. ЛАРИОНОВ','КОД 3.'],['6. АНТОН','Булочку или нож.'],['7. АМИРА','Через кабинет директора.'],['🚨 ВАЖНО','Герман — только маркер.'],['🦉 ТОТЕМ','30с неуязвимость']];$('rlT').innerHTML=r.map(x=>'<p><b>'+x[0]+'</b><br>'+x[1]+'</p>').join('');$('rlP').classList.add('on');}
-
-// ИСПРАВЛЕНО: полностью переписан объект DLG со сбалансированными скобками
+// ═══ DLG ═══
 const DLG={
-  sanya:{
-    name:'САНЯ',role:'создатель',avatar:'🧙',
-    start(){return{text:'Йо!',choices:[
-      {label:'«Кто ты?»',next:'who'},
-      {label:'«Дай полезное»',action:function(){G.inv.mk++;G.inv.bo++;uInv();toast('✒+1 🪃+1');},next:'gift'},
-      {label:'«Пойду»',close:true}
-    ]};},
-    who(){return{text:'Саня.',choices:[{label:'ОК',close:true}]};},
-    gift(){return{text:'Держи.',choices:[{label:'Спасибо!',close:true}]};}
-  },
-  valya:{
-    name:'ТЁТЯ ВАЛЯ',role:'повар',avatar:'👩‍🍳',
-    start(){return{text:'Кушать?',choices:[
-      {label:'«Булочку»',action:function(){G.inv.food+=2;uInv();toast('🍞+2');},next:'f'},
-      {label:'«Нет»',close:true}
-    ]};},
-    f(){return{text:'Держи.',choices:[{label:'Спасибо',close:true}]};}
-  },
-  buhov:{
-    name:'БУХОВ',role:'трудовик',avatar:'🔧',
-    start(){return{text:'Нож?',choices:[
-      {label:'«Да»',action:function(){G.knife=true;toast('🔪');},next:'g'},
-      {label:'«Нет»',close:true}
-    ]};},
-    g(){return{text:'OK',choices:[{label:'Спасибо',close:true}]};}
-  },
-  doctor:{
-    name:'ДОКТОР',role:'медик',avatar:'⚕',
-    start(){return{text:'Что?',choices:[
-      {label:'«Миндаль»',action:function(){G.inv.alm+=2;uInv();toast('💧+2');},next:'a'},
-      {label:'«Ничего»',close:true}
-    ]};},
-    a(){return{text:'Держи.',choices:[{label:'Спасибо',close:true}]};}
-  },
-  director:{
-    name:'ДИРЕКТОР',role:'2:43',avatar:'🕴',
-    start(){return{text:'2:43.',choices:[
-      {label:'Помахать',action:function(){toast('📖');},next:'w'},
-      {label:'Убежать',close:true}
-    ]};},
-    w(){return{text:'Исчез.',choices:[{label:'Ох',close:true}]};}
-  },
-  leha:{
-    name:'ЛЕХА',role:'помощник',avatar:'🧑',
-    start(){return{text:'Мы поможем.',choices:[{label:'«ОК»',close:true}]};}
-  },
-  nik:{
-    name:'НИКОЛАЙ',role:'бывший',avatar:'👴',
-    start(){return{text:'Герман — не человек.',choices:[{label:'ОК',close:true}]};}
-  }
+  sanya:{name:'САНЯ',role:'создатель',avatar:'🧙',start(){return{text:'Йо!',choices:[{label:'«Кто ты?»',next:'who'},{label:'«Дай полезное»',action:function(){G.inv.mk++;G.inv.bo++;uInv();toast('✒+1 🪃+1');},next:'gift'},{label:'«Пойду»',close:true}]};},who(){return{text:'Саня.',choices:[{label:'ОК',close:true}]};},gift(){return{text:'Держи.',choices:[{label:'Спасибо!',close:true}]};}},
+  valya:{name:'ТЁТЯ ВАЛЯ',role:'повар',avatar:'👩‍🍳',start(){return{text:'Кушать?',choices:[{label:'«Булочку»',action:function(){G.inv.food+=2;uInv();toast('🍞+2');},next:'f'},{label:'«Нет»',close:true}]};},f(){return{text:'Держи.',choices:[{label:'Спасибо',close:true}]};}},
+  buhov:{name:'БУХОВ',role:'трудовик',avatar:'🔧',start(){return{text:'Нож?',choices:[{label:'«Да»',action:function(){G.knife=true;toast('🔪');},next:'g'},{label:'«Нет»',close:true}]};},g(){return{text:'OK',choices:[{label:'Спасибо',close:true}]};}},
+  doctor:{name:'ДОКТОР',role:'медик',avatar:'⚕',start(){return{text:'Что?',choices:[{label:'«Миндаль»',action:function(){G.inv.alm+=2;uInv();toast('💧+2');},next:'a'},{label:'«Ничего»',close:true}]};},a(){return{text:'Держи.',choices:[{label:'Спасибо',close:true}]};}},
+  director:{name:'ДИРЕКТОР',role:'2:43',avatar:'🕴',start(){return{text:'2:43.',choices:[{label:'Помахать',action:function(){toast('📖');},next:'w'},{label:'Убежать',close:true}]};},w(){return{text:'Исчез.',choices:[{label:'Ох',close:true}]};}},
+  leha:{name:'ЛЕХА',role:'помощник',avatar:'🧑',start(){return{text:'Мы поможем.',choices:[{label:'«ОК»',close:true}]};}},
+  nik:{name:'НИКОЛАЙ',role:'бывший',avatar:'👴',start(){return{text:'Герман — не человек.',choices:[{label:'ОК',close:true}]};}}
 };
 let curDlg=null;
 function openDlg(id){
@@ -1442,8 +1805,8 @@ function initMats(){
   M.med=new THREE.MeshLambertMaterial({color:0xff3030,emissive:0x300000});
   M.totem=new THREE.MeshLambertMaterial({color:0xf0f,emissive:0xa0a});
   M.box=new THREE.MeshLambertMaterial({color:0xd08040,emissive:0x502010});
+  M.windowFrame=new THREE.MeshLambertMaterial({color:0x2a1a0a});
 }
-
 function applyVisualMods(){
   if(!SC||!M||!M.wall||!M.floor)return;
   try{
@@ -1460,8 +1823,10 @@ function applyVisualMods(){
 
 function initGame3D(){
   if(RD)return;
-  RD=new THREE.WebGLRenderer({antialias:false,powerPreference:'high-performance'});
-  RD.setPixelRatio(DEVICE==='mobile'?0.75:PR[cfg.qual]);
+  const l=gfxLevel();
+  const p=GFX_PRESETS[l]||GFX_PRESETS.medium;
+  RD=new THREE.WebGLRenderer({antialias:p.antialias,powerPreference:'high-performance'});
+  RD.setPixelRatio(Math.min(window.devicePixelRatio||1, p.pixelRatio));
   RD.setSize(window.innerWidth,window.innerHeight);
   RD.outputColorSpace=THREE.SRGBColorSpace;
   RD.sortObjects=false;
@@ -1509,10 +1874,27 @@ const sC={};
 function sT(t){if(sC[t])return sC[t];const c=document.createElement('canvas');c.width=256;c.height=64;const g=c.getContext('2d');g.fillStyle='#0e3260';g.fillRect(0,0,256,64);g.strokeStyle='#f0f8ff';g.lineWidth=4;g.strokeRect(2,2,252,60);g.fillStyle='#fff';g.font='bold 26px monospace';g.textAlign='center';g.textBaseline='middle';g.fillText(t,128,34);const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;sC[t]=tx;return tx;}
 function sign(cx,y,z,t,f){const m=new THREE.Mesh(new THREE.PlaneGeometry(2.2,.55),new THREE.MeshBasicMaterial({map:sT(t),fog:false}));m.position.set(cx,y,z);m.rotation.y=f==='n'?Math.PI:0;m.matrixAutoUpdate=false;m.updateMatrix();W.add(m);}
 
+// Окно на стене с природой
+function addWindow(x,y,z,w,h,rotY){
+  const skyTex=getSkyTexture();
+  const wm=new THREE.MeshBasicMaterial({map:skyTex});
+  const win=new THREE.Mesh(new THREE.PlaneGeometry(w,h),wm);
+  win.position.set(x,y,z);win.rotation.y=rotY;
+  win.matrixAutoUpdate=false;win.updateMatrix();W.add(win);
+  // Рама (4 тонкие полосы вокруг)
+  const fm=M.windowFrame;
+  const t=.06;
+  const top=new THREE.Mesh(BG,fm);top.position.set(x,y+h/2+t/2,z);top.scale.set(w+t*2,t,.08);top.rotation.y=rotY;top.matrixAutoUpdate=false;top.updateMatrix();W.add(top);
+  const bot=new THREE.Mesh(BG,fm);bot.position.set(x,y-h/2-t/2,z);bot.scale.set(w+t*2,t,.08);bot.rotation.y=rotY;bot.matrixAutoUpdate=false;bot.updateMatrix();W.add(bot);
+  const lef=new THREE.Mesh(BG,fm);lef.position.set(x-Math.cos(rotY)*(w/2+t/2),y,z+Math.sin(rotY)*(w/2+t/2));lef.scale.set(t,h+t*2,.08);lef.rotation.y=rotY;lef.matrixAutoUpdate=false;lef.updateMatrix();W.add(lef);
+  const rig=new THREE.Mesh(BG,fm);rig.position.set(x+Math.cos(rotY)*(w/2+t/2),y,z-Math.sin(rotY)*(w/2+t/2));rig.scale.set(t,h+t*2,.08);rig.rotation.y=rotY;rig.matrixAutoUpdate=false;rig.updateMatrix();W.add(rig);
+}
+
 function buildSchool(){
   while(W.children.length)W.remove(W.children[0]);
   COL=[];RMS={};NPC=[];G.items=[];PROJ=[];camCams.length=0;
   for(const k in sC)delete sC[k];
+  invalidateSky();
   const L=genL(G.map),N=10;
   bx(0,-.15,0,XMx-XM+2,.3,ZR*2+2,M.floor,false);
   bx(0,FH-.15,0,XMx-XM+2,.3,ZR*2+2,M.ceil,false);
@@ -1540,6 +1922,23 @@ function buildSchool(){
     sign(cx+1.9,WH-.5,ZC-.2,RN[rn]||'?','n');
     sign(cs-1.9,WH-.5,-ZC+.2,RN[rs]||'?','s');
     fill(rn,RMS['n'+i],0,i);fill(rs,RMS['s'+i],0,i);
+    // Окна в комнатах — по 2 в каждом классе на дальней стене
+    if(rn.startsWith('class')||rn==='english'||rn==='math'||rn==='physics'||rn==='chemistry'||rn==='biology'||rn==='history'||rn==='geography'||rn==='computer'||rn==='music'){
+      addWindow(cx-2,1.9,ZR-.05,1.3,.9,Math.PI);
+      addWindow(cx+2,1.9,ZR-.05,1.3,.9,Math.PI);
+    }
+    if(rs.startsWith('class')||rs==='english'||rs==='math'||rs==='physics'||rs==='chemistry'||rs==='biology'||rs==='history'||rs==='geography'||rs==='computer'||rs==='music'){
+      addWindow(cs-2,1.9,-ZR+.05,1.3,.9,0);
+      addWindow(cs+2,1.9,-ZR+.05,1.3,.9,0);
+    }
+  }
+  // Окна в коридоре — вдоль обеих стен
+  for(let i=0;i<9;i++){
+    const x=XM+6+i*14;
+    // Северная стена (верхний коридор)
+    addWindow(x,1.9,ZC-.05,1.4,.95,Math.PI);
+    // Южная (нижний)
+    addWindow(x,1.9,-ZC+.05,1.4,.95,0);
   }
   for(let x=XM+8;x<=XMx-8;x+=15)bx(x,WH-.1,0,2.4,.08,.5,M.lamp,false);
   const EL=200,HW=2.5;
@@ -1602,13 +2001,11 @@ function itm(x,y,z,t){
   if(t==='box'){const lt=new THREE.PointLight(0xffaa44,.6,3,2);lt.position.copy(o.position);W.add(lt);o.userData.light=lt;}
   G.items.push({mesh:o,type:t,x:x,y:y,z:z,taken:false});
 }
-
 function mH(sh,pa,sk,sc){
   if(sc===undefined)sc=1;
   const g=new THREE.Group();
   const mk=function(w,h,d,c,y){const o=new THREE.Mesh(BG,new THREE.MeshLambertMaterial({color:c}));o.scale.set(w*sc,h*sc,d*sc);o.position.y=y*sc;o.matrixAutoUpdate=false;o.updateMatrix();g.add(o);return o;};
-  mk(.5,.72,.3,sh,1.16);
-  mk(.26,.28,.26,sk||0xe0b890,1.64);
+  mk(.5,.72,.3,sh,1.16);mk(.26,.28,.26,sk||0xe0b890,1.64);
   const a1=mk(.14,.55,.14,sh,1.16);a1.position.x=-.33*sc;
   const a2=mk(.14,.55,.14,sh,1.16);a2.position.x=.33*sc;
   const l1=mk(.17,.72,.18,pa,.36);l1.position.x=-.12*sc;
@@ -1731,7 +2128,6 @@ function uGer(dt,now){
   }
   if(d<1.1&&!isMod('pacifist'))kill('Герман.','german');
 }
-
 function spawnDay(){
   if(G.spawned)return;G.spawned=true;
   const cls=[{t:'class1a',te:'Марья Ивановна',tc:0xa08060,pu:['Петя','Ваня','Катя','Соня']},{t:'class1b',te:'Ольга Петровна',tc:0x8090c0,pu:['Кира','Рома','Таня','Дима']},{t:'class4b',te:'Учитель 4Б',tc:0xaa4455,pu:['Амир','Максим','Лена','Стёпа']},{t:'class5a',te:'Ирина Сергеевна',tc:0x90a060,pu:['Макс','Лена','Стёпа','Юля']},{t:'class6a',te:'Наталья Дмитриевна',tc:0xa080a0,pu:['Ксюша','Илья','Даша','Гриша']},{t:'class7a',te:'Галина Ивановна',tc:0x80a0a0,pu:['Артём','Вика','Слава','Соня']}];
@@ -1750,7 +2146,6 @@ function spawnDay(){
   }
 }
 function rmvDay(){if(!G.spawned)return;for(const n of NPC.slice())if(n.dayOnly)rNPC(n);G.spawned=false;}
-
 function spawnAll(){
   const pr=RMS.s0;
   if(pr){
@@ -1766,7 +2161,6 @@ function spawnAll(){
     if(RMS[k].type==='doctor'){const r=RMS[k];sNPC('dr',r.cx,0,r.cz+3,'Доктор','staff',0xf0f0f0,{shirt:0xf0f0f0,pants:0xf0f0f0,skin:0xe8c0a0,state:'idle',noMove:true,dialogId:'doctor'});}
   }
 }
-
 function throwIt(t){
   if(dead||!running)return;
   if(t==='mk'){if(G.inv.mk<=0&&!isMod('cheat')&&!isMod('allItems')){toast('Нет маркеров');return;}if(!isMod('nocost')&&!isMod('cheat')&&!isMod('allItems'))G.inv.mk--;}
@@ -1801,7 +2195,6 @@ function uProj(dt){
 }
 function uInv(){const e=$('iv');e.innerHTML='';if(G.inv.box>0)e.innerHTML+='<div class="ii bx">📦 ×'+G.inv.box+'</div>';if(G.inv.totem>0)e.innerHTML+='<div class="ii tm">🦉 ТОТЕМ</div>';if(G.inv.food)e.innerHTML+='<div class="ii">🍞 '+G.inv.food+'</div>';if(G.inv.med)e.innerHTML+='<div class="ii">💊 '+G.inv.med+'</div>';if(G.inv.alm)e.innerHTML+='<div class="ii" style="color:#a0c8ff">💧 '+G.inv.alm+'</div>';if(G.inv.mk)e.innerHTML+='<div class="ii m">✒ '+G.inv.mk+((isMod('cheat')||isMod('allItems'))?'∞':'')+'</div>';if(G.inv.bo)e.innerHTML+='<div class="ii bm">🪃 '+G.inv.bo+((isMod('cheat')||isMod('allItems'))?'∞':'')+'</div>';}
 function col(){const r=P.r,lo=.2,hi=1.9;if(isMod('fly')||isMod('noclip')||isMod('ghostMode')||isMod('flyCheat'))return;for(let it=0;it<2;it++){let p=false;for(const b of COL){if(b.maxY<lo||b.minY>hi)continue;const cx=Math.max(b.minX,Math.min(P.x,b.maxX)),cz=Math.max(b.minZ,Math.min(P.z,b.maxZ));const dx=P.x-cx,dz=P.z-cz,d2=dx*dx+dz*dz;if(d2>=r*r)continue;if(d2>1e-6){const d=Math.sqrt(d2);P.x+=dx/d*(r-d+.001);P.z+=dz/d*(r-d+.001);}else{const dl=P.x-b.minX,dr=b.maxX-P.x,dd=P.z-b.minZ,du=b.maxZ-P.z,m=Math.min(dl,dr,dd,du);if(m===dl)P.x=b.minX-r-.01;else if(m===dr)P.x=b.maxX+r+.01;else if(m===dd)P.z=b.minZ-r-.01;else P.z=b.maxZ+r+.01;}p=true;}if(!p)break;}}
-
 function spawnTwin(){if(G.twin||!W)return;const g=mH(0x80ff80,0x206020,0xe8d0b0,1);g.position.set(P.x+2,0,P.z+2);W.add(g);const sp=nSp('ДВОЙНИК','#80ff80');sp.position.y=2.1;g.add(sp);G.twin={obj:g,wT:0,tx:P.x,tz:P.z};}
 
 let curI=null;
@@ -1863,10 +2256,8 @@ function talk(n){
 }
 function stD(cb){dCb=cb||null;$('dT').textContent=dQ[0]||'';$('dP').style.display='flex';if(document.pointerLockElement)document.exitPointerLock();}
 $('dNext').onclick=function(){dQ.shift();if(!dQ.length){$('dP').style.display='none';const cb=dCb;dCb=null;if(cb)cb();else rqL();}else $('dT').textContent=dQ[0];};
-
 function opPC(){if(dead)return;$('pcP').style.display='flex';$('pcI').innerHTML='Роль: <b>'+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'))+'</b><br>День: <b>'+G.day+'/5</b> • '+tS()+'<br>Модов: <b>'+countMods()+'/'+Object.keys(MOD_DEFS).length+'</b>';if(document.pointerLockElement)document.exitPointerLock();}
 $('pcP').addEventListener('click',function(e){const b=e.target.closest('button');if(!b)return;const c=b.dataset.c;if(c==='c1')rad(1);else if(c==='c3')rad(3);else if(c==='cam'){enterCameras();}else if(c==='cl'){$('pcP').style.display='none';rqL();}});
-
 function opRad(){if(dead)return;G.radio=1;$('rP').style.display='flex';if(document.pointerLockElement)document.exitPointerLock();SND.rad();const i=Math.random()<(IH()?.35:.12);$('rInterf').textContent=i?'⚠ ПОМЕХИ':'';}
 function clRad(){G.radio=0;$('rP').style.display='none';rqL();}
 $('rP').addEventListener('click',function(e){const b=e.target.closest('button');if(!b)return;if(b.dataset.c==='cl'){clRad();return;}const c=parseInt(b.dataset.r);if(!isNaN(c))rad(c);});
@@ -1890,7 +2281,6 @@ function rad(c){
   }
 }
 function tglFlash(){G.flashOn=!G.flashOn;if(TOR)TOR.intensity=G.flashOn?((IH()||G.ln)?2.5:1.8):0;toast(G.flashOn?'🔦 ВКЛ':'🔦 ВЫКЛ');}
-
 function playTotemMeme(){try{if('speechSynthesis' in window){window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance('Шутки шутками, смех смехом, но всё веселье, когда сова на скакалке попадается');u.lang='ru-RU';u.rate=0.95;u.pitch=1.15;window.speechSynthesis.speak(u);}}catch(e){}}
 function kill(r,k){
   if(dead)return;
@@ -1909,9 +2299,48 @@ function kill(r,k){
   dead=true;G.deaths++;flash('dm',.6);addJ('Погиб: '+r);
   setTimeout(function(){endG(k||'death','ВЫ ПОГИБЛИ',r);},500);
 }
-
 const ENDS={survive:['🏆 5 ДНЕЙ','Вы выжили!'],lastnightWin:['🏆 ЛЕГЕНДА','Выжили!'],german:['👻 ГЕРМАН','Белая сущность.'],code3:['📻 КОД 3',''],death:['💀 ПОГИБ',''],eaten:['🍔 СЪЕДЕН',''],bathroom:['🚽 ЗАСТРЯЛ',''],lonely:['😶 ОДИНОЧЕСТВО',''],bell:['🔔 ЗВОНОК',''],sanLoss:['🧠 СУМАСШЕСТВИЕ',''],lastnight:['🕯️ ПОСЛЕДНЯЯ НОЧЬ',''],madness:['🌌 БЕСКОНЕЧНОСТЬ','']};
+
+// ═══ ПОБЕДА → EXIT ANIMATION → CREDITS ═══
+function winGame(title,sub){
+  running=false;paused=true;
+  if(document.pointerLockElement)document.exitPointerLock();
+  $('hud').style.display='none';
+  $('tui').classList.remove('on');$('camUI').classList.remove('on');
+  $('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');
+  $('invuln_bar').classList.remove('on');$('invuln_label').classList.remove('on');
+  document.body.style.filter='';document.body.style.animation='';
+  if(IS_BAG())unlAch('bag');
+  if(isMod('cheat'))unlAch('cheater');
+  checkModAch();
+  G.ended=true;
+  // Убираем игровой рендерер
+  if(RD&&RD.domElement&&RD.domElement.parentNode)RD.domElement.parentNode.removeChild(RD.domElement);
+  RD=null;
+  // Запускаем анимацию выхода
+  runExitAnimation(()=>{
+    // После выхода — титры
+    showCredits(()=>{
+      // После титров — экран победы
+      endGFinal(title,sub);
+    });
+  });
+}
+function endGFinal(t,x){
+  $('eT').textContent=t||'🏆 5 ДНЕЙ';
+  $('eX').textContent=x||'Вы выжили!';
+  let extra='';
+  if(G.speedrun){if(!G.ach.speedrun)unlAch('speedrun');const isRec=(G.srBest===0||G.srTime<G.srBest);if(isRec){G.srBest=G.srTime;try{localStorage.setItem('sh43srbest',G.srBest.toString())}catch(err){}unlAch('speedrunFast');extra='<br><b style="color:#5f9">🏆 РЕКОРД: '+G.srTime.toFixed(2)+' сек!</b>';}else{extra='<br>Время: <b>'+G.srTime.toFixed(2)+' сек</b>';}}
+  if(IS_BAG())extra+='<br><b style="color:#f0a">🎒 BAG ПРОЙДЕН!</b>';
+  $('eS').innerHTML='V24.4 • '+DEVICE+' • '+(role==='guard'?'Охранник':(role==='student'?'7А':'Уборщица'))+'<br>День: '+G.day+'/5 • Смертей: '+G.deaths+'<br>Активных модов: <b>'+countMods()+'</b>'+extra;
+  $('eP').classList.add('on');
+}
 function endG(k,t,x){
+  // Победа через анимацию, остальное — сразу
+  if(k==='survive'||k==='lastnightWin'){
+    winGame(t,x);
+    return;
+  }
   running=false;paused=true;
   if(document.pointerLockElement)document.exitPointerLock();
   const e=ENDS[k]||[t,x];
@@ -1919,7 +2348,7 @@ function endG(k,t,x){
   let extra='';
   if(G.speedrun){if(!G.ach.speedrun)unlAch('speedrun');const isRec=(G.srBest===0||G.srTime<G.srBest);if(isRec){G.srBest=G.srTime;try{localStorage.setItem('sh43srbest',G.srBest.toString())}catch(err){}unlAch('speedrunFast');extra='<br><b style="color:#5f9">🏆 РЕКОРД: '+G.srTime.toFixed(2)+' сек!</b>';}else{extra='<br>Время: <b>'+G.srTime.toFixed(2)+' сек</b>';}}
   if(IS_BAG())extra+='<br><b style="color:#f0a">🎒 BAG ПРОЙДЕН!</b>';
-  $('eS').innerHTML='V24.3 • '+DEVICE+' • '+(role==='guard'?'Охранник':(role==='student'?'7А':'Уборщица'))+'<br>День: '+G.day+'/5 • Смертей: '+G.deaths+'<br>Активных модов: <b>'+countMods()+'</b>'+extra;
+  $('eS').innerHTML='V24.4 • '+DEVICE+' • '+(role==='guard'?'Охранник':(role==='student'?'7А':'Уборщица'))+'<br>День: '+G.day+'/5 • Смертей: '+G.deaths+'<br>Активных модов: <b>'+countMods()+'</b>'+extra;
   $('eP').classList.add('on');$('hud').style.display='none';
   $('tui').classList.remove('on');$('rP').style.display='none';$('pcP').style.display='none';
   $('ln').classList.remove('on');$('cd').classList.remove('on');$('camUI').classList.remove('on');
@@ -1938,7 +2367,6 @@ function selectCam(i){if(i<0||i>=camCams.length)return;G.camSel=i;SND.cam();docu
 function toggleCamNV(){G.camNV=!G.camNV;document.querySelectorAll('.camF').forEach(function(f){f.style.background=G.camNV?'rgba(20,80,40,.15)':'transparent';f.style.filter=G.camNV?'brightness(1.4) contrast(1.2) hue-rotate(70deg)':'none';});toast(G.camNV?'🌙 Ночной':'👁 Обычный');}
 document.querySelectorAll('.camF').forEach(function(f){f.addEventListener('click',function(){selectCam(parseInt(f.dataset.i));});f.addEventListener('touchstart',function(e){e.preventDefault();selectCam(parseInt(f.dataset.i));},{passive:false});});
 function renderCameras(){if(!RD)return;const W2=RD.domElement.width,H2=RD.domElement.height;document.querySelectorAll('.camF').forEach(function(f,i){const c=camCams[i];if(!c)return;f.querySelector('.camLbl').textContent=(i===G.camSel?'▶ ':'● ')+'CAM '+(i+1);f.querySelector('.camTime').textContent=tS();});RD.setScissorTest(true);for(let i=0;i<4;i++){const col=i%2,row=Math.floor(i/2);const vx=col*Math.floor(W2/2),vy=(1-row)*Math.floor(H2/2),vw=Math.floor(W2/2),vh=Math.floor(H2/2);RD.setViewport(vx,vy,vw,vh);RD.setScissor(vx,vy,vw,vh);const c=camCams[i];if(c){c.cam.aspect=vw/vh;c.cam.updateProjectionMatrix();RD.render(SC,c.cam);}}RD.setScissorTest(false);RD.setViewport(0,0,W2,H2);RD.setScissor(0,0,W2,H2);}
-
 function toggleMap(){const m=$('mmap');m.classList.toggle('on');if(m.classList.contains('on'))drawMap();}
 function drawMap(){
   const c=$('mcanvas'),ctx=c.getContext('2d');
@@ -1983,32 +2411,28 @@ document.addEventListener('keydown',function(e){
   if(G.camOn&&c.startsWith('Digit')){const n=parseInt(c.slice(5));if(n>=1&&n<=4)selectCam(n-1);}
 });
 document.addEventListener('keyup',function(e){const c=e.code;if(c==='KeyW'||c==='ArrowUp')keys['w']=false;if(c==='KeyA'||c==='ArrowLeft')keys['a']=false;if(c==='KeyS'||c==='ArrowDown')keys['s']=false;if(c==='KeyD'||c==='ArrowRight')keys['d']=false;if(c==='ShiftLeft'||c==='ShiftRight')keys['shift']=false;});
-
 function openJInline(){const l=$('jContent');if(!l)return;if(!G.journal||G.journal.length===0){l.innerHTML='<div style="padding:16px;text-align:center;color:#555;font-size:10.5px">Пусто</div>';return;}l.innerHTML='';G.journal.slice().reverse().slice(0,50).forEach(function(e){l.innerHTML+='<div class="entry"><div class="day">Д'+e.day+' • '+e.time+'</div><div class="text">'+e.text+'</div></div>';});}
 
-let joy=null,jS={x:0,y:0},jV={x:0,y:0},look=null,lL={x:0,y:0},joyActive=false;
+let joy=null,jS={x:0,y:0},jV={x:0,y:0},look=null,lL={x:0,y:0};
 function setupTouch(){
   const jb=$('jb'),jk=$('jk'),lz=$('lz');
-  jb.addEventListener('touchstart',function(e){e.preventDefault();const t=e.changedTouches[0];joy=t.identifier;joyActive=true;jS.x=t.clientX;jS.y=t.clientY;},{passive:false});
+  jb.addEventListener('touchstart',function(e){e.preventDefault();const t=e.changedTouches[0];joy=t.identifier;jS.x=t.clientX;jS.y=t.clientY;},{passive:false});
   jb.addEventListener('touchmove',function(e){e.preventDefault();if(joy===null)return;for(const t of e.changedTouches){if(t.identifier!==joy)continue;let dx=t.clientX-jS.x,dy=t.clientY-jS.y;const d=Math.hypot(dx,dy),m=44;if(d>m){dx=dx/d*m;dy=dy/d*m;}jV.x=dx/m;jV.y=dy/m;jk.style.transform='translate('+dx+'px,'+dy+'px)';}},{passive:false});
-  const eJ=function(e){for(const t of e.changedTouches)if(t.identifier===joy){joy=null;joyActive=false;jV.x=jV.y=0;jk.style.transform='';}};
+  const eJ=function(e){for(const t of e.changedTouches)if(t.identifier===joy){joy=null;jV.x=jV.y=0;jk.style.transform='';}};
   jb.addEventListener('touchend',eJ);jb.addEventListener('touchcancel',eJ);
   lz.addEventListener('touchstart',function(e){const t=e.changedTouches[0];look=t.identifier;lL.x=t.clientX;lL.y=t.clientY;},{passive:true});
   lz.addEventListener('touchmove',function(e){if(look===null||G.camOn)return;for(const t of e.changedTouches){if(t.identifier!==look)continue;P.yaw-=(t.clientX-lL.x)*.006*cfg.sens;P.pitch=Math.max(-1.4,Math.min(1.4,P.pitch-(t.clientY-lL.y)*.006*cfg.sens));lL.x=t.clientX;lL.y=t.clientY;}},{passive:true});
   const eL=function(e){for(const t of e.changedTouches)if(t.identifier===look)look=null;};
   lz.addEventListener('touchend',eL);lz.addEventListener('touchcancel',eL);
-  const b=function(id,fn){const el=$(id);el.addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();fn();},{passive:false});el.addEventListener('click',function(e){e.stopPropagation();fn();});};
+  const b=function(id,fn){const el=$(id);if(!el)return;el.addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();fn();},{passive:false});el.addEventListener('click',function(e){e.stopPropagation();fn();});};
   b('bA',tryI);b('bR',opRad);b('bT',tglFlash);b('bE',useFood);b('bM',useAlm);
   b('bK',function(){throwIt('mk');});b('bB',function(){throwIt('bo');});
   b('bC',function(){if(G.camOn)exitCameras();else if(Math.hypot(P.x-pcPos.x,P.z-pcPos.z)<3.5)enterCameras();else toast('Присед');});
   b('bQ',toggleMap);
   b('bJ',function(){$('journal').classList.toggle('on');if($('journal').classList.contains('on'))openJInline();});
   const sb=$('bS');
-  sb.addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();keys['shift']=true;sb.style.background='rgba(255,100,100,.85)';},{passive:false});
-  sb.addEventListener('touchend',function(){keys['shift']=false;sb.style.background='rgba(255,100,100,.3)';});
-  sb.addEventListener('touchcancel',function(){keys['shift']=false;sb.style.background='rgba(255,100,100,.3)';});
+  if(sb){sb.addEventListener('touchstart',function(e){e.preventDefault();e.stopPropagation();keys['shift']=true;sb.style.background='rgba(255,100,100,.85)';},{passive:false});sb.addEventListener('touchend',function(){keys['shift']=false;sb.style.background='rgba(255,100,100,.3)';});sb.addEventListener('touchcancel',function(){keys['shift']=false;sb.style.background='rgba(255,100,100,.3)';});}
 }
-
 function doScr(){
   const el=$('sk'),f=$('skf');
   const F=['☠','👁','💀','👹','👻','🦉','ЖУТЬ'];
@@ -2048,7 +2472,6 @@ function loop(now){
   const dt=Math.min(.05,(now-lastT)/1000);lastT=now;
   if(!RD||!SC||!CM)return;
   G.camTime+=dt;
-
   if(IS_BAG()&&running&&!paused&&!dead&&!G.busys&&!G.transition){
     const I=BAG_CFG.intensity||1;
     G.bag.teleportCool-=dt;G.bag.hpJitter-=dt;G.bag.lastBagMsg-=dt;
@@ -2057,12 +2480,10 @@ function loop(now){
     if(BAG_CFG.messages&&G.bag.lastBagMsg<=0){G.bag.lastBagMsg=(BAG_CFG.msgCool||6)/I+Math.random()*4/I;if(Math.random()<0.6)bagMsg();}
     if(BAG_CFG.hueFlash&&Math.random()<0.008*I){document.body.style.filter='hue-rotate('+(Math.random()*360)+'deg)';setTimeout(function(){document.body.style.filter='';},100);}
   }
-
   if(G.cdOn&&running&&!paused&&!dead&&!G.busys&&!G.transition){
     G.cdT-=dt;if(G.cdT<=0){G.cdV--;if(G.cdV<=0){G.cdOn=false;$('cd').classList.remove('on');G.scream=1;SND.bel();toast('☠️ ПОСЛЕДНИЙ ДЕНЬ!');}else{$('cdn').textContent=G.cdV;SND.cd();G.cdT=1;}}
   }
   if(G.camOn){updateCamWorld(dt);renderCameras();return;}
-
   if(running&&!paused&&!dead&&!G.busys&&!G.transition){
     uNPCArg=now;
     const D=DF[diff]||DF.normal;let fw=0,st=0;
@@ -2125,15 +2546,11 @@ function loop(now){
     const tZ=(bOn&&mg>.01)?Math.sin(G.bob)*.015*sf:0;
     let camY=1.65+bY;
     if(isMod('fly')||isMod('flyCheat'))camY+=2.5;
-    if(IS_BAG()&&BAG_CFG.camJitter&&Math.random()<0.015*(BAG_CFG.intensity||1))camY+=Math.random()*0.6-0.3;
     CM.position.set(P.x+cy*bX,camY,P.z-sy*bX);
     CM.rotation.y=P.yaw;CM.rotation.x=P.pitch;CM.rotation.z=tZ;
-    if(IS_BAG()&&BAG_CFG.camJitter)CM.rotation.z+=Math.sin(now*0.001)*0.05*(BAG_CFG.intensity||1);
     if(isMod('shake')){CM.position.x+=(Math.random()-.5)*0.05;CM.position.y+=(Math.random()-.5)*0.05;}
     if(isMod('wave'))CM.rotation.z+=Math.sin(now*0.002)*0.1;
-    let fov=78;
-    if(isMod('big'))fov=100;
-    if(isMod('small'))fov=55;
+    let fov=78;if(isMod('big'))fov=100;if(isMod('small'))fov=55;
     if(CM.fov!==fov){CM.fov=fov;CM.updateProjectionMatrix();}
     const sb=$('stamina_bar');if(sp){sb.classList.add('on');$('stamina_fill').style.width=G.st+'%';}else sb.classList.remove('on');
     uNPC(dt);uSky();uLight();uPr();spawnAnom(dt);
@@ -2185,9 +2602,7 @@ function loop(now){
   }
   try{RD.render(SC,CM);}catch(e){}
 }
-
 function formatSRTime(t){const m=Math.floor(t/60),s=Math.floor(t%60),ms=Math.floor((t%1)*100);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+'.'+String(ms).padStart(2,'0');}
-
 function updateCamWorld(dt){
   uGer(dt,performance.now()/1000);uProj(dt);uNPC(dt);uSky();uLight();
   const nd=isDay();
@@ -2198,7 +2613,6 @@ function updateCamWorld(dt){
   G.dayRealTime+=dt;const gm=MINS_PER_DAY/SEC_PER_DAY;G.time+=dt*gm;
   if(G.dayRealTime>=SEC_PER_DAY){G.dayRealTime=0;startNewDay();}
 }
-
 function uNPC(dt){
   const now=uNPCArg;
   for(const n of NPC){
@@ -2230,7 +2644,6 @@ function uNPC(dt){
     }
   }
 }
-
 function startGame(coop){
   if(!G._rulesShown){G._rulesShown=true;G._showRulesBeforeStart=true;showRules();return;}
   actuallyStartGame();
@@ -2240,7 +2653,6 @@ function actuallyStartGame(){
   G.bag={stepJitter:0,speedJitter:0,textJitter:0,mooCool:0,teleportCool:0,hpJitter:0,glitch:0,lastBagMsg:0};
   if(mode!=='speedrun')G.speedrun=false;
   if(mode!=='story'&&mode!=='speedrun')mode='story';
-
   $('cd').classList.remove('on');$('cdn').textContent='5';
   $('daySplash').classList.remove('on');$('journal').classList.remove('on');
   $('invuln_bar').classList.remove('on');$('invuln_label').classList.remove('on');
@@ -2274,7 +2686,7 @@ function actuallyStartGame(){
   if(G.savedPos&&!IS_BAG()){P.x=G.savedPos.x;P.z=G.savedPos.z;P.yaw=G.savedPos.yaw||0;P.pitch=G.savedPos.pitch||0;G.savedPos=null;}
   else{const p=RMS.s0;if(p){P.x=p.cx;P.z=p.cz+3;}else{P.x=0;P.z=0;}P.yaw=0;P.pitch=0;}
   spawnAll();uInv();addJ('Начата смена — День 1');
-  obj('V24.3 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'))+' • '+countMods()+' модов');
+  obj('V24.4 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'))+' • '+countMods()+' модов');
   toast('🎮 Карта: '+['СТАНДАРТ','ВОСТОЧНАЯ','МУЗЫКАЛЬНАЯ','НАУЧНАЯ','СПОРТИВНАЯ','БИБЛИОТЕЧНАЯ','КОМПЬЮТЕРНАЯ','ХУДОЖЕСТВЕННАЯ','ИСТОРИЧЕСКАЯ','СЛОЖНАЯ'][G.map]);
   const ds=$('daySplash');$('dsBig').textContent='ДЕНЬ 1';
   $('dsSub').textContent=G.speedrun?'⏱ СПИДРАН':(IS_BAG()?'🎒 BAG':'НОЧНАЯ СМЕНА');
@@ -2288,11 +2700,10 @@ window.SH=window.SH||{};window.SH.game=startGame;
 
 window.addEventListener('resize',function(){
   if(CM){CM.aspect=window.innerWidth/window.innerHeight;CM.updateProjectionMatrix();}
-  if(RD){RD.setSize(window.innerWidth,window.innerHeight,false);RD.setPixelRatio(DEVICE==='mobile'?0.75:PR[cfg.qual]);if(!G.camOn){const W2=RD.domElement.width,H2=RD.domElement.height;RD.setScissorTest(false);RD.setViewport(0,0,W2,H2);RD.setScissor(0,0,W2,H2);}}
+  if(RD){RD.setSize(window.innerWidth,window.innerHeight,false);if(!G.camOn){const W2=RD.domElement.width,H2=RD.domElement.height;RD.setScissorTest(false);RD.setViewport(0,0,W2,H2);RD.setScissor(0,0,W2,H2);}}
   resizeMenuCanvas();
 });
 
-// ═══ BOOT ═══
 setupTouch();
 updDevBadge();
 updateMenuClock();
@@ -2303,12 +2714,18 @@ if(G.srBest>0){const el=$('srBestTxt');if(el)el.textContent=G.srBest.toFixed(2)+
 setInterval(function(){if(running)saveAll();},30000);
 $('mc').addEventListener('contextmenu',function(e){e.preventDefault();});
 
-// Запуск: интро, потом меню
+// Инициализация графики с сохранённого пресета
+try{
+  const l=gfxLevel();
+  const p=GFX_PRESETS[l]||GFX_PRESETS.medium;
+  cfg.qual=p.qual;cfg.fog=p.fogFar;cfg.dist=p.dist;cfg.pixelRatio=p.pixelRatio;
+  cfg.shadows=p.shadows;cfg.antialias=p.antialias;cfg.dust=p.dust;
+}catch(e){}
+
 try{runIntro();}catch(e){console.error(e);showMenuFinal();}
-// Игровой цикл стартует сразу, но работает только при наличии RD
 loop(0);
 
-console.log('ШКОЛА №43 — V24.3 «ENTRANCE» загружена');
+console.log('ШКОЛА №43 — V24.4 «EXIT» загружена');
 </script>
 </body>
-                                                                 </html>
+                                                  </html>
