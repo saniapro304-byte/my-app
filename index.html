@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#000">
-<title>ШКОЛА №43 — V30.3</title>
+<title>ШКОЛА №43 — V30.4 «БЕГ»</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-tap-highlight-color:transparent;font-family:Consolas,monospace}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;position:fixed;touch-action:none}
@@ -357,7 +357,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 #coopText .name{color:#60c0ff;font-weight:bold;letter-spacing:4px;text-shadow:0 0 15px #60c0ff}
 #coopText .hi{color:#ffd76a;font-weight:bold}
 #coopFade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:6;transition:opacity 3s}
-/* Индикатор бега в финальной сцене */
 #coopEnding .endingBar{position:absolute;left:50%;top:20%;transform:translateX(-50%);z-index:4;opacity:0;transition:opacity 1.5s}
 #coopEnding .endingBar.on{opacity:1}
 #coopEnding .endingBarInner{width:240px;height:3px;background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
@@ -432,7 +431,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <div id="intro">
   <canvas id="introCanvas"></canvas>
   <div class="introOverlay"></div>
-  <div class="introTitle"><div class="t1">ШКОЛА №43</div><div class="t2">НОЧНАЯ СМЕНА • V30.3 «БЕГ»</div></div>
+  <div class="introTitle"><div class="t1">ШКОЛА №43</div><div class="t2">НОЧНАЯ СМЕНА • V30.4 «БЕГ»</div></div>
   <div class="introSub">входим в школу...</div>
   <div class="introSkip" id="introSkip">ПРОПУСТИТЬ ▸</div>
 </div>
@@ -463,7 +462,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
     <div class="mHeadLogo">🦉</div>
     <div class="mHeadTitle">
       <div class="a">ШКОЛА №43</div>
-      <div class="b">НОЧНАЯ СМЕНА • V30.3 «БЕГ»</div>
+      <div class="b">НОЧНАЯ СМЕНА • V30.4 «БЕГ»</div>
     </div>
     <div class="mHeadRight">
       <span class="badge" id="devBadge">PC</span>
@@ -705,7 +704,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <div class="pn" id="chgP"><div class="pb" style="max-width:600px"><h2>📋 СПИСОК ИЗМЕНЕНИЙ</h2><div id="chgContent"></div><button id="chgB" class="p" style="width:100%;margin-top:10px">ЗАКРЫТЬ</button></div></div>
 <div class="pn" id="abP"><div class="pb"><h2>О ИГРЕ</h2>
 <div style="font-size:10.5px;line-height:1.6;color:#bfe">
-<b style="color:#5f9">ШКОЛА №43 — V30.3 «БЕГ»</b><br><br>
+<b style="color:#5f9">ШКОЛА №43 — V30.4 «БЕГ»</b><br><br>
 Грустная концовка от первого лица: бежишь по коридору, выбегаешь на улицу, оборачиваешься — и дверь захлопывается перед другом. Грустная песня в титрах.
 </div>
 <button id="abB" class="p">ЗАКРЫТЬ</button></div></div>
@@ -895,7 +894,7 @@ try{G.srBest=parseFloat(localStorage.getItem('sh43srbest')||'0')}catch(e){}
 let fpsVal=0,fpsFrames=0,fpsLastTime=0;
 
 const SND={c:null,m:null,musicGain:null,
-init(){if(this.c)return;try{this.c=new(AudioContext||window.webkitAudioContext)();this.m=this.c.createGain();this.m.gain.value=isMod('mute')?0:cfg.vol;this.m.connect(this.c.destination);this.musicGain=this.c.createGain();this.musicGain.gain.value=0;this.musicGain.connect(this.c.destination);}catch(e){}},
+init(){if(this.c)return;try{this.c=new(AudioContext||window.webkitAudioContext)();this.m=this.c.createGain();this.m.gain.value=isMod('mute')?0:cfg.vol;this.m.connect(this.c.destination);this.musicGain=this.c.createGain();this.musicGain.gain.value=0.0001;this.musicGain.connect(this.c.destination);}catch(e){}},
 resume(){if(this.c&&this.c.state==='suspended')this.c.resume()},
 noise(d){const sr=this.c.sampleRate,b=this.c.createBuffer(1,sr*d,sr),a=b.getChannelData(0);for(let i=0;i<a.length;i++)a[i]=Math.random()*2-1;return b},
 tone(f,d,v,ty){if(!this.c)return;if(isMod('mute'))return;const o=this.c.createOscillator();o.type=ty||'sine';let freq=f;if(isMod('highpitch'))freq*=1.5;if(isMod('lowpitch'))freq*=0.6;o.frequency.value=freq;const g=this.c.createGain();g.gain.setValueAtTime(0,this.c.currentTime);g.gain.linearRampToValueAtTime(v,this.c.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,this.c.currentTime+d);o.connect(g);g.connect(this.m);o.start();o.stop(this.c.currentTime+d)},
@@ -918,7 +917,7 @@ doorSlam(){this.tone(60,.8,.55,'sawtooth');this.tone(90,.6,.45);this.tone(150,.4
 knock(){this.tone(180,.08,.28,'square');setTimeout(()=>this.tone(160,.08,.24,'square'),120)},
 friend(){this.tone(700,.1,.12,'sine');setTimeout(()=>this.tone(900,.12,.1,'sine'),100)},
 
-// ГРУСТНАЯ ПЕСНЯ — синтезированная мелодия из аккордов и мелодии
+// ГРУСТНАЯ ПЕСНЯ
 songStop:false,
 playSadSong(){
   if(!this.c)return;
@@ -928,61 +927,31 @@ playSadSong(){
   const songGain=ctx.createGain();
   songGain.gain.value=0.0001;
   songGain.connect(this.musicGain||this.m);
-  // Плавный fade-in
   songGain.gain.exponentialRampToValueAtTime(0.35, ctx.currentTime+3);
-  
-  // Мелодия — печальная, в минорной тональности (A minor)
-  // Аккорды: Am - F - C - G (классическая грустная прогрессия)
-  // Длительность одной строки — 4 такта
-  const beat = 0.5;         // секунда на четверть
-  const chord = beat*4;     // 2 сек на аккорд
-  const noteLen = beat*0.9; // длительность ноты
-  
-  // Мелодия — одиночные ноты поверх аккордов
-  // Ноты в герцах: A4=440, C5=523, E5=659, F4=349, G4=392, B4=493, D5=587
+  const beat = 0.5;
+  const chord = beat*4;
+  const noteLen = beat*0.9;
   const melodies=[
-    // Фраза 1 - Am
     [{t:0,    f:440, d:noteLen}, {t:beat, f:523, d:noteLen}, {t:beat*2, f:659, d:noteLen*2}],
-    // Фраза 2 - F  
     [{t:beat*4, f:523, d:noteLen}, {t:beat*5, f:493, d:noteLen}, {t:beat*6, f:440, d:noteLen*2}],
-    // Фраза 3 - C
     [{t:beat*8, f:523, d:noteLen}, {t:beat*9, f:587, d:noteLen}, {t:beat*10, f:659, d:noteLen*2}],
-    // Фраза 4 - G
     [{t:beat*12, f:587, d:noteLen}, {t:beat*13, f:523, d:noteLen}, {t:beat*14, f:440, d:noteLen*2}],
-    // Фраза 5 - Em (грустный поворот)
     [{t:beat*16, f:659, d:noteLen}, {t:beat*17, f:523, d:noteLen}, {t:beat*18, f:493, d:noteLen*2}],
-    // Фраза 6 - Am
     [{t:beat*20, f:440, d:noteLen*3}],
-    // Фраза 7 - F
     [{t:beat*24, f:523, d:noteLen}, {t:beat*25, f:493, d:noteLen}, {t:beat*26, f:440, d:noteLen*2}],
-    // Фраза 8 - Am финал
     [{t:beat*28, f:440, d:noteLen*4}]
   ];
-  
-  // Аккорды — басовые ноты + трезвучие
   const bassPattern=[
-    // Am
     {t:0, notes:[110,220,261.63,329.63]},
-    // F
     {t:beat*4, notes:[87.31,174.61,220,261.63]},
-    // C
     {t:beat*8, notes:[130.81,261.63,329.63,392]},
-    // G
     {t:beat*12, notes:[98,196,246.94,293.66]},
-    // Em
     {t:beat*16, notes:[82.41,164.81,196,246.94]},
-    // Am
     {t:beat*20, notes:[110,220,261.63,329.63]},
-    // F
     {t:beat*24, notes:[87.31,174.61,220,261.63]},
-    // Am
     {t:beat*28, notes:[110,220,261.63,329.63]}
   ];
-  
   const startTime=ctx.currentTime+0.1;
-  const totalDuration=beat*32+2;
-  
-  // Играем басовые аккорды (долгие, мягкие)
   bassPattern.forEach(ch=>{
     ch.notes.forEach((freq,i)=>{
       if(this.songStop)return;
@@ -998,14 +967,11 @@ playSadSong(){
       osc.stop(startTime+ch.t+chord);
     });
   });
-  
-  // Играем мелодию (мягкие одиночные ноты)
   melodies.flat().forEach(n=>{
     if(this.songStop)return;
     const osc=ctx.createOscillator();
     osc.type='sine';
     osc.frequency.value=n.f;
-    // Vibrato
     const vib=ctx.createOscillator();
     vib.frequency.value=5;
     const vibGain=ctx.createGain();
@@ -1021,14 +987,11 @@ playSadSong(){
     osc.stop(startTime+n.t+n.d);
     vib.stop(startTime+n.t+n.d);
   });
-  
-  // Реверб-эффект через задержку
   const delay=ctx.createDelay();
   delay.delayTime.value=0.25;
   const delayGain=ctx.createGain();
   delayGain.gain.value=0.25;
   songGain.connect(delay);delay.connect(delayGain);delayGain.connect(songGain);
-  
   this._songGain=songGain;
 },
 songFadeOut(){
@@ -1118,7 +1081,8 @@ function uBotFriend(dt,now){
 }
 
 // ═══════════════════════════════════════════════════════
-// ФИНАЛЬНАЯ СЦЕНА — БЕЖИМ ИЗ КОРИДОРА, ОБОРАЧИВАЕМСЯ
+// ФИНАЛЬНАЯ СЦЕНА — ФИКС КАМЕРЫ V30.4
+// Камера смотрит ВПЕРЁД по +Z (к выходу), при обороте — НАЗАД
 // ═══════════════════════════════════════════════════════
 let coopEndingRenderer=null;
 function coopSadEnding(){
@@ -1161,11 +1125,11 @@ function runCoopEndingScene(){
   const scene=new THREE.Scene();
   scene.background=new THREE.Color(0x05060e);
   scene.fog=new THREE.Fog(0x05060e,5,55);
-  // КАМЕРА ОТ ПЕРВОГО ЛИЦА
+  // КАМЕРА ОТ ПЕРВОГО ЛИЦА — СМОТРИМ ВПЕРЁД (+Z) К ВЫХОДУ
   const cam=new THREE.PerspectiveCamera(72,window.innerWidth/window.innerHeight,.1,100);
   cam.rotation.order='YXZ';
+  cam.rotation.y=Math.PI; // ФИКС: камера смотрит в +Z (к двери/выходу)
 
-  // Ночное освещение
   scene.add(new THREE.AmbientLight(0x2a3a55,.5));
   const hl=new THREE.HemisphereLight(0x1a2840,0x000000,.4);
   scene.add(hl);
@@ -1173,7 +1137,6 @@ function runCoopEndingScene(){
   moonLight.position.set(30,50,-20);
   scene.add(moonLight);
 
-  // ═══ МАТЕРИАЛЫ ═══
   const mFloorIn=new THREE.MeshLambertMaterial({color:0x2a2a2a});
   const mWallIn=new THREE.MeshLambertMaterial({color:0x3a4450});
   const mCeil=new THREE.MeshLambertMaterial({color:0x0a1018});
@@ -1184,15 +1147,14 @@ function runCoopEndingScene(){
   const mLamp=new THREE.MeshBasicMaterial({color:0xfff8e0});
   const mFriend=new THREE.MeshLambertMaterial({color:0x60c0ff,emissive:0x2050a0});
 
-  // ═══ РАЗМЕРЫ ═══
   const BW=4.5,BH=4.5;
-  const IN_LEN=40;      // длина коридора
-  const OUT_LEN=30;     // длина площадки снаружи
+  const IN_LEN=40;
+  const OUT_LEN=30;
   const DOOR_Z=0;
   const DOOR_W=2.4;
   const DOOR_H=2.8;
 
-  // ═══ КОРИДОР ВНУТРИ (z от 0 до -IN_LEN) ═══
+  // ═══ КОРИДОР ВНУТРИ (z от -IN_LEN до 0) — бежим из глубины к двери ═══
   const floorIn=new THREE.Mesh(new THREE.PlaneGeometry(BW,IN_LEN),mFloorIn);
   floorIn.rotation.x=-Math.PI/2;
   floorIn.position.set(0,0,-IN_LEN/2);
@@ -1209,7 +1171,6 @@ function runCoopEndingScene(){
   wallInR.rotation.y=-Math.PI/2;
   wallInR.position.set(BW/2,BH/2,-IN_LEN/2);
   scene.add(wallInR);
-  // Дальняя стена коридора
   const wallBack=new THREE.Mesh(new THREE.PlaneGeometry(BW,BH),mWallIn);
   wallBack.position.set(0,BH/2,-IN_LEN);
   scene.add(wallBack);
@@ -1236,7 +1197,6 @@ function runCoopEndingScene(){
   wallOutTop.position.set(0,DOOR_H+(BH-DOOR_H)/2,DOOR_Z+.18);
   scene.add(wallOutTop);
 
-  // Дверная рамка
   const frameTop=new THREE.Mesh(new THREE.BoxGeometry(DOOR_W+.24,.16,.5),mDoorFrame);
   frameTop.position.set(0,DOOR_H+.06,DOOR_Z+.15);
   scene.add(frameTop);
@@ -1247,13 +1207,13 @@ function runCoopEndingScene(){
   frameR.position.set(DOOR_W/2,DOOR_H/2,DOOR_Z+.15);
   scene.add(frameR);
 
-  // ═══ АСФАЛЬТ СНАРУЖИ (z от 0 до OUT_LEN) ═══
+  // ═══ АСФАЛЬТ СНАРУЖИ (z от 0 до +OUT_LEN) ═══
   const floorOut=new THREE.Mesh(new THREE.PlaneGeometry(BW+12,OUT_LEN),mAsphalt);
   floorOut.rotation.x=-Math.PI/2;
   floorOut.position.set(0,-.02,OUT_LEN/2);
   scene.add(floorOut);
 
-  // ═══ ДВЕРИ (2 створки, открываются внутрь -z) ═══
+  // ═══ ДВЕРИ — открыты внутрь (в -z), при захлопывании закрываются ═══
   const doorPivotL=new THREE.Group();
   doorPivotL.position.set(-DOOR_W/2,0,DOOR_Z);
   scene.add(doorPivotL);
@@ -1267,7 +1227,6 @@ function runCoopEndingScene(){
   dMR.position.x=-DOOR_W/4;dMR.position.y=DOOR_H/2;
   doorPivotR.add(dMR);
 
-  // Двери СНАЧАЛА ОТКРЫТЫ (внутрь школы, -z) — чтобы можно было выбежать
   const DOOR_OPEN=Math.PI/2*0.92;
   doorPivotL.rotation.y=-DOOR_OPEN;
   doorPivotR.rotation.y=DOOR_OPEN;
@@ -1298,7 +1257,7 @@ function runCoopEndingScene(){
   poleArm.position.set(-4.8,4.4,7);
   scene.add(poleArm);
 
-  // ═══ ДРУГ (внутри, за игроком — только силуэт, будет виден при повороте) ═══
+  // ═══ ДРУГ (позади игрока в коридоре, бежит за нами, потом остаётся у двери) ═══
   const friend=new THREE.Group();
   const fBody=new THREE.Mesh(new THREE.CapsuleGeometry(.28,1,.5,12),mFriend);
   fBody.position.y=1;friend.add(fBody);
@@ -1306,19 +1265,18 @@ function runCoopEndingScene(){
   fHead.position.y=1.75;friend.add(fHead);
   const fSp=nSp((FRIEND_CFG.name||'ДРУГ').toUpperCase(),'#60c0ff');
   fSp.position.y=2.15;friend.add(fSp);
-  friend.position.set(0,0,-4); // друг ПОЗАДИ игрока, в коридоре
-  friend.rotation.y=0;
+  friend.position.set(0,0,-4); // друг ПОЗАДИ игрока в коридоре
+  friend.rotation.y=Math.PI; // смотрит вперёд (в +Z, за игроком)
   scene.add(friend);
   const friendGlow=new THREE.PointLight(0x60c0ff,1.0,5,2);
   friendGlow.position.y=1.5;
   friend.add(friendGlow);
 
-  // ═══ НЕБО СНАРУЖИ — купол ═══
+  // ═══ НЕБО И ЗВЁЗДЫ ═══
   const skyGeo=new THREE.SphereGeometry(60,16,12);
   const skyMat=new THREE.MeshBasicMaterial({color:0x0a1228,side:THREE.BackSide,fog:false});
   const sky=new THREE.Mesh(skyGeo,skyMat);
   scene.add(sky);
-  // Звёзды на небе
   const starsGeo=new THREE.BufferGeometry();
   const starsPos=new Float32Array(300*3);
   for(let i=0;i<300;i++){
@@ -1334,32 +1292,31 @@ function runCoopEndingScene(){
   scene.add(stars);
 
   // ═══════════════════════════════════════════
-  // СЦЕНАРИЙ — ОТ ПЕРВОГО ЛИЦА
+  // СЦЕНАРИЙ
   // ═══════════════════════════════════════════
   const STATES={
-    RUN_TO_DOOR:0,    // бежим по коридору к двери
-    EXIT_SCHOOL:1,    // выбегаем на улицу
-    STOP_AND_TURN:2,  // останавливаемся и оборачиваемся с покачиванием
-    SEE_FRIEND:3,     // видим, как друг бежит к двери
-    DOOR_SLAMS:4,     // дверь захлопывается перед другом
-    HOLD:5,           // держим взгляд на двери
-    FADE:6            // затемнение и титры
+    RUN_TO_DOOR:0,
+    EXIT_SCHOOL:1,
+    STOP_AND_TURN:2,
+    SEE_FRIEND:3,
+    DOOR_SLAMS:4,
+    HOLD:5,
+    FADE:6
   };
   let state=STATES.RUN_TO_DOOR;
   let stateT=0;
-  let camZ=-25;             // старт камеры глубоко в коридоре
-  let camYaw=0;             // смотрим вперёд (наружу, +z)
+  let camZ=-25;             // старт глубоко в коридоре
+  let camYaw=Math.PI;       // ФИКС: смотрим вперёд (+Z, к выходу)
   let camPitch=0;
   let camBobPhase=0;
-  let camBobAmt=0;
   let doorAngleL=-DOOR_OPEN;
   let doorAngleR=DOOR_OPEN;
-  let friendZ=-4;           // друг начинает позади
+  let friendZ=-4;
   let friendRunPhase=0;
   let finished=false;
   let doorSlamPlayed=false;
-  let turnStartYaw=0;
-  let turnTargetYaw=0;
+  let turnStartYaw=Math.PI;
+  let turnTargetYaw=0;      // ФИКС: оборачиваемся НАЗАД (в коридор, к другу)
 
   function finish(){
     if(finished)return;finished=true;
@@ -1376,25 +1333,24 @@ function runCoopEndingScene(){
     const dt=Math.min(.05,(now-last)/1000);last=now;
     stateT+=dt;
 
-    // ═══ СЦЕНАРИЙ ═══
     if(state===STATES.RUN_TO_DOOR){
-      // Бежим вперёд — камера от первого лица летит вперёд
+      // Бежим вперёд по +Z (к выходу)
       camZ+=dt*9.5;
-      // Покачивание при беге
       camBobPhase+=dt*14;
       const bobY=Math.sin(camBobPhase*2)*.06;
       const bobSide=Math.cos(camBobPhase)*.03;
       cam.position.set(bobSide,1.65+bobY,camZ);
-      camYaw=Math.sin(camBobPhase*.5)*.03;
+      camYaw=Math.PI+Math.sin(camBobPhase*.5)*.03; // ФИКС
       camPitch=Math.sin(camBobPhase*2)*.02;
       cam.rotation.y=camYaw;
       cam.rotation.x=camPitch;
       cam.rotation.z=Math.sin(camBobPhase)*.015;
 
-      // Друг бежит за нами (он сзади, в коридоре)
+      // Друг бежит за нами (позади в коридоре)
       friendRunPhase+=dt*12;
       friendZ+=dt*9.0;
       friend.position.z=friendZ;
+      friend.rotation.y=Math.PI; // смотрит в +Z (в спину игроку, т.е. вперёд)
       const Lf=friend.userData.limbs;
       if(Lf){
         Lf[2].rotation.x=Math.sin(friendRunPhase)*.7;
@@ -1403,18 +1359,15 @@ function runCoopEndingScene(){
         Lf[1].rotation.x=Math.sin(friendRunPhase)*.6;
       }
 
-      // Прогресс бар вверху — небольшая полоска бега
       if(stateT>0.2)$('endingBar').classList.add('on');
       const runProgress=Math.min(100,(camZ+25)/(25+DOOR_Z)*100);
       $('endingBarFill').style.width=runProgress+'%';
 
-      // Титры
       if(stateT>0.2&&!$('coopText').classList.contains('on')){
         $('coopText').innerHTML='<span class="hi">Беги!</span> Не оглядывайся.';
         $('coopText').classList.add('on');
       }
 
-      // Добежали до двери (z=0)
       if(camZ>=DOOR_Z-0.3){
         state=STATES.EXIT_SCHOOL;
         stateT=0;
@@ -1422,25 +1375,25 @@ function runCoopEndingScene(){
       }
     }
     else if(state===STATES.EXIT_SCHOOL){
-      // Выбегаем на улицу — продолжаем бежать, но замедляемся
+      // Выбегаем на улицу — замедляемся
       const spd=9.5*(1-Math.min(1,stateT/1.5));
       camZ+=dt*Math.max(2,spd);
       camBobPhase+=dt*14*(1-Math.min(1,stateT/1.5));
       const bobY=Math.sin(camBobPhase*2)*.06*(1-Math.min(1,stateT/1.5));
       const bobSide=Math.cos(camBobPhase)*.03*(1-Math.min(1,stateT/1.5));
       cam.position.set(bobSide,1.65+bobY,camZ);
-      camYaw=Math.sin(camBobPhase*.5)*.03;
+      camYaw=Math.PI+Math.sin(camBobPhase*.5)*.03; // ФИКС
       camPitch=Math.sin(camBobPhase*2)*.02;
       cam.rotation.y=camYaw;
       cam.rotation.x=camPitch;
       cam.rotation.z=Math.sin(camBobPhase)*.015;
 
-      // Друг тоже бежит — но НЕ через дверь (он ещё в коридоре)
+      // Друг бежит за нами, но останавливается у двери (внутри)
       friendRunPhase+=dt*12;
       friendZ+=dt*8.5;
-      // Друг останавливается перед дверью — z=-1.5 (внутри)
       if(friendZ>-1.5)friendZ=-1.5;
       friend.position.z=friendZ;
+      friend.rotation.y=Math.PI;
       const Lf=friend.userData.limbs;
       if(Lf){
         Lf[2].rotation.x=Math.sin(friendRunPhase)*.7;
@@ -1455,16 +1408,15 @@ function runCoopEndingScene(){
         state=STATES.STOP_AND_TURN;
         stateT=0;
         turnStartYaw=camYaw;
-        turnTargetYaw=Math.PI; // поворачиваемся на 180 градусов
+        turnTargetYaw=0; // ФИКС: оборачиваемся назад
       }
     }
     else if(state===STATES.STOP_AND_TURN){
-      // Останавливаемся и медленно оборачиваемся с покачиванием
+      // Останавливаемся и медленно оборачиваемся
       const t=Math.min(1,stateT/2.2);
       const ease=t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
       camYaw=turnStartYaw+(turnTargetYaw-turnStartYaw)*ease;
       
-      // Покачивание камеры при повороте
       const turnBob=Math.sin(stateT*3.5)*.04*Math.sin(t*Math.PI);
       const turnShake=Math.sin(stateT*12)*.015*Math.sin(t*Math.PI);
       
@@ -1473,7 +1425,6 @@ function runCoopEndingScene(){
       cam.rotation.x=Math.sin(stateT*2.2)*.03;
       cam.rotation.z=Math.sin(stateT*2.8)*.02;
       
-      // Друг застыл у двери, чуть покачивается
       friend.position.z=-1.5;
       
       if(t>0.15&&!$('coopText').classList.contains('on')){
@@ -1488,17 +1439,16 @@ function runCoopEndingScene(){
       }
     }
     else if(state===STATES.SEE_FRIEND){
-      // Смотрим на дверь и на друга за ней
+      // Смотрим НАЗАД (в -Z) на дверь и друга за ней
       cam.position.set(0,1.65,camZ);
-      cam.rotation.y=Math.PI;
-      // Чуть покачиваем головой, осматривая
+      cam.rotation.y=0; // ФИКС: смотрим назад (в -Z)
       cam.rotation.x=Math.sin(stateT*1.5)*.02;
       cam.rotation.z=Math.sin(stateT*1.2)*.015;
       
-      // Друг машет — покачивается и поднимает руки
+      // Друг машет
       const Lf=friend.userData.limbs;
       if(Lf){
-        Lf[0].rotation.x=-1.2+Math.sin(stateT*6)*.35; // рука вверх — машет
+        Lf[0].rotation.x=-1.2+Math.sin(stateT*6)*.35;
         Lf[1].rotation.x=-.3;
         Lf[2].rotation.x=.1;
         Lf[3].rotation.x=-.1;
@@ -1518,36 +1468,32 @@ function runCoopEndingScene(){
       }
     }
     else if(state===STATES.DOOR_SLAMS){
-      // ДВЕРЬ РЕЗКО ЗАХЛОПЫВАЕТСЯ перед лицом друга
+      // ДВЕРЬ ЗАХЛОПЫВАЕТСЯ
       const t=Math.min(1,stateT*3.2);
       doorAngleL=-DOOR_OPEN*(1-t);
       doorAngleR=DOOR_OPEN*(1-t);
       doorPivotL.rotation.y=doorAngleL;
       doorPivotR.rotation.y=doorAngleR;
       
-      // Друг ударяется в закрытую дверь
       const Lf=friend.userData.limbs;
       if(Lf){
-        Lf[0].rotation.x=-1.5; // руки вытянуты вперёд — упирается
+        Lf[0].rotation.x=-1.5;
         Lf[1].rotation.x=-1.5;
       }
-      // Небольшой отскок
       friend.position.z=-1.5+t*0.2;
       
-      // ЗВУК УДАРА + ТРЯСКА ЭКРАНА
       if(!doorSlamPlayed&&t>0.85){
         doorSlamPlayed=true;
         try{SND.doorSlam()}catch(e){}
       }
       
-      // Тряска камеры при ударе
       if(t>0.85){
         const shakeX=Math.sin(stateT*90)*.06;
         const shakeY=Math.cos(stateT*85)*.05;
         cam.position.x=shakeX*(1-Math.min(1,(stateT-0.27)/0.4));
         cam.position.y=1.65+shakeY*(1-Math.min(1,(stateT-0.27)/0.4));
       }
-      cam.rotation.y=Math.PI;
+      cam.rotation.y=0; // смотрим на дверь (назад)
       cam.rotation.x=0;
       cam.rotation.z=0;
       
@@ -1563,24 +1509,20 @@ function runCoopEndingScene(){
       }
     }
     else if(state===STATES.HOLD){
-      // Стоим и смотрим на дверь. Друг прижат к стеклу
+      // Смотрим на дверь, друг стучит
       cam.position.set(0,1.65,camZ);
-      cam.rotation.y=Math.PI;
-      // Лёгкое дыхание
+      cam.rotation.y=0; // смотрим назад на дверь
       cam.rotation.x=Math.sin(stateT*1.2)*.015;
       cam.rotation.z=Math.sin(stateT*1.5)*.012;
       
-      // Друг прижат к двери
       const Lf=friend.userData.limbs;
       if(Lf){
         Lf[0].rotation.x=-1.5;
         Lf[1].rotation.x=-1.5;
       }
       friend.position.z=-1.2;
-      // Стучит — периодически дёргается
       friend.position.x=Math.sin(stateT*18)*.02;
       
-      // Звук стука
       if(!loop._knockT)loop._knockT=0;
       loop._knockT-=dt;
       if(loop._knockT<=0){loop._knockT=1.2;try{SND.knock()}catch(e){}}
@@ -1602,11 +1544,8 @@ function runCoopEndingScene(){
       if(stateT>3.2){finish();return;}
     }
 
-    // Мерцание ламп
     lampLights.forEach(l=>{l.intensity=.6+Math.sin(now*.008)*.1+Math.random()*.05;});
     if(streetLight)streetLight.intensity=1.4+Math.sin(now*.003)*.15;
-    
-    // Мерцание звёзд
     if(stars&&stars.material)stars.material.opacity=.6+Math.sin(now*.001)*.2;
 
     try{renderer.render(scene,cam);}catch(e){finish();}
@@ -1617,7 +1556,7 @@ function runCoopEndingScene(){
 function showSadFinalScreen(){
   $('eT').textContent='😢 ГРУСТНЫЙ ФИНАЛ';
   $('eX').innerHTML='Вы вышли. <b style="color:#60c0ff">'+(FRIEND_CFG.name||'Друг')+' — остался внутри.</b>';
-  $('eS').innerHTML='V30.3 • '+DEVICE+'<br>Дней: '+G.day+'/5 • Смертей: '+G.deaths+'<br><br><i style="color:#7ab;font-size:9px">«Иногда вместе — не значит до конца.»</i>';
+  $('eS').innerHTML='V30.4 • '+DEVICE+'<br>Дней: '+G.day+'/5 • Смертей: '+G.deaths+'<br><br><i style="color:#7ab;font-size:9px">«Иногда вместе — не значит до конца.»</i>';
   $('eP').classList.add('on');
 }
 
@@ -1782,14 +1721,14 @@ function runExitAnimation(callback){
   requestAnimationFrame(loopExit);
 }
 
-// CREDITS — с грустной песней
+// CREDITS
 function buildCreditsHTML(){
   const srBest=G.srBest>0?G.srBest.toFixed(2)+' сек':'—';
   let helpersHTML='';
   TEAM.helpers.forEach(h=>{helpersHTML+=`<p style="margin-bottom:8px"><span style="font-size:1.3em">${h.emoji}</span> <span class="person">${h.name}</span> <span class="muted" style="font-size:.8em">— ${h.desc}</span></p>`;});
   return `
 <h1>ШКОЛА №43</h1>
-<p class="muted">НОЧНАЯ СМЕНА • V30.3 «БЕГ»</p>
+<p class="muted">НОЧНАЯ СМЕНА • V30.4 «БЕГ»</p>
 <div class="divider"></div>
 <p>Пять ночей.</p>
 <p>Пять дней в проклятой школе.</p>
@@ -1851,12 +1790,11 @@ ${helpersHTML}
 <p class="muted" style="font-size:.9em;margin-top:8px">— Команда ШКОЛА №43</p>
 <p style="color:#f0a;font-family:monospace;letter-spacing:3px;margin-top:50px;font-size:1.1em">КОД: ${TEAM.code}</p>
 <p class="muted" style="margin-top:40px;font-size:.85em">© 2026 ШКОЛА №43</p>
-<p class="muted" style="font-size:.85em">V30.3 «БЕГ»</p>`;
+<p class="muted" style="font-size:.85em">V30.4 «БЕГ»</p>`;
 }
 function showCredits(onEnd){
   const el=$('creditsScroll');const inner=$('creditsInner');
   inner.innerHTML=buildCreditsHTML();el.classList.add('on');
-  // Запускаем грустную песню
   try{SND.playSadSong();}catch(e){}
   let finished=false;const speed=55;
   inner.style.top=(window.innerHeight+40)+'px';
@@ -2041,21 +1979,20 @@ function openAch(){const l=$('acList');l.innerHTML='';Object.keys(ACH).forEach(k
 function openJournal(){const l=$('joList');l.innerHTML='';if(!G.journal||G.journal.length===0){l.innerHTML='<div style="padding:16px;text-align:center;color:#555;font-size:11px">Журнал пуст.</div>';}else{G.journal.slice().reverse().forEach(e=>{l.innerHTML+='<div style="padding:5px 8px;margin:3px 0;border-left:2px solid #5f9;font-size:10px"><b style="color:#5f9">Д'+e.day+' • '+e.time+'</b><br><span style="color:#bfe">'+e.text+'</span></div>';});}$('joP').classList.add('on');}
 
 const CHANGELOG=[
-{v:'V30.3',date:'2026-10-02',recent:true,items:[
-{tag:'new',text:'🎬 Грустная концовка от ПЕРВОГО ЛИЦА'},
-{tag:'new',text:'🏃 Бежишь по коридору и выбегаешь на улицу'},
-{tag:'new',text:'📷 Оборачиваешься с покачиванием камеры'},
-{tag:'new',text:'👥 Видишь, как друг бежит к двери и машет'},
-{tag:'new',text:'🚪 Дверь резко захлопывается перед другом'},
-{tag:'new',text:'🎵 Грустная песня в титрах (синтезированная мелодия)'},
-{tag:'new',text:'📝 Слова песни «Не отпускай руку» в титрах'}
+{v:'V30.4',date:'2026-10-02',recent:true,items:[
+{tag:'fix',text:'🐛 ФИКС: камера в финальной сцене смотрела назад'},
+{tag:'new',text:'🎬 Теперь бежишь ЛИЦОМ вперёд — камера смотрит по +Z'},
+{tag:'new',text:'🔄 При оборачивании поворот на 180° — видишь дверь и друга'},
+{tag:'new',text:'👥 Друг бежит ПОЗАДИ, останавливается у двери внутри'},
+{tag:'new',text:'🚪 Дверь захлопывается прямо перед ним'}
 ]},
+{v:'V30.3',date:'2026-10-02',items:[{tag:'new',text:'🎬 Грустная концовка от ПЕРВОГО ЛИЦА'}]},
 {v:'V30.2',date:'2026-10-02',items:[{tag:'new',text:'Кинематографичная концовка (3-е лицо)'}]},
 {v:'V30.1',date:'2026-10-02',items:[{tag:'new',text:'Мод БОТ-ДРУГ'},{tag:'new',text:'Режим ХАРДКОР'}]},
 {v:'V30',date:'2026-10-02',items:[{tag:'new',text:'Сервера как в Minecraft'}]}
 ];
 function openChangelog(){const l=$('chgContent');l.innerHTML='';CHANGELOG.forEach(entry=>{const d=document.createElement('div');d.className='chgBlock'+(entry.recent?' recent':'');let html='<h4>'+(entry.recent?'▸ ':'')+entry.v+'</h4><div class="date">📅 '+entry.date+'</div><ul>';entry.items.forEach(it=>{const tag=it.tag==='new'?'<span class="tag new">NEW</span>':it.tag==='fix'?'<span class="tag fix">FIX</span>':'<span class="tag upd">UPD</span>';html+='<li>'+tag+it.text+'</li>';});html+='</ul>';d.innerHTML=html;l.appendChild(d);});$('chgP').classList.add('on');}
-function openCredits(){const srBest=G.srBest>0?G.srBest.toFixed(2)+' сек':'нет рекорда';$('crContent').innerHTML='<div class="crTitle">🏫 ШКОЛА №43</div><div class="crSub">V30.3 «БЕГ»</div>'+'<div class="crBlock" style="border-color:#f0a"><b>🧪 МОДОВ</b><br><br>Всего: <b style="color:#5f9">'+Object.keys(MOD_DEFS).length+'</b><br>Активно: <b style="color:#ffd76a">'+countMods()+'</b></div>'+'<div class="crBlock" style="border-color:#a0e8ff"><b>⏱ СПИДРАН</b><br><br>Рекорд: <b style="color:#5f9">'+srBest+'</b></div>';$('crP').classList.add('on');}
+function openCredits(){const srBest=G.srBest>0?G.srBest.toFixed(2)+' сек':'нет рекорда';$('crContent').innerHTML='<div class="crTitle">🏫 ШКОЛА №43</div><div class="crSub">V30.4 «БЕГ»</div>'+'<div class="crBlock" style="border-color:#f0a"><b>🧪 МОДОВ</b><br><br>Всего: <b style="color:#5f9">'+Object.keys(MOD_DEFS).length+'</b><br>Активно: <b style="color:#ffd76a">'+countMods()+'</b></div>'+'<div class="crBlock" style="border-color:#a0e8ff"><b>⏱ СПИДРАН</b><br><br>Рекорд: <b style="color:#5f9">'+srBest+'</b></div>';$('crP').classList.add('on');}
 
 const DLG={
   sanya:{name:'САНЯ (ITZRealSaneghka)',role:'создатель игры',avatar:'🧙',start(){return{text:'Йо! Я Саня, создал эту игру.',choices:[{label:'«Спасибо!»',next:'thx'},{label:'«Дай маркер и бумеранг»',action:function(){G.inv.mk+=2;G.inv.bo+=1;uInv();toast('✒+2 🪃+1');},next:'gift'},{label:'«Пойду»',close:true}]};},thx(){return{text:'Играй на здоровье!',choices:[{label:'ОК',close:true}]};},gift(){return{text:'Держи.',choices:[{label:'Спасибо!',close:true}]};}},
@@ -2241,8 +2178,8 @@ function winGame(title,sub){
   if(RTC.connected||G.botFriend){coopSadEnding();return;}
   runExitAnimation(()=>{showCredits(()=>{endGFinal(title,sub);});});
 }
-function endGFinal(t,x){$('eT').textContent=t||'🏆 5 ДНЕЙ';$('eX').textContent=x||'Вы выжили!';let extra='';if(G.speedrun){const isRec=(G.srBest===0||G.srTime<G.srBest);if(isRec){G.srBest=G.srTime;try{localStorage.setItem('sh43srbest',G.srBest.toString())}catch(err){}extra='<br><b style="color:#5f9">🏆 РЕКОРД: '+G.srTime.toFixed(2)+' сек!</b>';}}$('eS').innerHTML='V30.3 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods()+extra;$('eP').classList.add('on');}
-function endG(k,t,x){if(k==='survive'||k==='lastnightWin'){winGame(t,x);return;}running=false;paused=true;if(document.pointerLockElement)document.exitPointerLock();const e=ENDS[k]||[t,x];$('eT').textContent=e[0];$('eX').textContent=e[1]||x;$('eS').innerHTML='V30.3 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods();$('eP').classList.add('on');$('hud').style.display='none';$('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');$('hcOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';G.ended=true;}
+function endGFinal(t,x){$('eT').textContent=t||'🏆 5 ДНЕЙ';$('eX').textContent=x||'Вы выжили!';let extra='';if(G.speedrun){const isRec=(G.srBest===0||G.srTime<G.srBest);if(isRec){G.srBest=G.srTime;try{localStorage.setItem('sh43srbest',G.srBest.toString())}catch(err){}extra='<br><b style="color:#5f9">🏆 РЕКОРД: '+G.srTime.toFixed(2)+' сек!</b>';}}$('eS').innerHTML='V30.4 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods()+extra;$('eP').classList.add('on');}
+function endG(k,t,x){if(k==='survive'||k==='lastnightWin'){winGame(t,x);return;}running=false;paused=true;if(document.pointerLockElement)document.exitPointerLock();const e=ENDS[k]||[t,x];$('eT').textContent=e[0];$('eX').textContent=e[1]||x;$('eS').innerHTML='V30.4 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods();$('eP').classList.add('on');$('hud').style.display='none';$('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');$('hcOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';G.ended=true;}
 function enterCameras(){if(!camCams.length){toast('Камеры недоступны');return;}G.camOn=true;G.camSel=0;G.camSeen=new Set([0]);$('camUI').classList.add('on');if(document.pointerLockElement)document.exitPointerLock();SND.cam();unlAch('camMaster');}
 function exitCameras(){G.camOn=false;$('camUI').classList.remove('on');if(RD){const W2=RD.domElement.width,H2=RD.domElement.height;RD.setScissorTest(false);RD.setViewport(0,0,W2,H2);RD.setScissor(0,0,W2,H2);}rqL();}
 function selectCam(i){if(i<0||i>=camCams.length)return;G.camSel=i;SND.cam();document.querySelectorAll('.camF').forEach(function(f){f.classList.toggle('sel',parseInt(f.dataset.i)===i);});G.camSeen.add(i);if(G.camSeen.size>=4)unlAch('camAll');}
@@ -2455,7 +2392,7 @@ function actuallyStartGame(){
   buildSchool();if(TOR)TOR.intensity=IH()?2.5:1.8;applyVisualMods();
   const p=RMS.s0;if(p){P.x=p.cx;P.z=p.cz+3;}else{P.x=0;P.z=0;}P.yaw=0;P.pitch=0;
   spawnAll();uInv();updateHotbar();addJ('Начата смена — День 1');
-  let startMsg='V30.3 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'));
+  let startMsg='V30.4 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'));
   if(IS_HARDCORE())startMsg+=' • ⚔️ ХАРДКОР';
   if(isMod('botfriend'))startMsg+=' • 👥 С ДРУГОМ';
   obj(startMsg);
@@ -2477,7 +2414,7 @@ $('mc').addEventListener('contextmenu',function(e){e.preventDefault();});
 if(OPT_CFG.showFps)$('fpsCounter').classList.add('on');
 try{runIntro();}catch(e){console.error(e);showMenuFinal();}
 loop(0);
-console.log('ШКОЛА №43 — V30.3 «БЕГ» загружена');
+console.log('ШКОЛА №43 — V30.4 «БЕГ» загружена');
 </script>
 </body>
-              </html>
+                </html>
