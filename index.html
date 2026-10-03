@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#000">
-<title>ШКОЛА №43 — V30.5 «УДАЧИ, БРО»</title>
+<title>ШКОЛА №43 — V30.6 «ВЫХОД ЕСТЬ»</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-tap-highlight-color:transparent;font-family:Consolas,monospace}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;position:fixed;touch-action:none}
@@ -167,6 +167,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 #tb .ph.coop{color:#60c0ff;font-weight:bold;animation:pl 1.5s infinite}
 #tb .ph.hc{color:#ff4040;font-weight:bold;animation:hcPulse 1s infinite}
 #tb .ph.eng{color:#ff8080;font-weight:bold;animation:pl .4s infinite;text-shadow:0 0 8px #f00}
+#tb .ph.exit{color:#5fff9f;font-weight:bold;animation:exitPulse 1s infinite;text-shadow:0 0 10px #0f0}
+@keyframes exitPulse{50%{opacity:.5;text-shadow:0 0 20px #0f0}}
 @keyframes hcPulse{50%{opacity:.5}}
 @keyframes pl{50%{opacity:.3}}
 @keyframes bagHue{0%,100%{color:#f0a;transform:skew(3deg)}50%{color:#0fa;transform:skew(-3deg)}}
@@ -191,11 +193,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 #ts{position:absolute;right:8px;bottom:200px;display:flex;flex-direction:column;align-items:flex-end;gap:3px;max-width:60vw}
 .t{font-size:9.5px;color:#ffd76a;padding:4px 8px;background:rgba(0,0,0,.85);border:1px solid rgba(255,215,106,.4);border-radius:3px;animation:ti .2s,to 3.4s ease-in forwards}
 .t.eng{color:#ff6060;border-color:#ff6060;font-weight:bold;animation:ti .2s,to .5s ease-in 5s forwards}
+.t.exit{color:#5fff9f;border-color:#5fff9f;font-weight:bold}
 @keyframes ti{from{opacity:0;transform:translateX(20px)}}
 @keyframes to{to{opacity:0;transform:translateX(20px)}}
 #dm{position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 30%,rgba(150,0,0,.9));opacity:0;transition:.3s;pointer-events:none;z-index:15}
 .fl{position:fixed;inset:0;opacity:0;pointer-events:none;z-index:28;transition:opacity .25s}
-#wf{background:#fff}#bf{background:#2040ff}#df{background:#ffe8a0}#rf{background:#f00;z-index:27;transition:.1s}#af{background:#a0d8ff}#tf{background:radial-gradient(circle,rgba(240,0,240,.4),rgba(150,80,255,.15));z-index:26}#ef{background:rgba(255,80,80,.4)}
+#wf{background:#fff}#bf{background:#2040ff}#df{background:#ffe8a0}#rf{background:#f00;z-index:27;transition:.1s}#af{background:#a0d8ff}#tf{background:radial-gradient(circle,rgba(240,0,240,.4),rgba(150,80,255,.15));z-index:26}#ef{background:rgba(255,80,80,.4)}#gf{background:rgba(80,255,140,.35)}
 #ln{position:fixed;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(80,0,0,.5));pointer-events:none;z-index:13;opacity:0;transition:.5s}
 #ln.on{opacity:1}
 #sk{position:fixed;inset:0;background:#000;z-index:99;display:none;pointer-events:none}
@@ -323,8 +326,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 #exitCanvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
 #exitVignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,.85) 100%);z-index:2}
 #exitFade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:3;transition:opacity 1.5s}
-
-/* ═══ COOP ENDING ═══ */
 #coopEnding{position:fixed;inset:0;z-index:185;background:#000;display:none;overflow:hidden;pointer-events:none}
 #coopEnding.on{display:block}
 #coopCanvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
@@ -402,7 +403,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <div id="intro">
   <canvas id="introCanvas"></canvas>
   <div class="introOverlay"></div>
-  <div class="introTitle"><div class="t1">ШКОЛА №43</div><div class="t2">НОЧНАЯ СМЕНА • V30.5 «УДАЧИ, БРО»</div></div>
+  <div class="introTitle"><div class="t1">ШКОЛА №43</div><div class="t2">НОЧНАЯ СМЕНА • V30.6 «ВЫХОД ЕСТЬ»</div></div>
   <div class="introSub">входим в школу...</div>
   <div class="introSkip" id="introSkip">ПРОПУСТИТЬ ▸</div>
 </div>
@@ -427,7 +428,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
   <div id="menuBg"></div>
   <div class="mHead">
     <div class="mHeadLogo">🦉</div>
-    <div class="mHeadTitle"><div class="a">ШКОЛА №43</div><div class="b">НОЧНАЯ СМЕНА • V30.5 «УДАЧИ, БРО»</div></div>
+    <div class="mHeadTitle"><div class="a">ШКОЛА №43</div><div class="b">НОЧНАЯ СМЕНА • V30.6 «ВЫХОД ЕСТЬ»</div></div>
     <div class="mHeadRight">
       <span class="badge" id="devBadge">PC</span>
       <span class="online" id="onlineBadge">🌐 В СЕТИ</span>
@@ -564,7 +565,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 
 <div id="dm"></div>
 <div class="fl" id="wf"></div><div class="fl" id="bf"></div><div class="fl" id="df"></div>
-<div class="fl" id="rf"></div><div class="fl" id="af"></div><div class="fl" id="tf"></div><div class="fl" id="ef"></div>
+<div class="fl" id="rf"></div><div class="fl" id="af"></div><div class="fl" id="tf"></div><div class="fl" id="ef"></div><div class="fl" id="gf"></div>
 <div id="ln"></div><div id="hb"></div>
 <div id="sk"><div id="skf">☠</div></div>
 <div id="cd"><div id="cdn">5</div><div id="cdt">ПОСЛЕДНИЙ ДЕНЬ</div></div>
@@ -644,8 +645,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#cfe;posi
 <div class="pn" id="chgP"><div class="pb" style="max-width:600px"><h2>📋 СПИСОК ИЗМЕНЕНИЙ</h2><div id="chgContent"></div><button id="chgB" class="p" style="width:100%;margin-top:10px">ЗАКРЫТЬ</button></div></div>
 <div class="pn" id="abP"><div class="pb"><h2>О ИГРЕ</h2>
 <div style="font-size:10.5px;line-height:1.6;color:#bfe">
-<b style="color:#5f9">ШКОЛА №43 — V30.5 «УДАЧИ, БРО»</b><br><br>
-Новая концовка: если прийти в кабинет английского в конце 5 дня или в coop-режиме — англичанка забирает друга, он кричит «Удачи, бро!».
+<b style="color:#5f9">ШКОЛА №43 — V30.6 «ВЫХОД ЕСТЬ»</b><br><br>
+Главный вход у поста охраны (южная стена) — выход на улицу.<br>
+При подходе к двери — если есть друг — запускается coop-концовка.<br>
+Англичанка теперь догоняет, а не убивает мгновенно.
 </div>
 <button id="abB" class="p">ЗАКРЫТЬ</button></div></div>
 <div class="pn" id="eP"><div class="pb" style="text-align:center">
@@ -790,9 +793,9 @@ function saveCheat(){try{localStorage.setItem('sh43cheat',JSON.stringify(CHEAT_C
 const BAG_CFG=Object.assign({intensity:1,teleport:true,hpJitter:true,textJitter:true,npcSpin:true,npcColor:true,overlay:true},JSON.parse(localStorage.getItem('sh43bag')||'{}'));
 function saveBag(){try{localStorage.setItem('sh43bag',JSON.stringify(BAG_CFG))}catch(e){}}
 const MOD_PRESETS={horror:{name:'😱 ХОРРОР',icon:'😱',mods:{night:true,fog:true,echo:true,lowpitch:true,shake:true,danger:true}},friend:{name:'👥 С ДРУГОМ',icon:'👥',mods:{botfriend:true,botfriend_smart:true,botfriend_medic:true}},fun:{name:'🎉 ВЕСЕЛЬЕ',icon:'🎉',mods:{dance:true,party:true,fart:true,duck:true,cat:true}},fastpc:{name:'⚡ БЫСТРО',icon:'⚡',mods:{opt_noshadow:true,opt_fps60:true,opt_noparticles:true,opt_simple:true}},weakpc:{name:'🐢 СЛАБЫЙ ПК',icon:'🐢',mods:{opt_noshadow:true,opt_lowres:true,opt_fps30:true,opt_noparticles:true,opt_simple:true,opt_far:true}},chill:{name:'😌 СПОКОЙНО',icon:'😌',mods:{sunset:true,music:true,cat:true,miniMap:true}},godmode:{name:'⚡ БОГ',icon:'⚡',mods:{cheat:true,godHP:true,instaKill:true,allItems:true}},dark:{name:'🖤 ТЬМА',icon:'🖤',mods:{fog:true,lowpitch:true,shake:true}}};
-const ACH={firstNight:'ПЕРВАЯ НОЧЬ',day2:'ВТОРАЯ',day3:'ТРЕТЬЯ',day4:'ЧЕТВЁРТАЯ',code1:'КОД 1',code0:'КОД 0',code3:'КОД 3',fiveDays:'5 ДНЕЙ',marker:'МАРКЕР',boomerang:'БУМЕРАНГ',legendary:'ЛЕГЕНДА',camMaster:'НАБЛЮДАТЕЛЬ',camAll:'ВСЕ КАМЕРЫ',dialogMaster:'ДИПЛОМАТ',alm:'МИНДАЛЬ',thief:'ВОР',survivor:'ВЫЖИВШИЙ',totem:'🦉 СОВА',speedrun:'СПИДРАНЕР',online:'ОНЛАЙН',bag:'БАГЛОРД',modsOn:'МОДДЕР',mods10:'10 МОДОВ',opt:'ОПТИМИЗАТОР',sadEnd:'😢 ГРУСТНЫЙ ФИНАЛ',friendBot:'👥 С БОТОМ',hardcoreWin:'⚔️ ХАРДКОР',hardcoreDeath:'💀 ХАРДКОР-СМЕРТЬ',englishEnd:'🇬🇧 УДАЧИ, БРО',teachersAllDay:'👨‍🏫 ДНЕВНАЯ СМЕНА'};
+const ACH={firstNight:'ПЕРВАЯ НОЧЬ',day2:'ВТОРАЯ',day3:'ТРЕТЬЯ',day4:'ЧЕТВЁРТАЯ',code1:'КОД 1',code0:'КОД 0',code3:'КОД 3',fiveDays:'5 ДНЕЙ',marker:'МАРКЕР',boomerang:'БУМЕРАНГ',legendary:'ЛЕГЕНДА',camMaster:'НАБЛЮДАТЕЛЬ',camAll:'ВСЕ КАМЕРЫ',dialogMaster:'ДИПЛОМАТ',alm:'МИНДАЛЬ',thief:'ВОР',survivor:'ВЫЖИВШИЙ',totem:'🦉 СОВА',speedrun:'СПИДРАНЕР',online:'ОНЛАЙН',bag:'БАГЛОРД',modsOn:'МОДДЕР',mods10:'10 МОДОВ',opt:'ОПТИМИЗАТОР',sadEnd:'😢 ГРУСТНЫЙ ФИНАЛ',friendBot:'👥 С БОТОМ',hardcoreWin:'⚔️ ХАРДКОР',hardcoreDeath:'💀 ХАРДКОР-СМЕРТЬ',englishEnd:'🇬🇧 УДАЧИ, БРО',teachersAllDay:'👨‍🏫 ДНЕВНАЯ СМЕНА',escaped:'🚪 ПОБЕГ'};
 
-const G={time:START_MIN,day:1,dayRealTime:0,hp:100,st:100,hg:100,sn:100,thr:100,inv:{food:0,med:0,alm:0,mk:1,bo:0,totem:0,box:0},bell:0,code1:0,code1T:0,deaths:0,knife:false,fiz:0,fizT:0,fizJ:0,fizD:false,lone:0,bath:0,imm:0,ln:false,lnT:0,bob:0,ger:null,gKill:0,cdOn:false,cdV:5,cdT:0,map:0,spawned:false,items:[],proj:[],flashOn:true,ach:{},journal:[],camOn:false,camSel:0,camNV:false,camTime:0,camSeen:new Set(),talkCount:0,picked:0,busys:false,ended:false,paused:false,scream:999,_rulesShown:false,radio:0,transition:false,stats:{kills:0,talks:0,items:0},totemUsed:false,savedPos:null,invuln:0,speedrun:false,srTime:0,srBest:0,twin:null,coop:false,botFriend:null,hardcore:false,englishAngry:false,dayNPCs:false,bag:{teleportCool:0,hpJitter:0,lastBagMsg:0}};
+const G={time:START_MIN,day:1,dayRealTime:0,hp:100,st:100,hg:100,sn:100,thr:100,inv:{food:0,med:0,alm:0,mk:1,bo:0,totem:0,box:0},bell:0,code1:0,code1T:0,deaths:0,knife:false,fiz:0,fizT:0,fizJ:0,fizD:false,lone:0,bath:0,imm:0,ln:false,lnT:0,bob:0,ger:null,gKill:0,cdOn:false,cdV:5,cdT:0,map:0,spawned:false,items:[],proj:[],flashOn:true,ach:{},journal:[],camOn:false,camSel:0,camNV:false,camTime:0,camSeen:new Set(),talkCount:0,picked:0,busys:false,ended:false,paused:false,scream:999,_rulesShown:false,radio:0,transition:false,stats:{kills:0,talks:0,items:0},totemUsed:false,savedPos:null,invuln:0,speedrun:false,srTime:0,srBest:0,twin:null,coop:false,botFriend:null,hardcore:false,englishAngry:false,dayNPCs:false,gerSpawnDay:0,bag:{teleportCool:0,hpJitter:0,lastBagMsg:0}};
 try{G.srBest=parseFloat(localStorage.getItem('sh43srbest')||'0')}catch(e){}
 
 let fpsVal=0,fpsFrames=0,fpsLastTime=0;
@@ -823,6 +826,7 @@ friend(){this.tone(700,.1,.12,'sine');setTimeout(()=>this.tone(900,.12,.1,'sine'
 english(){this.tone(1400,.15,.3,'square');setTimeout(()=>this.tone(1100,.2,.28,'square'),150);setTimeout(()=>this.tone(800,.3,.25,'sawtooth'),300);},
 englishEvil(){this.tone(200,.8,.4,'sawtooth');this.tone(150,1.2,.35,'sawtooth');setTimeout(()=>this.tone(100,1.5,.3,'sawtooth'),200);},
 fall(){this.tone(200,.3,.4,'sawtooth');setTimeout(()=>this.tone(120,.4,.35),100);setTimeout(()=>this.tone(80,.5,.3),200);},
+exit(){this.tone(660,.2,.3);setTimeout(()=>this.tone(880,.2,.28),150);setTimeout(()=>this.tone(1320,.4,.25),300);},
 songStop:false,
 playSadSong(){
   if(!this.c||isMod('mute'))return;
@@ -842,7 +846,6 @@ playSadSong(){
   this._songGain=songGain;
 },
 songFadeOut(){this.songStop=true;if(this._songGain&&this.c){try{this._songGain.gain.exponentialRampToValueAtTime(0.001,this.c.currentTime+2);}catch(e){}}},
-// НОВАЯ МЕЛОДИЯ ДЛЯ КОНЦОВКИ С АНГЛИЧАНКОЙ — мрачная, тревожная
 playEnglishSong(){
   if(!this.c||isMod('mute'))return;
   this.songStop=false;
@@ -852,7 +855,6 @@ playEnglishSong(){
   songGain.connect(this.musicGain||this.m);
   songGain.gain.exponentialRampToValueAtTime(0.4,ctx.currentTime+2);
   const beat=0.55;
-  // Мрачная тема в Dm
   const melodies=[[{t:0,f:293.66,d:beat*2},{t:beat*2,f:349.23,d:beat},{t:beat*3,f:440,d:beat*2}],[{t:beat*5,f:392,d:beat},{t:beat*6,f:349.23,d:beat},{t:beat*7,f:293.66,d:beat*2}],[{t:beat*9,f:220,d:beat*2},{t:beat*11,f:261.63,d:beat},{t:beat*12,f:293.66,d:beat*2}],[{t:beat*14,f:293.66,d:beat*3}],[{t:beat*18,f:261.63,d:beat},{t:beat*19,f:293.66,d:beat},{t:beat*20,f:349.23,d:beat*2}],[{t:beat*22,f:440,d:beat},{t:beat*23,f:392,d:beat},{t:beat*24,f:349.23,d:beat*2}],[{t:beat*26,f:293.66,d:beat*4}]];
   const bass=[{t:0,notes:[73.42,146.83,174.61]},{t:beat*5,notes:[98,196,220]},{t:beat*9,notes:[73.42,146.83,174.61]},{t:beat*14,notes:[73.42,146.83,174.61]},{t:beat*18,notes:[87.31,174.61,220]},{t:beat*22,notes:[98,196,246.94]},{t:beat*26,notes:[73.42,146.83,174.61]}];
   const startTime=ctx.currentTime+0.05;
@@ -929,9 +931,7 @@ function uBotFriend(dt,now){
 }
 
 // ═══════════════════════════════════════════════════════
-// ФИНАЛЬНАЯ СЦЕНА — 2 ВАРИАНТА
-// 1) Обычная: друг сзади, дверь закрывается
-// 2) АНГЛИЧАНКА: друг спотыкается, "Удачи, бро!", его забирают
+// ФИНАЛЬНАЯ СЦЕНА
 // ═══════════════════════════════════════════════════════
 let coopEndingRenderer=null;
 function coopSadEnding(englishMode){
@@ -954,7 +954,7 @@ function coopSadEnding(englishMode){
 function runCoopEndingScene(englishMode){
   const el=$('coopEnding');
   const cv=$('coopCanvas');
-  if(!cv){showCredits(()=>{showSadFinalScreen(englishMode);});return;}
+  if(!cv){showCredits(()=>{showSadFinalScreen(englishMode);},englishMode);return;}
   el.classList.add('on');
   $('coopFade').style.opacity='0';
   $('coopText').innerHTML='';
@@ -968,7 +968,7 @@ function runCoopEndingScene(englishMode){
     renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,p.pixelRatio));
     renderer.setSize(window.innerWidth,window.innerHeight,false);
     renderer.outputColorSpace=THREE.SRGBColorSpace;
-  }catch(e){showCredits(()=>{showSadFinalScreen(englishMode);});return;}
+  }catch(e){showCredits(()=>{showSadFinalScreen(englishMode);},englishMode);return;}
   coopEndingRenderer=renderer;
 
   const scene=new THREE.Scene();
@@ -1036,7 +1036,6 @@ function runCoopEndingScene(englishMode){
   const streetLight=new THREE.PointLight(0xffe8a0,1.6,20,1.5);streetLight.position.set(-4.6,4.3,7);scene.add(streetLight);
   const poleArm=new THREE.Mesh(new THREE.BoxGeometry(.18,.18,.7),poleM);poleArm.position.set(-4.8,4.4,7);scene.add(poleArm);
 
-  // ДРУГ
   const friend=new THREE.Group();
   const fBody=new THREE.Mesh(new THREE.CapsuleGeometry(.28,1,.5,12),mFriend);fBody.position.y=1;friend.add(fBody);
   const fHead=new THREE.Mesh(new THREE.SphereGeometry(.22,12,10),new THREE.MeshLambertMaterial({color:0xe8d0b0}));fHead.position.y=1.75;friend.add(fHead);
@@ -1046,7 +1045,6 @@ function runCoopEndingScene(englishMode){
   scene.add(friend);
   const friendGlow=new THREE.PointLight(0x60c0ff,1.0,5,2);friendGlow.position.y=1.5;friend.add(friendGlow);
 
-  // АНГЛИЧАНКА (только для englishMode)
   const teacher=new THREE.Group();
   const tBody=new THREE.Mesh(new THREE.CapsuleGeometry(.3,1.1,.5,12),mTeacher);tBody.position.y=1;teacher.add(tBody);
   const tHead=new THREE.Mesh(new THREE.SphereGeometry(.24,12,10),new THREE.MeshLambertMaterial({color:0xf0d0b0}));tHead.position.y=1.8;teacher.add(tHead);
@@ -1057,7 +1055,6 @@ function runCoopEndingScene(englishMode){
   scene.add(teacher);
   const teacherGlow=new THREE.PointLight(0xff3050,englishMode?1.5:0,7,2);teacherGlow.position.y=1.5;teacher.add(teacherGlow);
 
-  // НЕБО
   const skyGeo=new THREE.SphereGeometry(60,16,12);
   const skyMat=new THREE.MeshBasicMaterial({color:englishMode?0x1a0520:0x0a1228,side:THREE.BackSide,fog:false});
   scene.add(new THREE.Mesh(skyGeo,skyMat));
@@ -1068,9 +1065,6 @@ function runCoopEndingScene(englishMode){
   const stars=new THREE.Points(starsGeo,new THREE.PointsMaterial({color:0xffffff,size:.3,transparent:true,opacity:.8}));
   scene.add(stars);
 
-  // СЦЕНАРИЙ
-  // Обычный: RUN_TO_DOOR → EXIT → TURN → SEE_FRIEND → DOOR_SLAMS → HOLD → FADE
-  // Англичанка: RUN_TO_DOOR → FRIEND_FALLS (друг спотыкается впереди) → TEACHER_TAKES (его забирают) → PLAYER_EXITS → FADE
   const STATES={RUN_TO_DOOR:0,EXIT_SCHOOL:1,STOP_AND_TURN:2,SEE_FRIEND:3,DOOR_SLAMS:4,HOLD:5,FADE:6,
     ENG_RUN:10,ENG_FRIEND_FALLS:11,ENG_TEACHER_TAKES:12,ENG_PLAYER_EXITS:13};
   let state=englishMode?STATES.ENG_RUN:STATES.RUN_TO_DOOR;
@@ -1089,7 +1083,6 @@ function runCoopEndingScene(englishMode){
   let turnTargetYaw=0;
   let friendFell=false;
   let teacherZ=-25;
-  let teacherSpeed=0;
   let teacherPhase=0;
 
   function finish(){
@@ -1107,7 +1100,6 @@ function runCoopEndingScene(englishMode){
     const dt=Math.min(.05,(now-last)/1000);last=now;
     stateT+=dt;
 
-    // ═══ ОБЫЧНЫЙ РЕЖИМ ═══
     if(!englishMode){
       if(state===STATES.RUN_TO_DOOR){
         camZ+=dt*9.5;camBobPhase+=dt*14;
@@ -1173,29 +1165,24 @@ function runCoopEndingScene(englishMode){
       }
       else if(state===STATES.FADE){$('coopFade').style.opacity=Math.min(1,stateT/3);if(stateT>3.2){finish();return;}}
     }
-    // ═══ РЕЖИМ АНГЛИЧАНКИ ═══
     else{
       if(state===STATES.ENG_RUN){
-        // Бежим с другом — друг ВПЕРЕДИ
         camZ+=dt*10.0;camBobPhase+=dt*15;
         const bobY=Math.sin(camBobPhase*2)*.06;const bobSide=Math.cos(camBobPhase)*.03;
         cam.position.set(bobSide,1.65+bobY,camZ);
         camYaw=Math.PI+Math.sin(camBobPhase*.5)*.03;
         cam.rotation.y=camYaw;cam.rotation.x=Math.sin(camBobPhase*2)*.02;cam.rotation.z=Math.sin(camBobPhase)*.015;
-        // Друг впереди нас
         friendRunPhase+=dt*14;friendZ+=dt*11.0;
         friend.position.z=friendZ;friend.rotation.y=Math.PI;
         const Lf=friend.userData.limbs;
         if(Lf){Lf[2].rotation.x=Math.sin(friendRunPhase)*.8;Lf[3].rotation.x=-Math.sin(friendRunPhase)*.8;Lf[0].rotation.x=-Math.sin(friendRunPhase)*.7;Lf[1].rotation.x=Math.sin(friendRunPhase)*.7;}
-        // Англичанка позади
         teacherZ=camZ-8;teacher.position.z=teacherZ;teacher.rotation.y=0;
         teacherPhase+=dt*8;
         teacher.position.y=Math.abs(Math.sin(teacherPhase))*.08;
         if(stateT>0.2)$('endingBar').classList.add('on');
         $('endingBarFill').style.width=Math.min(100,(camZ+25)/25*100)+'%';
         if(stateT>0.2&&!$('coopText').classList.contains('on')){$('coopText').innerHTML='<span class="eng">ОНА ЗА НАМИ!</span><br>Беги быстрее!';$('coopText').classList.add('on');}
-        try{SND.englishEvil()}catch(e){}
-        // Друг спотыкается на z=-5
+        try{SND.playEnglishSong();}catch(e){}
         if(friendZ>=-5&&!friendFell){
           friendFell=true;state=STATES.ENG_FRIEND_FALLS;stateT=0;
           $('coopText').classList.remove('on');
@@ -1205,19 +1192,16 @@ function runCoopEndingScene(englishMode){
         }
       }
       else if(state===STATES.ENG_FRIEND_FALLS){
-        // Друг лежит
         const t=Math.min(1,stateT*2.0);
         friend.position.z=friendZ;
         friend.rotation.x=-Math.PI/2*t;
         friend.position.y=-.3*t;
         const Lf=friend.userData.limbs;
         if(Lf){Lf[0].rotation.x=Math.sin(stateT*10)*.2;Lf[1].rotation.x=-Math.sin(stateT*10)*.2;}
-        // Мы замедляемся
         camZ+=dt*4*(1-Math.min(1,stateT/1.5));
         cam.position.set(0,1.65,camZ);
         cam.rotation.y=Math.PI;
         cam.rotation.x=Math.sin(stateT*2)*.05*(1-Math.min(1,stateT/1.5));
-        // Англичанка приближается
         teacherZ+=(camZ-3-teacherZ)*Math.min(1,dt*1.5);teacher.position.z=teacherZ;
         teacher.rotation.y=0;
         teacherPhase+=dt*12;teacher.position.y=Math.abs(Math.sin(teacherPhase))*.1;
@@ -1228,17 +1212,13 @@ function runCoopEndingScene(englishMode){
         if(stateT>2.2){state=STATES.ENG_TEACHER_TAKES;stateT=0;$('coopText').classList.remove('on');}
       }
       else if(state===STATES.ENG_TEACHER_TAKES){
-        // Англичанка хватает друга
         cam.position.set(0,1.65,camZ);
         cam.rotation.y=Math.PI;
         cam.rotation.x=Math.sin(stateT*3)*.04;
-        // Англичанка тянется к другу
         teacherZ+=(friendZ-.6-teacherZ)*Math.min(1,dt*2);teacher.position.z=teacherZ;
         teacher.rotation.y=0;
-        // Руки-щупальца
         const Lf=friend.userData.limbs;
         if(Lf){Lf[0].rotation.x=-1.0-Math.sin(stateT*4)*.3;Lf[1].rotation.x=-1.0+Math.sin(stateT*4)*.3;}
-        // Друг поднимается и смотрит на нас
         friend.rotation.x=-Math.PI/2*(1-Math.min(1,stateT/1.2));
         friend.position.y=-.3*(1-Math.min(1,stateT/1.2));
         if(stateT>0.5&&!$('coopText').classList.contains('on')){
@@ -1248,7 +1228,6 @@ function runCoopEndingScene(englishMode){
         if(stateT>2.5){state=STATES.ENG_PLAYER_EXITS;stateT=0;$('coopText').classList.remove('on');}
       }
       else if(state===STATES.ENG_PLAYER_EXITS){
-        // Мы выбегаем из школы, оглядываемся
         const spd=8*(1-Math.min(1,stateT/2));
         camZ+=dt*Math.max(3,spd);
         camBobPhase+=dt*12*(1-Math.min(1,stateT/2));
@@ -1256,10 +1235,8 @@ function runCoopEndingScene(englishMode){
         cam.position.set(0,1.65+bobY,camZ);
         cam.rotation.y=Math.PI;
         cam.rotation.z=Math.sin(camBobPhase)*.02;
-        // Англичанка и друг остаются позади
         teacher.position.z+=dt*0;
         friend.position.z+=dt*0;
-        // Друг машет
         const Lf=friend.userData.limbs;
         if(Lf){Lf[0].rotation.x=-1.5+Math.sin(stateT*8)*.4;Lf[1].rotation.x=-1.5-Math.sin(stateT*8)*.4;}
         if(stateT>0.3&&!$('coopText').classList.contains('on')){
@@ -1285,11 +1262,11 @@ function showSadFinalScreen(englishMode){
   if(englishMode){
     $('eT').textContent='🇬🇧 УДАЧИ, БРО';
     $('eX').innerHTML='Англичанка забрала <b style="color:#60c0ff">'+(FRIEND_CFG.name||'Друга')+'</b>.<br>Ты вышел один.';
-    $('eS').innerHTML='V30.5 • '+DEVICE+'<br>Дней: '+G.day+'/5 • Смертей: '+G.deaths+'<br><br><i style="color:#ffd76a;font-size:10px">«Удачи, бро!» — его последние слова.</i>';
+    $('eS').innerHTML='V30.6 • '+DEVICE+'<br>Дней: '+G.day+'/5 • Смертей: '+G.deaths+'<br><br><i style="color:#ffd76a;font-size:10px">«Удачи, бро!» — его последние слова.</i>';
   } else {
     $('eT').textContent='😢 ГРУСТНЫЙ ФИНАЛ';
     $('eX').innerHTML='Вы вышли. <b style="color:#60c0ff">'+(FRIEND_CFG.name||'Друг')+' — остался внутри.</b>';
-    $('eS').innerHTML='V30.5 • '+DEVICE+'<br>Дней: '+G.day+'/5 • Смертей: '+G.deaths+'<br><br><i style="color:#7ab;font-size:9px">«Иногда вместе — не значит до конца.»</i>';
+    $('eS').innerHTML='V30.6 • '+DEVICE+'<br>Дней: '+G.day+'/5 • Смертей: '+G.deaths+'<br><br><i style="color:#7ab;font-size:9px">«Иногда вместе — не значит до конца.»</i>';
   }
   $('eP').classList.add('on');
 }
@@ -1433,7 +1410,7 @@ function buildCreditsHTML(){
   TEAM.helpers.forEach(h=>{helpersHTML+=`<p style="margin-bottom:8px"><span style="font-size:1.3em">${h.emoji}</span> <span class="person">${h.name}</span> <span class="muted" style="font-size:.8em">— ${h.desc}</span></p>`;});
   return `
 <h1>ШКОЛА №43</h1>
-<p class="muted">НОЧНАЯ СМЕНА • V30.5 «УДАЧИ, БРО»</p>
+<p class="muted">НОЧНАЯ СМЕНА • V30.6 «ВЫХОД ЕСТЬ»</p>
 <div class="divider"></div>
 <p>Пять ночей.</p>
 <p>Пять дней в проклятой школе.</p>
@@ -1509,7 +1486,7 @@ ${helpersHTML}
 <p class="muted" style="font-size:.9em;margin-top:8px">— Команда ШКОЛА №43</p>
 <p style="color:#f0a;font-family:monospace;letter-spacing:3px;margin-top:50px;font-size:1.1em">КОД: ${TEAM.code}</p>
 <p class="muted" style="margin-top:40px;font-size:.85em">© 2026 ШКОЛА №43</p>
-<p class="muted" style="font-size:.85em">V30.5 «УДАЧИ, БРО»</p>`;
+<p class="muted" style="font-size:.85em">V30.6 «ВЫХОД ЕСТЬ»</p>`;
 }
 function showCredits(onEnd,englishMode){
   const el=$('creditsScroll');const inner=$('creditsInner');
@@ -1675,7 +1652,7 @@ function updateGfxInfo(level){const p=GFX_PRESETS[level]||GFX_PRESETS.medium;con
 document.querySelectorAll('.gfxBtn').forEach(b=>{b.onclick=()=>{setGfxLevel(b.dataset.gfx);document.querySelectorAll('.gfxBtn').forEach(x=>x.classList.toggle('on',x.dataset.gfx===b.dataset.gfx));updateGfxInfo(b.dataset.gfx);toast('🖼 '+b.querySelector('.nm').textContent);try{SND.click()}catch(e){}};});
 $('s5').addEventListener('input',e=>{cfg.fog=parseFloat(e.target.value);$('v5').textContent=cfg.fog+'м';if(SC&&SC.fog)SC.fog.far=cfg.fog;saveAll();});
 $('s6').addEventListener('input',e=>{cfg.dist=parseFloat(e.target.value);$('v6').textContent=cfg.dist;saveAll();});
-function showRules(){const r=[['1. СТОРОЖ','КОД 1 через рацию (R).'],['2. ДИРЕКТОР 2:43','Помаши (E).'],['3. ФИЗРУК','Спортзал до 00:30.'],['4. УЧИТЕЛЬ 4Б','Покажи дату (E).'],['5. ЛАРИОНОВ','КОД 3.'],['6. АНТОН','Булочку или нож.'],['7. АМИРА','Через кабинет директора.'],['🚨 ВАЖНО','Герман — только маркер.'],['🇬🇧 АНГЛИЧАНКА','Приди в кабинет англ. в 23:00+ 5 дня.'],['🦉 ТОТЕМ','30с неуязвимость']];$('rlT').innerHTML=r.map(x=>'<p><b>'+x[0]+'</b><br>'+x[1]+'</p>').join('');$('rlP').classList.add('on');}
+function showRules(){const r=[['1. СТОРОЖ','КОД 1 через рацию (R).'],['2. ДИРЕКТОР 2:43','Помаши (E).'],['3. ФИЗРУК','Спортзал до 00:30.'],['4. УЧИТЕЛЬ 4Б','Покажи дату (E).'],['5. ЛАРИОНОВ','КОД 3.'],['6. АНТОН','Булочку или нож.'],['7. АМИРА','Через кабинет директора.'],['🚨 ВАЖНО','Герман — только маркер. В лёгком — раз в 2 дня.'],['🇬🇧 АНГЛИЧАНКА','В 5-й день после 23:00 беги к выходу!'],['🚪 ВЫХОД','Южная стена у поста охраны.'],['🦉 ТОТЕМ','30с неуязвимость']];$('rlT').innerHTML=r.map(x=>'<p><b>'+x[0]+'</b><br>'+x[1]+'</p>').join('');$('rlP').classList.add('on');}
 $('eR').onclick=()=>{$('eP').classList.remove('on');$('menu').classList.add('on');$('hud').style.display='none';$('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');$('hcOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';running=false;dead=true;if(RD&&RD.domElement&&RD.domElement.parentNode)RD.domElement.parentNode.removeChild(RD.domElement);RD=null;showScreen('mm');showMenuFinal();};
 $('pauseResume').onclick=()=>{paused=false;G.paused=false;$('pauseP').classList.remove('on');if(DEVICE==='pc'&&cv&&cv.requestPointerLock)cv.requestPointerLock();};
 $('pauseRules').onclick=()=>showRules();
@@ -1688,15 +1665,16 @@ function openAch(){const l=$('acList');l.innerHTML='';Object.keys(ACH).forEach(k
 function openJournal(){const l=$('joList');l.innerHTML='';if(!G.journal||G.journal.length===0){l.innerHTML='<div style="padding:16px;text-align:center;color:#555;font-size:11px">Журнал пуст.</div>';}else{G.journal.slice().reverse().forEach(e=>{l.innerHTML+='<div style="padding:5px 8px;margin:3px 0;border-left:2px solid #5f9;font-size:10px"><b style="color:#5f9">Д'+e.day+' • '+e.time+'</b><br><span style="color:#bfe">'+e.text+'</span></div>';});}$('joP').classList.add('on');}
 
 const CHANGELOG=[
-{v:'V30.5',date:'2026-10-02',recent:true,items:[
-{tag:'new',text:'🇬🇧 НОВАЯ КОНЦОВКА «УДАЧИ, БРО» — англичанка забирает друга'},
-{tag:'new',text:'Друг спотыкается ВПЕРЕДИ тебя, кричит «Удачи, бро!»'},
-{tag:'new',text:'Условие: прийти в кабинет английского в 23:00+ 5 дня'},
-{tag:'fix',text:'👨‍🏫 Днём теперь ученики и учителя (7:30–16:30)'},
-{tag:'fix',text:'🎵 Мелодия в грустной концовке играет с начала сцены'},
-{tag:'fix',text:'🎵 Новая мрачная мелодия для концовки с англичанкой'},
-{tag:'fix',text:'🔧 Починены все механики (toggleCamNV, journal inline и др.)'}
+{v:'V30.6',date:'2026-10-02',recent:true,items:[
+{tag:'fix',text:'🚪 ДОБАВЛЕН ВЫХОД — дверь на южной стене у поста охраны'},
+{tag:'fix',text:'При подходе к двери — запускается coop-концовка (если есть друг)'},
+{tag:'fix',text:'🇬🇧 Англичанка теперь ДОГОНЯЕТ, а не убивает мгновенно'},
+{tag:'fix',text:'Скорость англичанки 2.5 < скорости бега игрока 5.5 — можно убежать'},
+{tag:'fix',text:'Убрано условие «только в кабинете» — англичанка появляется где угодно в 5-й день после 23:00'},
+{tag:'fix',text:'👻 ГЕРМАН: в лёгком режиме раз в 2 дня, в остальных — чаще'},
+{tag:'new',text:'🏆 Достижение «🚪 ПОБЕГ» за выход из школы'}
 ]},
+{v:'V30.5',date:'2026-10-02',items:[{tag:'new',text:'🇬🇧 НОВАЯ КОНЦОВКА «УДАЧИ, БРО»'},{tag:'fix',text:'Днём ученики и учителя (7:30–16:30)'}]},
 {v:'V30.4',date:'2026-10-02',items:[{tag:'fix',text:'🐛 Фикс камеры в финальной сцене'}]},
 {v:'V30.3',date:'2026-10-02',items:[{tag:'new',text:'🎬 Грустная концовка от ПЕРВОГО ЛИЦА'}]},
 {v:'V30.2',date:'2026-10-02',items:[{tag:'new',text:'Кинематографичная концовка (3-е лицо)'}]},
@@ -1704,17 +1682,17 @@ const CHANGELOG=[
 {v:'V30',date:'2026-10-02',items:[{tag:'new',text:'Сервера как в Minecraft'}]}
 ];
 function openChangelog(){const l=$('chgContent');l.innerHTML='';CHANGELOG.forEach(entry=>{const d=document.createElement('div');d.className='chgBlock'+(entry.recent?' recent':'');let html='<h4>'+(entry.recent?'▸ ':'')+entry.v+'</h4><div class="date">📅 '+entry.date+'</div><ul>';entry.items.forEach(it=>{const tag=it.tag==='new'?'<span class="tag new">NEW</span>':it.tag==='fix'?'<span class="tag fix">FIX</span>':'<span class="tag upd">UPD</span>';html+='<li>'+tag+it.text+'</li>';});html+='</ul>';d.innerHTML=html;l.appendChild(d);});$('chgP').classList.add('on');}
-function openCredits(){const srBest=G.srBest>0?G.srBest.toFixed(2)+' сек':'нет рекорда';$('crContent').innerHTML='<div class="crTitle">🏫 ШКОЛА №43</div><div class="crSub">V30.5 «УДАЧИ, БРО»</div>'+'<div class="crBlock" style="border-color:#f0a"><b>🧪 МОДОВ</b><br><br>Всего: <b style="color:#5f9">'+Object.keys(MOD_DEFS).length+'</b><br>Активно: <b style="color:#ffd76a">'+countMods()+'</b></div>'+'<div class="crBlock" style="border-color:#a0e8ff"><b>⏱ СПИДРАН</b><br><br>Рекорд: <b style="color:#5f9">'+srBest+'</b></div>';$('crP').classList.add('on');}
+function openCredits(){const srBest=G.srBest>0?G.srBest.toFixed(2)+' сек':'нет рекорда';$('crContent').innerHTML='<div class="crTitle">🏫 ШКОЛА №43</div><div class="crSub">V30.6 «ВЫХОД ЕСТЬ»</div>'+'<div class="crBlock" style="border-color:#f0a"><b>🧪 МОДОВ</b><br><br>Всего: <b style="color:#5f9">'+Object.keys(MOD_DEFS).length+'</b><br>Активно: <b style="color:#ffd76a">'+countMods()+'</b></div>'+'<div class="crBlock" style="border-color:#a0e8ff"><b>⏱ СПИДРАН</b><br><br>Рекорд: <b style="color:#5f9">'+srBest+'</b></div>';$('crP').classList.add('on');}
 
 let RD=null,SC=null,CM=null,TOR=null,W=null,cv=null,running=false,dead=false,paused=false;
 const BG=new THREE.BoxGeometry(1,1,1);
 const P={x:0,z:0,yaw:0,pitch:0,r:.38};
-let COL=[],RMS={},NPC=[],pcPos=new THREE.Vector3(),PROJ=[],camCams=[];
+let COL=[],RMS={},NPC=[],pcPos=new THREE.Vector3(),PROJ=[],camCams=[],exitDoorPos=null;
 const FH=4,WH=3.5,XM=-62,XMx=62,ZC=3.5,ZR=22,RW=12.5;
 const RN={post:'ПОСТ',director:'ДИРЕКТОР',doctor:'МЕДКАБ',english:'АНГЛИЙСКИЙ',cafe:'СТОЛОВАЯ',gym:'СПОРТЗАЛ',gym2:'РАЗДЕВАЛКА',wc1:'ТУАЛЕТ',wc2:'ТУАЛЕТ',wc3:'ТУАЛЕТ',class1a:'1-А',class1b:'1-Б',class4b:'4-Б',class5a:'5-А',class6a:'6-А',class7a:'7-А',teachers:'УЧИТЕЛЬСКАЯ',trud:'ТРУД',storage:'СКЛАД',library:'БИБЛИОТЕКА',chemistry:'ХИМИЯ',math:'МАТЕМАТИКА',physics:'ФИЗИКА',biology:'БИОЛОГИЯ',computer:'ИНФОРМАТИКА',music:'МУЗЫКА',history:'ИСТОРИЯ',geography:'ГЕОГРАФИЯ'};
 
 let M={};
-function initMats(){M.floor=new THREE.MeshLambertMaterial({color:0xb8c0b0});M.ceil=new THREE.MeshLambertMaterial({color:0xd8d8cc});M.wall=new THREE.MeshLambertMaterial({color:0xc0c8b8});M.w2=new THREE.MeshLambertMaterial({color:0xa8b4c0});M.wood=new THREE.MeshLambertMaterial({color:0xa07850});M.desk=new THREE.MeshLambertMaterial({color:0xc8b080});M.metal=new THREE.MeshLambertMaterial({color:0x808890});M.dark=new THREE.MeshLambertMaterial({color:0x404850});M.lamp=new THREE.MeshBasicMaterial({color:0xfff8e0});M.white=new THREE.MeshLambertMaterial({color:0xe8e8e8});M.black=new THREE.MeshLambertMaterial({color:0x1a1a20});M.chair=new THREE.MeshLambertMaterial({color:0x6a4a2a});M.mk=new THREE.MeshLambertMaterial({color:0x101010,emissive:0x080808});M.bo=new THREE.MeshLambertMaterial({color:0xd09040});M.alm=new THREE.MeshLambertMaterial({color:0xa0c8ff,emissive:0x204060});M.food=new THREE.MeshLambertMaterial({color:0xffa050});M.med=new THREE.MeshLambertMaterial({color:0xff3030,emissive:0x300000});M.totem=new THREE.MeshLambertMaterial({color:0xf0f,emissive:0xa0a});M.box=new THREE.MeshLambertMaterial({color:0xd08040,emissive:0x502010});M.windowFrame=new THREE.MeshLambertMaterial({color:0x2a1a0a});}
+function initMats(){M.floor=new THREE.MeshLambertMaterial({color:0xb8c0b0});M.ceil=new THREE.MeshLambertMaterial({color:0xd8d8cc});M.wall=new THREE.MeshLambertMaterial({color:0xc0c8b8});M.w2=new THREE.MeshLambertMaterial({color:0xa8b4c0});M.wood=new THREE.MeshLambertMaterial({color:0xa07850});M.desk=new THREE.MeshLambertMaterial({color:0xc8b080});M.metal=new THREE.MeshLambertMaterial({color:0x808890});M.dark=new THREE.MeshLambertMaterial({color:0x404850});M.lamp=new THREE.MeshBasicMaterial({color:0xfff8e0});M.white=new THREE.MeshLambertMaterial({color:0xe8e8e8});M.black=new THREE.MeshLambertMaterial({color:0x1a1a20});M.chair=new THREE.MeshLambertMaterial({color:0x6a4a2a});M.mk=new THREE.MeshLambertMaterial({color:0x101010,emissive:0x080808});M.bo=new THREE.MeshLambertMaterial({color:0xd09040});M.alm=new THREE.MeshLambertMaterial({color:0xa0c8ff,emissive:0x204060});M.food=new THREE.MeshLambertMaterial({color:0xffa050});M.med=new THREE.MeshLambertMaterial({color:0xff3030,emissive:0x300000});M.totem=new THREE.MeshLambertMaterial({color:0xf0f,emissive:0xa0a});M.box=new THREE.MeshLambertMaterial({color:0xd08040,emissive:0x502010});M.windowFrame=new THREE.MeshLambertMaterial({color:0x2a1a0a});M.exitDoor=new THREE.MeshLambertMaterial({color:0x2a5a2a,emissive:0x0a200a});}
 function applyVisualMods(){if(!SC||!M||!M.wall||!M.floor)return;try{if(isMod('banana')){M.wall.color.setHex(0xf0d040);M.floor.color.setHex(0xf0e040);}else if(isMod('checker')){M.wall.color.setHex(0x505050);M.floor.color.setHex(0x202020);}else if(isMod('tree')){M.wall.color.setHex(0x604020);M.floor.color.setHex(0x402010);}else if(isMod('marble')){M.wall.color.setHex(0xf0f0f0);M.floor.color.setHex(0xe0e0e0);}else{M.wall.color.setHex(0xc0c8b8);M.floor.color.setHex(0xb8c0b0);}}catch(e){}}
 function initGame3D(){
   if(RD)return;
@@ -1747,14 +1725,29 @@ const sC={};
 function sT(t){if(sC[t])return sC[t];const c=document.createElement('canvas');c.width=256;c.height=64;const g=c.getContext('2d');g.fillStyle='#0e3260';g.fillRect(0,0,256,64);g.strokeStyle='#f0f8ff';g.lineWidth=4;g.strokeRect(2,2,252,60);g.fillStyle='#fff';g.font='bold 26px monospace';g.textAlign='center';g.textBaseline='middle';g.fillText(t,128,34);const tx=new THREE.CanvasTexture(c);tx.colorSpace=THREE.SRGBColorSpace;sC[t]=tx;return tx;}
 function sign(cx,y,z,t,f){const m=new THREE.Mesh(new THREE.PlaneGeometry(2.2,.55),new THREE.MeshBasicMaterial({map:sT(t),fog:false}));m.position.set(cx,y,z);m.rotation.y=f==='n'?Math.PI:0;m.matrixAutoUpdate=false;m.updateMatrix();W.add(m);}
 function addWindow(x,y,z,w,h,rotY){const skyTex=getSkyTexture();const wm=new THREE.MeshBasicMaterial({map:skyTex});const win=new THREE.Mesh(new THREE.PlaneGeometry(w,h),wm);win.position.set(x,y,z);win.rotation.y=rotY;win.matrixAutoUpdate=false;win.updateMatrix();W.add(win);const fm=M.windowFrame;const t=.06;const top=new THREE.Mesh(BG,fm);top.position.set(x,y+h/2+t/2,z);top.scale.set(w+t*2,t,.08);top.rotation.y=rotY;top.matrixAutoUpdate=false;top.updateMatrix();W.add(top);const bot=new THREE.Mesh(BG,fm);bot.position.set(x,y-h/2-t/2,z);bot.scale.set(w+t*2,t,.08);bot.rotation.y=rotY;bot.matrixAutoUpdate=false;bot.updateMatrix();W.add(bot);if(!W.userData.windows)W.userData.windows=[];W.userData.windows.push(win);}
+// ВЫХОД — дверь на южной стене у поста охраны
+function addExitDoor(x,z,rotY){
+  const g=new THREE.Group();
+  const frame=new THREE.Mesh(BG,M.metal);frame.position.set(0,WH/2,0);frame.scale.set(.2,WH,.4);frame.matrixAutoUpdate=false;frame.updateMatrix();g.add(frame);
+  const door=new THREE.Mesh(BG,M.exitDoor);door.position.set(0,1.4,.02);door.scale.set(1.4,2.6,.12);door.matrixAutoUpdate=false;door.updateMatrix();g.add(door);
+  const sign=new THREE.Mesh(new THREE.PlaneGeometry(1.2,.35),new THREE.MeshBasicMaterial({map:sT('ВЫХОД'),fog:false}));sign.position.set(0,3,.05);sign.matrixAutoUpdate=false;sign.updateMatrix();g.add(sign);
+  const light=new THREE.PointLight(0x5fff88,1.5,6,2);light.position.set(0,2,1);g.add(light);
+  g.position.set(x,0,z);g.rotation.y=rotY;g.matrixAutoUpdate=false;g.updateMatrix();
+  W.add(g);
+  exitDoorPos={x:x,z:z};
+}
 function buildSchool(){
   while(W.children.length)W.remove(W.children[0]);W.userData.windows=[];
-  COL=[];RMS={};NPC=[];G.items=[];PROJ=[];camCams.length=0;
+  COL=[];RMS={};NPC=[];G.items=[];PROJ=[];camCams.length=0;exitDoorPos=null;
   for(const k in sC)delete sC[k];invalidateSky();
   const L=genL(G.map),N=10;
   bx(0,-.15,0,XMx-XM+2,.3,ZR*2+2,M.floor,false);bx(0,FH-.15,0,XMx-XM+2,.3,ZR*2+2,M.ceil,false);
   bx(0,WH/2,ZR+.2,XMx-XM+2,WH,.4,M.wall);bx(0,WH/2,-ZR-.2,XMx-XM+2,WH,.4,M.wall);
   bx(XM-.2,WH/2,0,.4,WH,ZR*2+2,M.wall);bx(XMx+.2,WH/2,0,.4,WH,ZR*2+2,M.wall);
+  // Дверь выхода на южной стене (z=-ZR), у поста охраны (post → s0, x = XM+6.25)
+  const postX=XM+RW*0.5;
+  const exitX=postX;
+  addExitDoor(exitX,-ZR+.05,Math.PI);
   const gN=[],gS=[];for(let i=0;i<N;i++){const a=rB(i,'n'),b=rB(i,'s');gN.push([(a.x0+a.x1)/2-1.3,(a.x0+a.x1)/2+1.3]);gS.push([(b.x0+b.x1)/2-1.3,(b.x0+b.x1)/2+1.3]);}
   wlX(XM,XMx,ZC,0,gN,M.w2);wlX(XM,XMx,-ZC,0,gS,M.w2);
   for(let i=1;i<N;i++){const x=XM+RW*i;const n1=L.n[i-1],n2=L.n[i],s1=L.s[i-1],s2=L.s[i];const skN=(n1==='gym'&&n2==='gym2')||(n1==='cafe'&&n2==='cafe')||(n1==='library'&&n2==='library')||(n1==='computer'&&n2==='computer');const skS=(s1==='cafe'&&s2==='cafe');if(!skN)bx(x,WH/2,(ZC+ZR)/2,.3,WH,ZR-ZC,M.wall);if(!skS)bx(x,WH/2,-(ZC+ZR)/2,.3,WH,ZR-ZC,M.wall);}
@@ -1796,7 +1789,6 @@ function gM(){return G.time%60;}
 const tS=function(){return String(Math.floor(gH())).padStart(2,'0')+':'+String(Math.floor(gM())).padStart(2,'0');};
 const isN=function(){const h=gH();return h>=19.5||h<7.5;};
 const isDay=function(){const h=gH();return h>=7.5&&h<17;};
-// Дневная смена — учителя и ученики с 7:30 до 16:30
 const isSchoolTime=function(){const h=gH();const m=gM();const t=h*60+m;return t>=7*60+30&&t<16*60+30;};
 function sky(){const h=gH(),d=IH()||G.ln;if(isMod('sunset'))return 0xd09060;if(isMod('space'))return 0x000010;if(isMod('fire'))return 0x3a0808;if(isMod('ice'))return 0xa0d0f0;if(isMod('under'))return 0x103050;if(isMod('matrix'))return 0x001000;if(isMod('cyberpunk'))return 0x100020;if(h>=20||h<5)return d?0x020204:0x0a1018;if(h>=5&&h<7)return 0x7a5a70;if(h>=7&&h<9)return 0x88a8c8;if(h>=9&&h<16)return 0x88b8d8;if(h>=16&&h<18)return 0xd09060;if(h>=18&&h<20)return 0x2a2038;return 0x0a1018;}
 function uSky(){if(!SC)return;const c=sky();SC.background.setHex(c);if(!OPT_CFG.noFog)SC.fog.color.setHex(c);}
@@ -1805,41 +1797,56 @@ function rAnom(){let k=0;for(const n of NPC.slice())if(n.kind==='anomaly'){rNPC(
 function spawnAnom(dt){
   if(G.code1)return;const h=gH();if(!isN()&&!G.ln)return;
   const isRare=(diff==='rare');const gerMult=isRare?(DF.rare[4]||5):(isMod('manyger')?3:1);
-  const M2=(DF[diff]?DF[diff][0]:1)*(G.ln?2.5:1)*(IS_HARDCORE()?1.5:1);const R=G.ln?.03:.008;
+  const M2=(DF[diff]?DF[diff][0]:1)*(G.ln?2.5:1)*(IS_HARDCORE()?1.5:1);
+  // В лёгком режиме — Герман раз в 2 дня
+  let gerRate;
+  if(diff==='easy')gerRate=0.0002;
+  else if(diff==='normal')gerRate=0.001;
+  else if(diff==='hard')gerRate=0.002;
+  else if(IH())gerRate=0.005;
+  else gerRate=0.001;
+  const R=G.ln?.03:.008;
   if(!fNPC('dw')&&Math.random()<dt*R*M2&&!isMod('pacifist')){sNPC('dw',XMx-5,0,0,'ДНЕВНОЙ СТОРОЖ','anomaly',0x554466,{hostile:true,speed:IH()?3.5:2.2,state:'chase',shirt:0x3a3a48,skin:0xb0b0b0,onContact:function(){if(!G.code1&&G.invuln<=0&&!isMod('pacifist'))kill('Сторож.','death');}});obj('⚠ СТОРОЖ! КОД 1 (R)');toast('СТОРОЖ');if(IH()||G.ln)doScr();addJ('Сторож');}
   const hh=Math.floor(h),mm=Math.floor((h-hh)*60);
   if(hh===2&&mm>=43&&mm<=52&&!fNPC('dir')){sNPC('dir',0,0,0,'ДИРЕКТОР','staff',0x334466,{shirt:0x2c3a55,pants:0x1e2636,skin:0xdcb89c,state:'idle',noMove:true,speed:0,dialogId:'director'});obj('🕑 Директор. E');addJ('Директор 2:43');}
   if(hh===2&&mm>52){const d=fNPC('dir');if(d)rNPC(d);}
   if(!fNPC('fz')&&h>.5&&h<5&&!G.fizD&&Math.random()<dt*R*.75*M2&&!isMod('noFiz')&&!isMod('pacifist')){sNPC('fz',XMx-8,0,0,'ФИЗРУК','anomaly',0xcc7733,{hostile:true,speed:IH()?4:2.5,state:'chase',shirt:0xcc7733,onContact:function(){if(!G.fizD&&G.invuln<=0&&!isMod('pacifist'))kill('Физрук.','death');}});G.fiz=1;G.fizT=60;obj('⚠ ФИЗРУК!');toast('ФИЗРУК');addJ('Физрук');}
   if(!fNPC('an')&&h>1&&h<5&&Math.random()<dt*R*.75*M2&&!isMod('pacifist')){sNPC('an',0,0,-1,'Антон','anomaly',0xdddddd,{hostile:true,speed:IH()?2.2:1.5,state:'chase',shirt:0xdde5ee,skin:0xf0c8a8,scale:.75,onContact:function(){if(G.knife){rNPC(fNPC('an'));toast('Антон убит!');}else if(G.inv.food>0){G.inv.food--;uInv();rNPC(fNPC('an'));}else if(G.invuln<=0){kill('Антон съел.','eaten');}}});toast('Антон');addJ('Антон');}
-  if((IH()||isRare||isMod('manyger')||IS_HARDCORE())&&!G.ger&&Math.random()<dt*(IS_HARDCORE()?.02:.005)*M2*gerMult&&!isMod('pacifist')){const gh=mH(0xffffff,0xf0f0ff,0xffffff,1.05);gh.position.set(XMx-10,0,10);W.add(gh);const sp=nSp('ГЕРМАН','#fff');sp.position.y=2.2;gh.add(sp);G.ger={obj:gh,speed:IS_HARDCORE()?2.8:2};SND.wh();obj('⚠ ГЕРМАН! B — маркер');toast('👻 ГЕРМАН!');flash('wf',.3);doScr();addJ('ГЕРМАН');}
-  // АНГЛИЧАНКА — условие новой концовки: 5-й день, ночь (после 23:00), в кабинете английского
-  if(G.day===5&&h>=23&&!fNPC('eng')&&!G.englishAngry){
-    for(const k in RMS){
-      if(RMS[k].type==='english'){
-        const r=RMS[k];
-        if(P.x>r.x0&&P.x<r.x1&&P.z>r.z0&&P.z<r.z1){
-          G.englishAngry=true;
-          sNPC('eng',r.cx,r.cz,'АНГЛИЧАНКА','anomaly',0xff3050,{hostile:true,speed:2.5,state:'chase',shirt:0x8a1a2a,pants:0x1a0a10,skin:0xf0d0b0,onContact:function(){
-            if(G.invuln<=0&&!isMod('pacifist')){
-              // Только если есть друг — запускаем концовку с англичанкой
-              if(G.botFriend||RTC.connected){
-                coopSadEnding(true);
-              } else {
-                kill('Англичанка.','english');
-              }
-            }
-          }});
-          toast('🇬🇧 АНГЛИЧАНКА! БЕГИ К ВЫХОДУ!','eng');
-          obj('⚠ БЕГИ К ВЫХОДУ! ОНА ЗА СПИНОЙ!');
-          flash('ef',.5);
-          SND.englishEvil();
-          G.englishAngry=true;
-          addJ('🇬🇧 Англичанка в кабинете!');
-          unlAch('englishEnd');
-        }
-      }
+  // ГЕРМАН — раз в 2 дня в лёгком
+  if((IH()||isRare||isMod('manyger')||IS_HARDCORE()||diff!=='easy')&&!G.ger&&Math.random()<dt*gerRate*M2*gerMult&&!isMod('pacifist')){
+    // Проверка: спавнить не чаще чем раз в 2 дня
+    const canSpawn=(diff!=='easy')||(G.day-G.gerSpawnDay>=2);
+    if(canSpawn){
+      G.gerSpawnDay=G.day;
+      const gh=mH(0xffffff,0xf0f0ff,0xffffff,1.05);gh.position.set(XMx-10,0,10);W.add(gh);
+      const sp=nSp('ГЕРМАН','#fff');sp.position.y=2.2;gh.add(sp);
+      G.ger={obj:gh,speed:IS_HARDCORE()?2.8:2};
+      SND.wh();obj('⚠ ГЕРМАН! B — маркер');toast('👻 ГЕРМАН!');flash('wf',.3);doScr();addJ('ГЕРМАН');
     }
+  }
+  // АНГЛИЧАНКА — 5 день, после 23:00, где угодно
+  if(G.day===5&&h>=23&&!fNPC('eng')&&!G.englishAngry){
+    G.englishAngry=true;
+    sNPC('eng',XMx-5,0,0,'АНГЛИЧАНКА','anomaly',0xff3050,{hostile:true,speed:2.5,state:'chase',shirt:0x8a1a2a,pants:0x1a0a10,skin:0xf0d0b0,onContact:function(){
+      if(G.invuln>0)return;
+      if(isMod('pacifist'))return;
+      // Друга есть — запускаем концовку. Нет — телепорт к выходу (даём шанс)
+      if(G.botFriend||RTC.connected){
+        coopSadEnding(true);
+      } else {
+        // Телепортируем к выходу
+        if(exitDoorPos){P.x=exitDoorPos.x;P.z=exitDoorPos.z+1.5;}
+        toast('🇬🇧 Она схватила тебя! БЕГИ К ВЫХОДУ!','eng');
+        obj('⚠ БЕГИ К ВЫХОДУ! ОНА ЗА СПИНОЙ!');
+        flash('ef',.5);
+        SND.englishEvil();
+      }
+    }});
+    toast('🇬🇧 АНГЛИЧАНКА! БЕГИ К ВЫХОДУ!','eng');
+    obj('⚠ БЕГИ К ВЫХОДУ! ОНА ЗА СПИНОЙ!');
+    flash('ef',.5);
+    SND.englishEvil();
+    addJ('🇬🇧 Англичанка появилась!');
   }
 }
 function uGer(dt,now){if(!G.ger)return;const gh=G.ger;const dx=P.x-gh.obj.position.x,dz=P.z-gh.obj.position.z,d=Math.hypot(dx,dz);if(d>.5){const sp=gh.speed*dt;gh.obj.position.x+=dx/d*sp;gh.obj.position.z+=dz/d*sp;gh.obj.rotation.y=Math.atan2(dx,dz);}if(isMod('cheat')&&CHEAT_CFG.instaKill&&d<6){G.gKill++;W.remove(gh.obj);G.ger=null;toast('💎 Герман убит!');return;}if(isMod('instaKill')&&d<6){G.gKill++;W.remove(gh.obj);G.ger=null;toast('💀 Ваншот!');return;}for(let i=PROJ.length-1;i>=0;i--){const p=PROJ[i];const pd=Math.hypot(p.mesh.position.x-gh.obj.position.x,p.mesh.position.z-gh.obj.position.z);if(pd<1.5&&(p.type==='mk'||p.type==='bo')){G.gKill++;W.remove(gh.obj);G.ger=null;W.remove(p.mesh);PROJ.splice(i,1);SND.mk();toast('✒ Герман отключён!');unlAch('marker');addJ('Герман отогнан');return;}}if(d<1.1&&!isMod('pacifist'))kill('Герман.','german');}
@@ -1855,7 +1862,6 @@ function spawnDay(){
   ];
   for(const k in RMS){
     const r=RMS[k];
-    // Учителя и ученики для классов
     const c=cls.find(function(x){return x.t===r.type;});
     if(c){
       sNPC('t_'+k,r.cx+4,0,r.cz+3,c.te,'staff',c.tc,{shirt:c.tc,pants:0x403040,skin:0xe8c8a8,state:'idle',noMove:true,pose:'teach',isDayOnly:true});
@@ -1867,31 +1873,25 @@ function spawnDay(){
         pi++;
       }
     }
-    // Учитель английского — сидит в кабинете
     if(r.type==='english'){
       sNPC('t_eng_'+k,r.cx,0,r.cz+3,'Учительница английского','staff',0xd05080,{shirt:0xd05080,pants:0x1a0a10,skin:0xf0d0b0,state:'idle',noMove:true,pose:'teach',isDayOnly:true});
       sNPC('p_eng_a',r.x0+3,0,r.cz-2.5,'Аня','neutral',0x6070a0,{shirt:0xa07090,pants:0x404050,state:'idle',noMove:true,pose:'sit',isDayOnly:true});
       sNPC('p_eng_b',r.x0+8.5,0,r.cz-2.5,'Егор','neutral',0x6070a0,{shirt:0x7090a0,pants:0x404050,state:'idle',noMove:true,pose:'sit',isDayOnly:true});
     }
-    // Учитель физкультуры в спортзале
     if(r.type==='gym'){
       sNPC('t_gym_'+k,r.cx+3,0,r.cz,'Физрук Петрович','staff',0xcc7733,{shirt:0xcc7733,pants:0x2a2a3a,skin:0xe0b890,state:'idle',noMove:true,pose:'teach',isDayOnly:true});
       sNPC('p_gym_a',r.x0+3,0,r.cz-3,'Вася','neutral',0x6070a0,{shirt:0x5060a0,pants:0x404050,state:'idle',noMove:true,pose:'sit',isDayOnly:true});
     }
-    // Учитель труда
     if(r.type==='trud'){
       sNPC('t_trud_'+k,r.cx,0,r.cz,'Трудовик Бухов','staff',0x88a0ff,{shirt:0x5a6a9a,pants:0x2a2a3a,skin:0xe0b890,state:'idle',noMove:true,pose:'teach',isDayOnly:true});
     }
-    // Учитель информатики
     if(r.type==='computer'){
       sNPC('t_pc_'+k,r.cx,0,r.cz+3,'Учитель информатики','staff',0x60a0c0,{shirt:0x60a0c0,pants:0x2a2a3a,skin:0xe8c8a8,state:'idle',noMove:true,pose:'teach',isDayOnly:true});
     }
-    // Учитель музыки
     if(r.type==='music'){
       sNPC('t_mus_'+k,r.cx,0,r.cz+3,'Учитель музыки','staff',0xa060c0,{shirt:0xa060c0,pants:0x2a2a3a,skin:0xe8c8a8,state:'idle',noMove:true,pose:'teach',isDayOnly:true});
     }
   }
-  toast('☀ ДНЕВНАЯ СМЕНА: ученики и учителя в школе','mod');
   unlAch('teachersAllDay');
 }
 function rmvDay(){if(!G.spawned)return;for(const n of NPC.slice())if(n.dayOnly)rNPC(n);G.spawned=false;}
@@ -1901,7 +1901,25 @@ function uProj(dt){for(let i=PROJ.length-1;i>=0;i--){const p=PROJ[i];p.life-=dt;
 function uInv(){const e=$('iv');e.innerHTML='';if(G.inv.box>0)e.innerHTML+='<div class="ii bx">📦 ×'+G.inv.box+'</div>';if(G.inv.totem>0)e.innerHTML+='<div class="ii tm">🦉 ТОТЕМ</div>';if(G.inv.food)e.innerHTML+='<div class="ii">🍞 '+G.inv.food+'</div>';if(G.inv.med)e.innerHTML+='<div class="ii">💊 '+G.inv.med+'</div>';if(G.inv.alm)e.innerHTML+='<div class="ii" style="color:#a0c8ff">💧 '+G.inv.alm+'</div>';if(G.inv.mk)e.innerHTML+='<div class="ii m">✒ '+G.inv.mk+((isMod('cheat')||isMod('allItems'))?'∞':'')+'</div>';if(G.inv.bo)e.innerHTML+='<div class="ii bm">🪃 '+G.inv.bo+((isMod('cheat')||isMod('allItems'))?'∞':'')+'</div>';updateHotbar();}
 function col(){const r=P.r,lo=.2,hi=1.9;if(isMod('fly')||isMod('noclip')||isMod('ghostMode')||isMod('flyCheat'))return;for(let it=0;it<2;it++){let p=false;for(const b of COL){if(b.maxY<lo||b.minY>hi)continue;const cx=Math.max(b.minX,Math.min(P.x,b.maxX)),cz=Math.max(b.minZ,Math.min(P.z,b.maxZ));const dx=P.x-cx,dz=P.z-cz,d2=dx*dx+dz*dz;if(d2>=r*r)continue;if(d2>1e-6){const d=Math.sqrt(d2);P.x+=dx/d*(r-d+.001);P.z+=dz/d*(r-d+.001);}else{const dl=P.x-b.minX,dr=b.maxX-P.x,dd=P.z-b.minZ,du=b.maxZ-P.z,m=Math.min(dl,dr,dd,du);if(m===dl)P.x=b.minX-r-.01;else if(m===dr)P.x=b.maxX+r+.01;else if(m===dd)P.z=b.minZ-r-.01;else P.z=b.maxZ+r+.01;}p=true;}if(!p)break;}}
 let curI=null;
-function collect(){const l=[];if(dead)return l;if(Math.abs(pcPos.y)<3&&role==='guard')l.push({pos:pcPos,label:'ПК / КАМЕРЫ',r:3,a:opPC});for(const n of NPC)l.push({pos:n.obj.position,label:'Говорить: '+n.name,r:2.4,a:function(){talk(n);}});for(const it of G.items){if(it.taken)continue;const L={food:'Взять еду',med:'Взять аптечку',alm:'Взять миндаль',knife:'Взять нож',mk:'Взять маркер',bo:'Взять бумеранг',totem:'🦉 ВЗЯТЬ ТОТЕМ',box:'📦 ВЗЯТЬ КОРОБКУ'};l.push({pos:new THREE.Vector3(it.x,it.y,it.z),label:bagRandomText(L[it.type]||'Взять'),r:1.8,a:function(){it.taken=true;W.remove(it.mesh);if(it.type==='box'){G.inv.food+=3;G.inv.alm+=3;G.inv.med+=1;G.inv.mk+=1;toast('📦 🍞+3 💧+3 💊+1 ✒+1');addJ('Взял коробку');}else if(it.type==='food')G.inv.food+=3;else if(it.type==='med')G.inv.med++;else if(it.type==='alm')G.inv.alm+=3;else if(it.type==='knife')G.knife=true;else if(it.type==='mk')G.inv.mk++;else if(it.type==='bo')G.inv.bo++;else if(it.type==='totem'){G.inv.totem=1;G.totemUsed=false;toast('🦉 ТОТЕМ ПОЛУЧЕН!');addJ('Взял тотем');flash('tf',.4);}G.picked++;G.stats.items++;uInv();toast('Взято');}});}if(G.fiz)for(const k in RMS)if(RMS[k].type==='gym2')l.push({pos:new THREE.Vector3(RMS[k].cx,.7,RMS[k].cz-3),label:'Прыгнуть ('+G.fizJ+'/4)',r:3,a:doJ});return l;}
+function collect(){const l=[];if(dead)return l;if(Math.abs(pcPos.y)<3&&role==='guard')l.push({pos:pcPos,label:'ПК / КАМЕРЫ',r:3,a:opPC});
+// ВЫХОД из школы
+if(exitDoorPos&&Math.hypot(P.x-exitDoorPos.x,P.z-exitDoorPos.z)<2.5){
+  l.push({pos:new THREE.Vector3(exitDoorPos.x,1.2,exitDoorPos.z),label:'🚪 ВЫЙТИ ИЗ ШКОЛЫ',r:2.5,a:function(){
+    unlAch('escaped');
+    SND.exit();
+    flash('gf',.5);
+    addJ('Выход из школы!');
+    if(G.botFriend||RTC.connected){
+      coopSadEnding(G.englishAngry||G.day===5);
+    } else {
+      // Одиночный выход — обычная концовка
+      winGame('🏆 ПОБЕГ','Вы вышли из школы!');
+    }
+  }});
+}
+for(const n of NPC)l.push({pos:n.obj.position,label:'Говорить: '+n.name,r:2.4,a:function(){talk(n);}});
+for(const it of G.items){if(it.taken)continue;const L={food:'Взять еду',med:'Взять аптечку',alm:'Взять миндаль',knife:'Взять нож',mk:'Взять маркер',bo:'Взять бумеранг',totem:'🦉 ВЗЯТЬ ТОТЕМ',box:'📦 ВЗЯТЬ КОРОБКУ'};l.push({pos:new THREE.Vector3(it.x,it.y,it.z),label:bagRandomText(L[it.type]||'Взять'),r:1.8,a:function(){it.taken=true;W.remove(it.mesh);if(it.type==='box'){G.inv.food+=3;G.inv.alm+=3;G.inv.med+=1;G.inv.mk+=1;toast('📦 🍞+3 💧+3 💊+1 ✒+1');addJ('Взял коробку');}else if(it.type==='food')G.inv.food+=3;else if(it.type==='med')G.inv.med++;else if(it.type==='alm')G.inv.alm+=3;else if(it.type==='knife')G.knife=true;else if(it.type==='mk')G.inv.mk++;else if(it.type==='bo')G.inv.bo++;else if(it.type==='totem'){G.inv.totem=1;G.totemUsed=false;toast('🦉 ТОТЕМ ПОЛУЧЕН!');addJ('Взял тотем');flash('tf',.4);}G.picked++;G.stats.items++;uInv();toast('Взято');}});}
+if(G.fiz)for(const k in RMS)if(RMS[k].type==='gym2')l.push({pos:new THREE.Vector3(RMS[k].cx,.7,RMS[k].cz-3),label:'Прыгнуть ('+G.fizJ+'/4)',r:3,a:doJ});return l;}
 function uPr(){if(DEVICE==='mobile'&&((performance.now()|0)%100<50))return;const l=collect(),d=new THREE.Vector3();CM.getWorldDirection(d);let best=null,bs=-1;for(const it of l){const dx=it.pos.x-P.x,dz=it.pos.z-P.z,dd=Math.hypot(dx,dz);if(dd>it.r)continue;const dot=(dx*d.x+dz*d.z)/(dd||1);if(dot<.2)continue;const sc=dot-dd*.05;if(sc>bs){bs=sc;best=it;}}curI=best;const e=$('pr'),c=$('cr');if(best){e.innerHTML='<b>['+keyCodeToName(KEYBINDS.interact)+']</b> '+best.label;e.classList.add('on');c.classList.add('on');}else{e.classList.remove('on');c.classList.remove('on');}}
 const tryI=function(){if(curI&&!paused&&!dead)curI.a();};
 function doJ(){G.fizJ=(G.fizJ||0)+1;toast('Прыжок '+G.fizJ+'/4');if(G.fizJ>=4){G.fiz=false;G.fizD=true;G.fizJ=0;const f=fNPC('fz');if(f){f.state='wander';f.speed=.8;f.hostile=false;}}}
@@ -1953,15 +1971,15 @@ function winGame(title,sub){
   if(RTC.connected||G.botFriend){coopSadEnding(false);return;}
   runExitAnimation(()=>{showCredits(()=>{endGFinal(title,sub);},false);});
 }
-function endGFinal(t,x){$('eT').textContent=t||'🏆 5 ДНЕЙ';$('eX').textContent=x||'Вы выжили!';let extra='';if(G.speedrun){const isRec=(G.srBest===0||G.srTime<G.srBest);if(isRec){G.srBest=G.srTime;try{localStorage.setItem('sh43srbest',G.srBest.toString())}catch(err){}extra='<br><b style="color:#5f9">🏆 РЕКОРД: '+G.srTime.toFixed(2)+' сек!</b>';}}$('eS').innerHTML='V30.5 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods()+extra;$('eP').classList.add('on');}
-function endG(k,t,x){if(k==='survive'||k==='lastnightWin'){winGame(t,x);return;}running=false;paused=true;if(document.pointerLockElement)document.exitPointerLock();const e=ENDS[k]||[t,x];$('eT').textContent=e[0];$('eX').textContent=e[1]||x;$('eS').innerHTML='V30.5 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods();$('eP').classList.add('on');$('hud').style.display='none';$('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');$('hcOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';G.ended=true;}
+function endGFinal(t,x){$('eT').textContent=t||'🏆 5 ДНЕЙ';$('eX').textContent=x||'Вы выжили!';let extra='';if(G.speedrun){const isRec=(G.srBest===0||G.srTime<G.srBest);if(isRec){G.srBest=G.srTime;try{localStorage.setItem('sh43srbest',G.srBest.toString())}catch(err){}extra='<br><b style="color:#5f9">🏆 РЕКОРД: '+G.srTime.toFixed(2)+' сек!</b>';}}$('eS').innerHTML='V30.6 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods()+extra;$('eP').classList.add('on');}
+function endG(k,t,x){if(k==='survive'||k==='lastnightWin'){winGame(t,x);return;}running=false;paused=true;if(document.pointerLockElement)document.exitPointerLock();const e=ENDS[k]||[t,x];$('eT').textContent=e[0];$('eX').textContent=e[1]||x;$('eS').innerHTML='V30.6 • '+DEVICE+' • '+G.day+'/5 • Модов: '+countMods();$('eP').classList.add('on');$('hud').style.display='none';$('tui').classList.remove('on');$('camUI').classList.remove('on');$('speedrunTimer').classList.remove('on');$('bagOverlay').classList.remove('on');$('hcOverlay').classList.remove('on');document.body.style.filter='';document.body.style.animation='';G.ended=true;}
 function enterCameras(){if(!camCams.length){toast('Камеры недоступны');return;}G.camOn=true;G.camSel=0;G.camSeen=new Set([0]);$('camUI').classList.add('on');if(document.pointerLockElement)document.exitPointerLock();SND.cam();unlAch('camMaster');}
 function exitCameras(){G.camOn=false;$('camUI').classList.remove('on');if(RD){const W2=RD.domElement.width,H2=RD.domElement.height;RD.setScissorTest(false);RD.setViewport(0,0,W2,H2);RD.setScissor(0,0,W2,H2);}rqL();}
 function selectCam(i){if(i<0||i>=camCams.length)return;G.camSel=i;SND.cam();document.querySelectorAll('.camF').forEach(function(f){f.classList.toggle('sel',parseInt(f.dataset.i)===i);});G.camSeen.add(i);if(G.camSeen.size>=4)unlAch('camAll');}
 document.querySelectorAll('.camF').forEach(function(f){f.addEventListener('click',function(){selectCam(parseInt(f.dataset.i));});});
 function renderCameras(){if(!RD)return;const W2=RD.domElement.width,H2=RD.domElement.height;document.querySelectorAll('.camF').forEach(function(f,i){const c=camCams[i];if(!c)return;f.querySelector('.camLbl').textContent=(i===G.camSel?'▶ ':'● ')+'CAM '+(i+1);f.querySelector('.camTime').textContent=tS();});RD.setScissorTest(true);for(let i=0;i<4;i++){const col=i%2,row=Math.floor(i/2);const vx=col*Math.floor(W2/2),vy=(1-row)*Math.floor(H2/2),vw=Math.floor(W2/2),vh=Math.floor(H2/2);RD.setViewport(vx,vy,vw,vh);RD.setScissor(vx,vy,vw,vh);const c=camCams[i];if(c){c.cam.aspect=vw/vh;c.cam.updateProjectionMatrix();RD.render(SC,c.cam);}}RD.setScissorTest(false);RD.setViewport(0,0,W2,H2);RD.setScissor(0,0,W2,H2);}
 function toggleMap(){const m=$('mmap');m.classList.toggle('on');if(m.classList.contains('on'))drawMap();}
-function drawMap(){const c=$('mcanvas'),ctx=c.getContext('2d');ctx.fillStyle='#020c06';ctx.fillRect(0,0,c.width,c.height);const sx=c.width/(XMx-XM+20),sz=c.height/(ZR*2+10),s=Math.min(sx,sz);const ox=(c.width-(XMx-XM)*s)/2-XM*s,oz=(c.height-ZR*2*s)/2+ZR*s;const tx=function(x){return ox+x*s;},tz=function(z){return oz-z*s;};for(const k in RMS){const r=RMS[k];ctx.fillStyle=r.type==='post'?'rgba(80,60,10,.6)':(r.type==='english'?'rgba(150,30,60,.6)':'rgba(30,80,50,.5)');ctx.fillRect(tx(r.x0),tz(r.z1),(r.x1-r.x0)*s,(r.z1-r.z0)*s);ctx.strokeStyle='#3fd18a';ctx.strokeRect(tx(r.x0),tz(r.z1),(r.x1-r.x0)*s,(r.z1-r.z0)*s);}ctx.fillStyle='#ffd76a';ctx.beginPath();ctx.arc(tx(P.x),tz(P.z),4,0,6.28);ctx.fill();if(RTC.remotePos){ctx.fillStyle='#60c0ff';ctx.beginPath();ctx.arc(tx(RTC.remotePos.x),tz(RTC.remotePos.z),4,0,6.28);ctx.fill();}if(G.botFriend){ctx.fillStyle='#a0d0ff';ctx.beginPath();ctx.arc(tx(G.botFriend.obj.position.x),tz(G.botFriend.obj.position.z),3,0,6.28);ctx.fill();}NPC.forEach(function(n){ctx.fillStyle=n.kind==='friendly'?'#5f9':(n.kind==='staff'?'#9ad0ff':(n.name==='АНГЛИЧАНКА'?'#f44':'#f44'));ctx.beginPath();ctx.arc(tx(n.obj.position.x),tz(n.obj.position.z),3,0,6.28);ctx.fill();});}
+function drawMap(){const c=$('mcanvas'),ctx=c.getContext('2d');ctx.fillStyle='#020c06';ctx.fillRect(0,0,c.width,c.height);const sx=c.width/(XMx-XM+20),sz=c.height/(ZR*2+10),s=Math.min(sx,sz);const ox=(c.width-(XMx-XM)*s)/2-XM*s,oz=(c.height-ZR*2*s)/2+ZR*s;const tx=function(x){return ox+x*s;},tz=function(z){return oz-z*s;};for(const k in RMS){const r=RMS[k];ctx.fillStyle=r.type==='post'?'rgba(80,60,10,.6)':(r.type==='english'?'rgba(150,30,60,.6)':'rgba(30,80,50,.5)');ctx.fillRect(tx(r.x0),tz(r.z1),(r.x1-r.x0)*s,(r.z1-r.z0)*s);ctx.strokeStyle='#3fd18a';ctx.strokeRect(tx(r.x0),tz(r.z1),(r.x1-r.x0)*s,(r.z1-r.z0)*s);}ctx.fillStyle='#ffd76a';ctx.beginPath();ctx.arc(tx(P.x),tz(P.z),4,0,6.28);ctx.fill();if(exitDoorPos){ctx.fillStyle='#5fff88';ctx.beginPath();ctx.arc(tx(exitDoorPos.x),tz(exitDoorPos.z),6,0,6.28);ctx.fill();ctx.fillStyle='#000';ctx.font='bold 10px monospace';ctx.textAlign='center';ctx.fillText('ВЫХОД',tx(exitDoorPos.x),tz(exitDoorPos.z)+3);}if(RTC.remotePos){ctx.fillStyle='#60c0ff';ctx.beginPath();ctx.arc(tx(RTC.remotePos.x),tz(RTC.remotePos.z),4,0,6.28);ctx.fill();}if(G.botFriend){ctx.fillStyle='#a0d0ff';ctx.beginPath();ctx.arc(tx(G.botFriend.obj.position.x),tz(G.botFriend.obj.position.z),3,0,6.28);ctx.fill();}NPC.forEach(function(n){ctx.fillStyle=n.kind==='friendly'?'#5f9':(n.kind==='staff'?'#9ad0ff':(n.name==='АНГЛИЧАНКА'?'#f00':'#f44'));ctx.beginPath();ctx.arc(tx(n.obj.position.x),tz(n.obj.position.z),3,0,6.28);ctx.fill();});}
 document.addEventListener('pointerlockchange',function(){ml=document.pointerLockElement===cv;});
 document.addEventListener('mousemove',function(e){if(!ml||!running||paused||dead||G.camOn)return;const s=.0022*cfg.sens;P.yaw-=e.movementX*s;P.pitch=Math.max(-1.5,Math.min(1.5,P.pitch-e.movementY*s));});
 document.addEventListener('keydown',function(e){
@@ -2073,7 +2091,10 @@ function loop(now){
     const sy=Math.sin(P.yaw),cy=Math.cos(P.yaw);
     P.x+=(fw*(-sy)+st*cy)*spd*dt;P.z+=(fw*(-cy)+st*(-sy))*spd*dt;
     col();
+    // Южная стена с дверью — не пропускаем сквозь, но разрешаем пройти если стоишь у двери
+    const nearExit=exitDoorPos&&Math.hypot(P.x-exitDoorPos.x,P.z-exitDoorPos.z)<2.0;
     if(P.x>XM-1&&P.x<XMx+1)P.z=Math.max(-ZR+.5,Math.min(ZR-.5,P.z));
+    if(nearExit&&P.z<-ZR+.3)P.z=-ZR+.3;
     P.x=Math.max(XM-100+1,Math.min(XMx+.4,P.x));
     if(P.x<-80){endG('madness','🌌 БЕСКОНЕЧНОСТЬ','');return;}
     const sf=sp?1.6:1;G.bob+=dt*(sp?12:8)*(mg>.01?1:0);
@@ -2108,7 +2129,6 @@ function loop(now){
     if(G.dayRealTime>=SEC_PER_DAY){G.dayRealTime=0;startNewDay();}
     const nd=isDay();
     const scT=isSchoolTime();
-    // Днём — ученики и учителя (7:30–16:30)
     if(scT&&!G.spawned&&!G.transition){spawnDay();}
     if(!scT&&G.spawned)rmvDay();
     if(!nd&&!G.ln&&!G.cdOn&&!G.transition)rAnom();
@@ -2139,7 +2159,7 @@ function updateCamWorld(dt){uGer(dt,performance.now()/1000);uProj(dt);uNPC(dt);u
 function uNPC(dt){const now=uNPCArg;for(const n of NPC){if(n.noMove)continue;if(n.dis>0){n.dis-=dt;if(n.dis<=0)n.hostile=true;continue;}const dx0=n.obj.position.x-P.x,dz0=n.obj.position.z-P.z,d2=dx0*dx0+dz0*dz0;if(n.kind!=='anomaly'&&d2>1600){n.obj.visible=false;continue;}else n.obj.visible=true;if(n.state==='chase'&&!dead){const dx=P.x-n.obj.position.x,dz=P.z-n.obj.position.z,d=Math.hypot(dx,dz);if(d>.01){n.obj.position.x+=dx/d*n.speed*dt;n.obj.position.z+=dz/d*n.speed*dt;}n.obj.rotation.y=Math.atan2(dx,dz);if(d<1.1&&n.onC)n.onC();}else if(n.state==='wander'){n.wT-=dt;if(n.wT<=0){n.wT=2+Math.random()*4;n.tx=XM+10+Math.random()*(XMx-XM-20);n.tz=(Math.random()-.5)*4;}const dx=n.tx-n.obj.position.x,dz=n.tz-n.obj.position.z,d=Math.hypot(dx,dz);if(d>.4){n.obj.position.x+=dx/d*n.speed*dt;n.obj.position.z+=dz/d*n.speed*dt;n.obj.rotation.y=Math.atan2(dx,dz);}}if(d2<100&&n.state==='chase'){n.bob+=dt*9;const L=n.obj.userData.limbs;if(!n.pose){L[0].rotation.x=Math.sin(n.bob)*.5;L[1].rotation.x=-Math.sin(n.bob)*.5;L[2].rotation.x=-Math.sin(n.bob)*.5;L[3].rotation.x=Math.sin(n.bob)*.5;}}if(isMod('dance')){n.obj.rotation.z=Math.sin(now*0.005)*0.3;n.obj.position.y=Math.abs(Math.sin(now*0.008))*0.3;}}}
 function startGame(){if(!G._rulesShown){G._rulesShown=true;G._showRulesBeforeStart=true;showRules();return;}actuallyStartGame();}
 function actuallyStartGame(){
-  G.day=1;G.time=START_MIN;G.dayRealTime=0;G.transition=false;G.cdOn=false;G.cdV=5;G.cdT=0;G.ln=false;G.lnT=0;G.scream=999;G.ended=false;G.busys=false;G.spawned=false;G.paused=false;G.ger=null;G.deaths=0;G.camSeen=new Set();G.totemUsed=false;G.invuln=0;G.srTime=0;G.twin=null;G.botFriend=null;G.englishAngry=false;
+  G.day=1;G.time=START_MIN;G.dayRealTime=0;G.transition=false;G.cdOn=false;G.cdV=5;G.cdT=0;G.ln=false;G.lnT=0;G.scream=999;G.ended=false;G.busys=false;G.spawned=false;G.paused=false;G.ger=null;G.deaths=0;G.camSeen=new Set();G.totemUsed=false;G.invuln=0;G.srTime=0;G.twin=null;G.botFriend=null;G.englishAngry=false;G.gerSpawnDay=0;
   if(mode!=='speedrun')G.speedrun=false;
   if(mode!=='story'&&mode!=='speedrun')mode='story';
   G.hardcore=IS_HARDCORE();
@@ -2172,7 +2192,7 @@ function actuallyStartGame(){
   buildSchool();if(TOR)TOR.intensity=IH()?2.5:1.8;applyVisualMods();
   const p=RMS.s0;if(p){P.x=p.cx;P.z=p.cz+3;}else{P.x=0;P.z=0;}P.yaw=0;P.pitch=0;
   spawnAll();uInv();updateHotbar();addJ('Начата смена — День 1');
-  let startMsg='V30.5 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'));
+  let startMsg='V30.6 • '+DEVICE.toUpperCase()+' • '+(role==='guard'?'ОХРАННИК':(role==='student'?'7А':'УБОРЩИЦА'));
   if(IS_HARDCORE())startMsg+=' • ⚔️ ХАРДКОР';
   if(isMod('botfriend'))startMsg+=' • 👥 С ДРУГОМ';
   obj(startMsg);
@@ -2182,6 +2202,7 @@ function actuallyStartGame(){
   setTimeout(function(){ds.classList.remove('on');},2500);
   uSn();setTimeout(rqL,300);
   if(IS_HARDCORE())toast('⚔️ ХАРДКОР: 1 удар = смерть!','hc');
+  if(diff==='easy')toast('😌 ЛЕГКО: Герман раз в 2 дня','mod');
 }
 window.SH=window.SH||{};window.SH.game=startGame;
 window.addEventListener('resize',function(){if(CM){CM.aspect=window.innerWidth/window.innerHeight;CM.updateProjectionMatrix();}if(RD){RD.setSize(window.innerWidth,window.innerHeight,false);if(!G.camOn){const W2=RD.domElement.width,H2=RD.domElement.height;RD.setScissorTest(false);RD.setViewport(0,0,W2,H2);RD.setScissor(0,0,W2,H2);}}resizeMenuCanvas();});
@@ -2194,7 +2215,7 @@ $('mc').addEventListener('contextmenu',function(e){e.preventDefault();});
 if(OPT_CFG.showFps)$('fpsCounter').classList.add('on');
 try{runIntro();}catch(e){console.error(e);showMenuFinal();}
 loop(0);
-console.log('ШКОЛА №43 — V30.5 «УДАЧИ, БРО» загружена');
+console.log('ШКОЛА №43 — V30.6 «ВЫХОД ЕСТЬ» загружена');
 </script>
 </body>
-  </html>
+              </html>
